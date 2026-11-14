@@ -4,7 +4,7 @@ title: "CATalyst: Defeating Last-Level Cache Side Channel Attacks in Cloud Compu
 year: 2016
 venue: "IEEE International Symposium on High Performance Computer Architecture (HPCA)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 

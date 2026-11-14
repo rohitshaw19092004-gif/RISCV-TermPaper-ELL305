@@ -4,7 +4,7 @@ title: "MuonTrap: Preventing Cross-Domain Spectre-Like Attacks by Capturing Spec
 year: 2020
 venue: "International Symposium on Computer Architecture (ISCA)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2020 · **Venue:** International Symposium on Computer Architecture (ISCA)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > MuonTrap [[@ainsworth2020muontrap]] confines speculative state to a small filter cache that is cleared at domain boundaries, and GhostMinion [[@ainsworth2021ghostminion]] adds a strict ordering discipline designed to close the timing paths that speculative interference ex

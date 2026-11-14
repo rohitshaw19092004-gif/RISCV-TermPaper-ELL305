@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2018 · **Venue:** IEEE/ACM International Symposium on Microarchitecture (MICRO)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > _no context captured; read the paper section that cites it_

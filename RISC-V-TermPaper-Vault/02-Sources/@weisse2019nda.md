@@ -4,7 +4,7 @@ title: "NDA: Preventing Speculative Execution Attacks at Their Source"
 year: 2019
 venue: "IEEE/ACM International Symposium on Microarchitecture (MICRO)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2019 · **Venue:** IEEE/ACM International Symposium on Microarchitecture (MICRO)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > NDA [[@weisse2019nda]] restricts the propagation of data from unresolved instructions more conservatively.

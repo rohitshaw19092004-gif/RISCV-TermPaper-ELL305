@@ -4,7 +4,7 @@ title: "DAWG: A Defense Against Cache Timing Attacks in Speculative Execution Pr
 year: 2018
 venue: "IEEE/ACM International Symposium on Microarchitecture (MICRO)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -18,7 +18,7 @@ status: to-read
 
 ## Where the paper uses this
 - [[Ch07 Multicore and Coherence]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Way partitioning caps the number of protected domains at the associativity (eight ways means at most eight isolated domains) and requires hardware support; DAWG [[@kiriansky2018dawg]] is the fully worked hardware design, and Intel's Cache Allocation Technology is the deployed commercial approximation, used as a security mechanism by CATalyst [[@liu2016catalyst]].

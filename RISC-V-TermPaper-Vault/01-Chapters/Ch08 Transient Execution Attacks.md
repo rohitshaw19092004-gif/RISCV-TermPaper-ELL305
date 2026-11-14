@@ -17,7 +17,7 @@ tags: [chapter, status/drafted]
 - Spectre-v1: bounds-check bypass
 - The variant family
 - Why the attacks reached RISC-V
-- Attacks on the defences
+- Attacks on the defenses
 
 
 
@@ -26,7 +26,7 @@ tags: [chapter, status/drafted]
 - Transient-execution variants
 
 ## To write for v0.2 / v0.3
-- [ ] For v0.2: add (a) a phase-by-phase mapping from each variant in `tab:variants` onto `fig:anatomy`, so that the defence coverage argument of [[Ch09 Defences Taxonomy]] can be stated as a matrix rather than in prose;
+- [ ] For v0.2: add (a) a phase-by-phase mapping from each variant in `tab:variants` onto `fig:anatomy`, so that the defense coverage argument of [[Ch09 Defenses Taxonomy]] can be stated as a matrix rather than in prose;
 - [ ] (b) a measured or simulated speculation-window figure for BOOM, showing how many transient instructions actually execute as a function of ROB size; this is experiment E3 in [[Ch11 Evaluation Plan]]; and (c) a short treatment of speculative interference with a worked example. Target: +6 pages.
 
 ## Sources cited here

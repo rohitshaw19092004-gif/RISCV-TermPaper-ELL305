@@ -1,4 +1,4 @@
-parameter,value,defence,geomean_slowdown_pct,worst_slowdown_pct,baseline_geomean_ipc
+parameter,value,defense,geomean_slowdown_pct,worst_slowdown_pct,baseline_geomean_ipc
 l1_latency,2,nospec,11.314,46.714,1.248
 l1_latency,2,dom,6.296,36.807,1.248
 l1_latency,2,invis-e,0.151,5.498,1.248

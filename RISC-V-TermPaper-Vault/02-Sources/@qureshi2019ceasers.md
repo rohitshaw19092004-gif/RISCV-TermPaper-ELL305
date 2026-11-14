@@ -4,7 +4,7 @@ title: "New Attacks and Defense for Encrypted-Address Cache"
 year: 2019
 venue: "International Symposium on Computer Architecture (ISCA)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -18,7 +18,7 @@ status: to-read
 
 ## Where the paper uses this
 - [[Ch08 Transient Execution Attacks]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Qureshi's own follow-up showed that the original parameters were insufficient against faster eviction-set construction, and raised the re-keying rate accordingly [[@qureshi2019ceasers]].

@@ -25,7 +25,7 @@ BUILD = os.path.join(HERE, "build")
 RESULTS = os.path.join(HERE, "results")
 MODEL = os.path.join(BUILD, "rvmodel")
 KERNELS = reference.KERNELS
-DEFENCES = ["none", "nospec", "dom", "invis-e", "invis-v", "stt", "nda", "undo"]
+DEFENSES = ["none", "nospec", "dom", "invis-e", "invis-v", "stt", "nda", "undo"]
 PAIRS = [("crc32", "hashtab"), ("bsearch", "stream"), ("heapsort", "matmul"),
          ("listwalk", "sieve"), ("bstree", "strsearch")]
 QEMU = ["qemu-system-riscv64", "-machine", "virt", "-cpu", "rv64", "-m", "128M",
@@ -153,10 +153,96 @@ loop:
 ring: .zero P * STRIDE
 """
 
+# As RING, with a branch that waits for each loaded value (never taken).
+RINGB = RING.replace("    ld    t1, 0(t1)\n    addi  t0, t0, -1",
+                     "    ld    t1, 0(t1)\n    beqz  t1, out\n    addi  t0, t0, -1").replace(
+                     "    li    a0, 0\n    ret", "out:\n    li    a0, 0\n    ret")
+
+# A divide feeds a branch; behind the branch one load supplies the address of
+# a second, whose value is the divide's operand in the next iteration.
+SLOW = """
+main:
+    la    a1, cell
+    li    t5, 1
+    li    t2, 5
+    li    t0, {n}
+loop:
+    divu  t3, t2, t5
+    beqz  t3, out
+    ld    t1, 0(a1)
+    ld    t2, 0(t1)
+    addi  t0, t0, -1
+    bnez  t0, loop
+out:
+    li    a0, 0
+    ret
+.data
+.align 6
+cell: .dword cell2
+.align 6
+cell2: .dword 5
+"""
+
+# The loop branch waits for a divide and is always mispredicted (bp=nottaken).
+# Its wrong path begins with {k} loads from lines that the set-up has pushed
+# out of the first-level cache into the second.
+WRONG = """
+main:
+    la    s0, pad
+    li    t3, 4096
+    add   s1, s0, t3
+    add   s2, s1, t3
+    add   s3, s2, t3
+    add   s4, s3, t3
+    li    t2, 13
+    mv    t1, s0
+touch:
+    ld    t4, 0(t1)
+    add   t1, t1, t3
+    addi  t2, t2, -1
+    bnez  t2, touch
+    li    t5, 1
+    li    t0, {n}
+loop:
+    divu  t0, t0, t5
+    addi  t0, t0, -1
+    bnez  t0, loop
+    {loads}
+    {nops}
+    li    a0, 0
+    ret
+.data
+.align 12
+pad: .zero 13 * 4096
+"""
+
+# One load behind a branch that waits for a divide, which in turn waits for
+# the first, cold load, so that nothing older is left to commit when the branch
+# resolves. The run is stopped when the second load has been committed.
+FLOOR = """
+main:
+    la    a1, cell
+    ld    t4, 0(a1)
+    li    t5, 1
+    divu  t3, t4, t5
+    beqz  t3, out
+    ld    t1, 0(a1)
+out:
+    li    a0, 0
+    ret
+.data
+.align 6
+cell: .dword cell
+"""
+
 
 def unit_tests():
-    """Differential timing tests: the cost of one more loop iteration must
-    equal the value derived by hand from the rules of the timing model."""
+    """Timing tests: a cost derived by hand from the rules of the timing model
+    must equal the cost that the simulator reports. Three kinds of cost are
+    used: cycles per additional loop iteration (kind "iter"), the commit time
+    of one instruction with a defense minus the same without (kind "commit"),
+    and cycles per additional context switch with a flush minus the same
+    without (kind "switch")."""
     indep = lambda k: "\n    ".join("addi  a%d, zero, %d" % (i + 1, i) for i in range(k))
     chain = lambda k: "\n    ".join(["addi  t1, t1, 1"] * k)
     loop = lambda body, setup="nop": lambda n: LOOP.format(n=n, body=body, setup=setup)
@@ -181,25 +267,85 @@ def unit_tests():
         ("always-mispredicted branch, depth 6", loop("nop"),
          {"bp": "nottaken", "fdepth": 6}, 10.0, 4000),
     ]
+    tests = [("iter",) + t for t in tests]
+    # --- the page walk: three first-level hits of 4 cycles before the load
+    tests += [
+        ("iter", "load chain over 33 pages, 32-entry TLB", ring(33, 4160), {}, 16.0, 3300),
+        ("iter", "load chain over 32 pages, 32-entry TLB", ring(32, 4160), {}, 4.0, 3200),
+    ]
+    # --- committed-path rules of the speculation defenses
+    slow = lambda n: SLOW.format(n=n)
+    ringb = lambda n: RINGB.format(n=n, p=1024, stride=64)
+    for d, cost in (("none", 2.0), ("dom", 2.0), ("invis-e", 2.0), ("invis-v", 2.0),
+                    ("stt", 25.0), ("nda", 25.0), ("nospec", 29.0)):
+        tests.append(("iter", "two loads behind a slow branch, def=%s" % d, slow,
+                      {"def": d}, cost, 4000))
+    for d, cost in (("none", 14.0), ("dom", 15.0), ("nospec", 15.0)):
+        tests.append(("iter", "second-level load chain feeding a branch, def=%s" % d, ringb,
+                      dict(big, **{"def": d}), cost, 2048))
+    # --- the redirect of the undo scheme: 14 cycles for every four rolled-back fills
+    def wrong(k):
+        loads = "\n    ".join("ld    t2, 0(s%d)" % j for j in range(k))
+        return lambda n: WRONG.format(n=n, loads=loads, nops="\n    ".join(["nop"] * 100))
+    tests += [
+        ("iter", "slow mispredicted branch, 1 wrong-path miss, def=none", wrong(1),
+         {"bp": "nottaken"}, 28.0, 3000),
+        ("iter", "slow mispredicted branch, 1 wrong-path miss, def=undo", wrong(1),
+         {"bp": "nottaken", "def": "undo"}, 42.0, 3000),
+        ("iter", "slow mispredicted branch, 5 wrong-path misses, def=undo", wrong(5),
+         {"bp": "nottaken", "def": "undo"}, 56.0, 3000),
+    ]
+    # --- the commit floor of the validating invisible scheme
+    tests += [
+        ("commit", "commit of a speculative first-level hit, def=invis-v", FLOOR,
+         {"def": "invis-v"}, 3.0, 2),
+        ("commit", "commit of a speculative first-level hit, def=invis-e", FLOOR,
+         {"def": "invis-e"}, 0.0, 2),
+    ]
+    # --- the context switch: 322 cycles for a flush, plus what must be refetched
+    tests += [
+        ("switch", "switch flushing the TLB, register-only loop", loop(indep(2)),
+         {"flush": 4}, 322.0, 3000),
+        ("switch", "switch flushing the first-level data cache, load chain",
+         loop("ld    t1, 0(t1)", "la    t1, cell"), {"flush": 1}, 332.0, 4000),
+        ("switch", "switch flushing the TLB, load chain",
+         loop("ld    t1, 0(t1)", "la    t1, cell"), {"flush": 4}, 334.0, 4000),
+    ]
     rows, ok = [], True
-    for i, (name, gen, opts, expect, n) in enumerate(tests):
-        cycles = []
-        for count in (n, 2 * n):
-            assemble_text("unit", crt() + gen(count))
-            cycles.append(model("unit", **dict(exact, **opts))["cycles"])
-        got = (cycles[1] - cycles[0]) / n
-        good = abs(got - expect) < 0.002 * expect
+    for i, (kind, name, gen, opts, expect, n) in enumerate(tests):
+        if kind == "iter":
+            cycles = []
+            for count in (n, 2 * n):
+                assemble_text("unit", crt() + gen(count))
+                cycles.append(model("unit", **dict(exact, **opts))["cycles"])
+            got = (cycles[1] - cycles[0]) / n
+        elif kind == "commit":           # n = which load to stop at
+            assemble_text("unit", crt() + gen)
+            stop = next(k for k in range(1, 200)
+                        if model("unit", maxinst=k, **exact)["load"] == n)
+            got = (model("unit", maxinst=stop, **dict(exact, **opts))["cycles"]
+                   - model("unit", maxinst=stop, **exact)["cycles"])
+        else:                            # two copies of the loop, 1000 instructions a slice
+            delta, switches = [], []
+            for count in (n, 2 * n):
+                assemble_text("unit", crt() + gen(count))
+                run = lambda **o: model(["unit", "unit"], quantum=1000, **dict(exact, **o))
+                with_flush, without = run(**opts), run()
+                delta.append(with_flush["cycles"] - without["cycles"])
+                switches.append(with_flush["nswitch"])
+            got = (delta[1] - delta[0]) / (switches[1] - switches[0])
+        good = abs(got - expect) <= 0.002 * expect
         ok &= good
-        rows.append([i + 1, name, "%.3f" % expect, "%.3f" % got, "yes" if good else "NO"])
-    write_csv("unit_tests.csv", ["test", "description", "expected_cycles_per_iteration",
-                                 "measured_cycles_per_iteration", "pass"], rows)
+        rows.append([i + 1, kind, name, "%.3f" % expect, "%.3f" % got, "yes" if good else "NO"])
+    write_csv("unit_tests.csv", ["test", "kind", "description", "expected_cycles",
+                                 "measured_cycles", "pass"], rows)
     return ok
 
 
 def invariants():
-    """Properties that must hold exactly if the defence models are coded as
-    specified: a hiding defence leaves no transient fills, a restricting
-    defence executes no dependent transient loads, and so on."""
+    """Properties that must hold exactly if the defense models are coded as
+    specified: a hiding defense leaves no transient fills, a restricting
+    defense executes no dependent transient loads, and so on."""
     rows, ok = [], True
 
     def check(name, value, want):
@@ -215,7 +361,7 @@ def invariants():
         total = sum(model(k, **{"def": d})["wp_dep"] for k in KERNELS)
         check("dependent transient loads executed under %s, all kernels" % d, total, 0)
     base = sum(model(k)["wp_dep"] for k in KERNELS)
-    rows.append(["dependent transient loads executed with no defence", base, "> 0",
+    rows.append(["dependent transient loads executed with no defense", base, "> 0",
                  "yes" if base > 0 else "NO"])
     ok &= base > 0
     pair = ["bsearch", "stream"]
@@ -325,12 +471,12 @@ def exp_window():
                                 "wp_executed", "wp_fills"], rows)
 
 
-def exp_defence():
-    """E5: cost and residual transient footprint of each speculation defence."""
+def exp_defense():
+    """E5: cost and residual transient footprint of each speculation defense."""
     jobs, tags = [], []
     for k in KERNELS:
         for fut in (0, 1):
-            for d in DEFENCES:
+            for d in DEFENSES:
                 jobs.append((k, {"def": d, "fut": fut})); tags.append((k, fut, d))
     res = dict(zip(tags, run_many(jobs)))
     rows = []
@@ -342,7 +488,7 @@ def exp_defence():
                      st["wp_depfill"], st["wp_hidden"], st["undo_lines"],
                      st["l1d_acc"] + st["x_l1"], st["l2_acc"] + st["x_l2"],
                      st["llc_acc"] + st["x_llc"], st["llc_miss"] + st["x_mem"]])
-    write_csv("defence.csv", ["kernel", "model", "defence", "cycles", "slowdown_pct",
+    write_csv("defense.csv", ["kernel", "model", "defense", "cycles", "slowdown_pct",
                               "blocked_loads", "second_accesses", "wp_executed", "wp_loads",
                               "wp_fills", "wp_dependent_loads", "wp_dependent_fills",
                               "wp_hidden_fills", "undo_lines", "l1_accesses", "l2_accesses",
@@ -350,18 +496,18 @@ def exp_defence():
 
 
 def exp_sensitivity():
-    """How the price of a defence moves with the baseline it is measured on."""
+    """How the price of a defense moves with the baseline it is measured on."""
     jobs, tags = [], []
     for name, opts in (("rob", {"rob": r}) for r in (32, 64, 128, 256)):
-        for d in DEFENCES:
+        for d in DEFENSES:
             for k in KERNELS:
                 jobs.append((k, dict(opts, **{"def": d}))); tags.append(("rob", opts["rob"], d, k))
     for width in (2, 4, 8):
-        for d in DEFENCES:
+        for d in DEFENSES:
             for k in KERNELS:
                 jobs.append((k, {"width": width, "def": d})); tags.append(("width", width, d, k))
     for l1 in (2, 4, 6):
-        for d in DEFENCES:
+        for d in DEFENSES:
             for k in KERNELS:
                 jobs.append((k, {"l1": l1, "def": d})); tags.append(("l1_latency", l1, d, k))
     res = dict(zip(tags, run_many(jobs)))
@@ -369,14 +515,14 @@ def exp_sensitivity():
     for what, value in sorted({(t[0], t[1]) for t in tags}):
         base_ipc = [res[(what, value, "none", k)]["inst"] / res[(what, value, "none", k)]["cycles"]
                     for k in KERNELS]
-        for d in DEFENCES[1:]:
+        for d in DEFENSES[1:]:
             ratios = [res[(what, value, d, k)]["cycles"] / res[(what, value, "none", k)]["cycles"]
                       for k in KERNELS]
             geo = math.exp(sum(math.log(r) for r in ratios) / len(ratios))
             rows.append([what, value, d, "%.3f" % (100 * (geo - 1)),
                          "%.3f" % (100 * (max(ratios) - 1)),
                          "%.3f" % math.exp(sum(math.log(i) for i in base_ipc) / len(base_ipc))])
-    write_csv("sensitivity.csv", ["parameter", "value", "defence", "geomean_slowdown_pct",
+    write_csv("sensitivity.csv", ["parameter", "value", "defense", "geomean_slowdown_pct",
                                   "worst_slowdown_pct", "baseline_geomean_ipc"], rows)
 
 
@@ -433,7 +579,7 @@ def exp_seeds():
     res = dict(zip(tags, run_many(jobs)))
     rows = [[k, seed, d, st["cycles"], pct(st["cycles"], res[(k, seed, "none")]["cycles"]),
              st["llc_miss"]] for (k, seed, d), st in res.items()]
-    write_csv("seeds.csv", ["kernel", "seed", "defence", "cycles", "slowdown_pct",
+    write_csv("seeds.csv", ["kernel", "seed", "defense", "cycles", "slowdown_pct",
                             "memory_accesses"], rows)
 
 
@@ -457,7 +603,9 @@ def exp_random():
 
 
 def exp_composition():
-    """E7: do the costs of two defences add when both are switched on?"""
+    """E7: do the costs of two defenses add when both are switched on? Every
+    combination is run for five page-frame layouts; the means are reported
+    together with the spread of the excess over the product."""
     combos = [("flush + colouring", {"flush": 15, "color": 1}, "stt", {"def": "stt"}),
               ("flush + colouring", {"flush": 15, "color": 1}, "dom", {"def": "dom"}),
               ("way partitioning", {"part": 1, "isolbp": 1}, "stt", {"def": "stt"}),
@@ -467,21 +615,27 @@ def exp_composition():
     for pair in PAIRS:
         for na, oa, nb, ob in combos:
             for label, opts in (("none", {}), ("a", oa), ("b", ob), ("ab", dict(oa, **ob))):
-                jobs.append((list(pair), dict(opts, quantum=100000)))
-                tags.append((pair, na, nb, label))
+                for seed in SEEDS:
+                    jobs.append((list(pair), dict(opts, quantum=100000, seed=seed)))
+                    tags.append((pair, na, nb, label, seed))
     res = dict(zip(tags, run_many(jobs)))
+    mean = lambda xs: sum(xs) / len(xs)
     rows = []
     for pair in PAIRS:
         for na, _, nb, _ in combos:
-            c = {l: res[(pair, na, nb, l)]["cycles"] for l in ("none", "a", "b", "ab")}
-            sa, sb, sab = (c[l] / c["none"] - 1 for l in ("a", "b", "ab"))
-            rows.append(["+".join(pair), na, nb, "%.3f" % (100 * sa), "%.3f" % (100 * sb),
-                         "%.3f" % (100 * sab), "%.3f" % (100 * (sa + sb)),
-                         "%.3f" % (100 * ((1 + sa) * (1 + sb) - 1)),
-                         "%.3f" % (100 * (sab - (sa + sb)))])
-    write_csv("composition.csv", ["pair", "isolation", "speculation_defence", "s_a_pct",
-                                  "s_b_pct", "s_ab_pct", "additive_pct", "multiplicative_pct",
-                                  "interaction_pct"], rows)
+            sa, sb, sab, prod, excess = [], [], [], [], []
+            for seed in SEEDS:
+                c = {l: res[(pair, na, nb, l, seed)]["cycles"] for l in ("none", "a", "b", "ab")}
+                a, b, ab = (100 * (c[l] / c["none"] - 1) for l in ("a", "b", "ab"))
+                p = 100 * ((1 + a / 100) * (1 + b / 100) - 1)
+                sa.append(a); sb.append(b); sab.append(ab); prod.append(p); excess.append(ab - p)
+            rows.append(["+".join(pair), na, nb, "%.3f" % mean(sa), "%.3f" % mean(sb),
+                         "%.3f" % mean(sab), "%.3f" % mean(prod), "%.3f" % mean(excess),
+                         "%.3f" % min(excess), "%.3f" % max(excess),
+                         "%.3f" % (mean(sab) - mean(sa) - mean(sb))])
+    write_csv("composition.csv", ["pair", "isolation", "speculation_defense", "s_a_pct",
+                                  "s_b_pct", "s_ab_pct", "product_pct", "excess_pct",
+                                  "excess_min_pct", "excess_max_pct", "excess_over_sum_pct"], rows)
 
 
 def manifest():
@@ -514,7 +668,7 @@ def main():
     exp_baseline()
     exp_cache()
     exp_window()
-    exp_defence()
+    exp_defense()
     exp_sensitivity()
     exp_domains()
     exp_seeds()

@@ -8,7 +8,7 @@ status: not-started
 # E6: Area and frequency
 
 **Answers:** RQ5
-**What it does:** Post-synthesis area and Fmax impact for the RTL-implemented defence.
+**What it does:** Post-synthesis area and Fmax impact for the RTL-implemented defense.
 **Why it matters:** Makes Table 10.1 numeric.
 
 ## Setup
@@ -24,7 +24,7 @@ status: not-started
 ## Threats to validity
 - Simulated timing is not silicon timing: trends and relative costs only.
 - Microbenchmarks written to exercise a channel flatter the attack.
-- A self-implemented defence may be less optimised than its authors' version.
+- A self-implemented defense may be less optimised than its authors' version.
 
 ## Results
 _(paste raw numbers here; the paper gets the cleaned version)_

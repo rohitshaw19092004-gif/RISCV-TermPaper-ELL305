@@ -23,8 +23,8 @@ tags: [chapter, status/drafted]
 
 
 ## Figures and tables in this chapter
-- Indicative cost by defence class
-- Storage and logic overheads by defence class
+- Indicative cost by defense class
+- Storage and logic overheads by defense class
 - Cost versus breadth of guarantee
 
 ## To write for v0.2 / v0.3

@@ -4,7 +4,7 @@ title: "CHERI: A Hybrid Capability-System Architecture for Scalable Software Com
 year: 2015
 venue: "IEEE Symposium on Security and Privacy (S&P)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2015 · **Venue:** IEEE Symposium on Security and Privacy (S&P)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > A more radical containment approach replaces pointers with hardware capabilities: CHERI [[@watson2015cheri]] enforces bounds and permissions in the hardware itself, which bounds what a transient access can reach even when the speculation cannot be prevented.

@@ -4,7 +4,7 @@ title: "MIRAGE: Mitigating Conflict-Based Cache Attacks with a Practical Fully-A
 year: 2021
 venue: "USENIX Security Symposium"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2021 · **Venue:** USENIX Security Symposium
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Mirage [[@saileshwar2021mirage]] takes a different route, using a pointer-based indirection to emulate full associativity so that conflict-based eviction becomes statistically negligible rather than merely obscured.

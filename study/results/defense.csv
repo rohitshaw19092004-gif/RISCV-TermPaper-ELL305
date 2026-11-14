@@ -1,4 +1,4 @@
-kernel,model,defence,cycles,slowdown_pct,blocked_loads,second_accesses,wp_executed,wp_loads,wp_fills,wp_dependent_loads,wp_dependent_fills,wp_hidden_fills,undo_lines,l1_accesses,l2_accesses,llc_accesses,memory_accesses
+kernel,model,defense,cycles,slowdown_pct,blocked_loads,second_accesses,wp_executed,wp_loads,wp_fills,wp_dependent_loads,wp_dependent_fills,wp_hidden_fills,undo_lines,l1_accesses,l2_accesses,llc_accesses,memory_accesses
 matmul,spectre,none,605057,0.000,0,0,8705,8193,56,0,0,0,0,548904,1236,779,779
 matmul,spectre,nospec,605062,0.001,520134,0,512,0,0,0,0,0,0,540708,1219,778,778
 matmul,spectre,dom,605062,0.001,383,0,3071,2559,0,0,0,0,0,543267,1219,778,778

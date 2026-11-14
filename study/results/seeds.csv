@@ -1,4 +1,4 @@
-kernel,seed,defence,cycles,slowdown_pct,memory_accesses
+kernel,seed,defense,cycles,slowdown_pct,memory_accesses
 matmul,1,none,605057,0.000,779
 matmul,1,dom,605062,0.001,778
 matmul,1,stt,605057,0.000,779

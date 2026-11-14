@@ -6,7 +6,7 @@
  * unmodified on QEMU). The timing part assigns every dynamic instruction a
  * fetch, dispatch, issue, completion and commit time using a reorder-buffer
  * window model, a three-level cache hierarchy, a TLB and branch predictors.
- * Defences are modelled as changes to those rules. Wrong-path (transient)
+ * Defenses are modelled as changes to those rules. Wrong-path (transient)
  * execution after a misprediction is simulated explicitly so that its effect
  * on cache state can be counted.
  *
@@ -44,7 +44,7 @@ static struct {
     int l1sets, l1ways, l2sets, l2ways, llcsets, llcways, tlbn;
     int repl;                                /* 0 = LRU, 1 = random          */
     int bp, bpbits, btbn, rasn, isolbp;      /* predictors                   */
-    int def, fut;                            /* speculation defence, VP model */
+    int def, fut;                            /* speculation defense, VP model */
     int part, color, flush, flushcost;       /* isolation between domains    */
     int frames;                              /* 1 = scattered page frames    */
     int rnd, rndlat, remap;                  /* randomised LLC index         */

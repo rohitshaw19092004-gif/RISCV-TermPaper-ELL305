@@ -4,7 +4,7 @@ title: "CleanupSpec: An ``Undo'' Approach to Safe Speculation"
 year: 2019
 venue: "IEEE/ACM International Symposium on Microarchitecture (MICRO)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -18,7 +18,7 @@ status: to-read
 
 ## Where the paper uses this
 - [[Ch05 Pipelining and Speculation]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > CleanupSpec [[@saileshwar2019cleanupspec]] & Undo & Lower than hiding on average & Covers cache traces via rollback.

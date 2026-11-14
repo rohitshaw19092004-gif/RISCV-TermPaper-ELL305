@@ -4,7 +4,7 @@ title: "SafeSpec: Banishing the Spectre of a Meltdown with Leakage-Free Speculat
 year: 2019
 venue: "ACM/IEEE Design Automation Conference (DAC)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2019 · **Venue:** ACM/IEEE Design Automation Conference (DAC)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > SafeSpec [[@khasawneh2019safespec]] uses shadow structures with the same intent.

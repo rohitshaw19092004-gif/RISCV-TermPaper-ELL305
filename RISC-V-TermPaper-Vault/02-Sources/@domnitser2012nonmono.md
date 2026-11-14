@@ -4,7 +4,7 @@ title: "Non-Monopolizable Caches: Low-Complexity Mitigation of Cache Side Channe
 year: 2012
 venue: "ACM Transactions on Architecture and Code Optimization (TACO)"
 type: article
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2012 · **Venue:** ACM Transactions on Architecture and Code Optimization (TACO)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > The idea is older than the modern designs: Wang and Lee's partition-locked and random-permutation caches [[@wang2007newcache]] proposed both locking lines against eviction and randomising the address-to-set mapping, and non-monopolisable caches [[@domnitser2012nonmono]] showed that merely preventing one thread from occupying a whole set already raises the attacker's cost substantially, at very low hardware complexity.

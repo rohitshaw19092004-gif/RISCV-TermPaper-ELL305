@@ -8,8 +8,8 @@ status: not-started
 # E7: Composition
 
 **Answers:** RQ4, RQ5
-**What it does:** Apply two defences from different taxonomy branches together; test whether costs add and coverage composes.
-**Why it matters:** Highest value, highest risk. The literature evaluates defences singly.
+**What it does:** Apply two defenses from different taxonomy branches together; test whether costs add and coverage composes.
+**Why it matters:** Highest value, highest risk. The literature evaluates defenses singly.
 
 ## Setup
 - Core(s):
@@ -24,7 +24,7 @@ status: not-started
 ## Threats to validity
 - Simulated timing is not silicon timing: trends and relative costs only.
 - Microbenchmarks written to exercise a channel flatter the attack.
-- A self-implemented defence may be less optimised than its authors' version.
+- A self-implemented defense may be less optimised than its authors' version.
 
 ## Results
 _(paste raw numbers here; the paper gets the cleaned version)_

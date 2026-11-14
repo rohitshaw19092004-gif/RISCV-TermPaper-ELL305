@@ -5,10 +5,10 @@ tags: [experiment, status/not-started]
 status: not-started
 ---
 
-# E5: Defence cost
+# E5: Defense cost
 
 **Answers:** RQ5
-**What it does:** One defence per taxonomy class, configured or implemented on the same platform, same workloads.
+**What it does:** One defense per taxonomy class, configured or implemented on the same platform, same workloads.
 **Why it matters:** Replaces Figure 10.1 and Figure 10.2 with measurements on one baseline.
 
 ## Setup
@@ -24,7 +24,7 @@ status: not-started
 ## Threats to validity
 - Simulated timing is not silicon timing: trends and relative costs only.
 - Microbenchmarks written to exercise a channel flatter the attack.
-- A self-implemented defence may be less optimised than its authors' version.
+- A self-implemented defense may be less optimised than its authors' version.
 
 ## Results
 _(paste raw numbers here; the paper gets the cleaned version)_

@@ -20,7 +20,7 @@ status: to-read
 - [[Ch01 Introduction and Scope]]
 - [[Ch02 Contract and Machine]]
 - [[Ch03 Memory Arrays]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Zkt & An architectural promise that a listed set of instructions executes in time independent of their data operands [[@riscv-crypto]].

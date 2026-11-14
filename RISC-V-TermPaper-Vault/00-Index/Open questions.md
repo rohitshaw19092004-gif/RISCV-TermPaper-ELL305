@@ -17,13 +17,13 @@ tags: [moc]
   2022MT61988, ELL 305, Computer Architecture, Prof. Subrat Kar, and the GitHub
   link are recorded in the LaTeX title page and vault home.
 - **Title spelling.** The title keeps American *"Defenses"* to match the course
-  form entry; the body keeps British *"defences"* throughout. This is a
+  form entry; the body keeps British *"defenses"* throughout. This is a
   deliberate mismatch, not an oversight. See [[Correction pass v0.1]]. Only
   change it if the form entry changes too.
 - **Illustrative figures stay labelled.** `fig:hierarchy`, `fig:histogram`,
   `fig:overheads` and `fig:pareto` are synthesised, not measured, and every one
   of them says so in its own caption. They stay that way until
-  [[E1 Latency characterisation]] and [[E5 Defence cost]] produce real numbers.
+  [[E1 Latency characterisation]] and [[E5 Defense cost]] produce real numbers.
   The alternative, an authoritative-looking chart mixing incomparable numbers,
   is the failure mode Chapter 10 is written against.
 

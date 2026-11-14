@@ -4,7 +4,7 @@ title: "Sanctum: Minimal Hardware Extensions for Strong Software Isolation"
 year: 2016
 venue: "USENIX Security Symposium"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -18,7 +18,7 @@ status: to-read
 
 ## Where the paper uses this
 - [[Ch01 Introduction and Scope]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Physical memory protection (PMP), enclave frameworks such as Sanctum [[@costan2016sanctum]], MI6 [[@bourgeat2019mi6]] and Keystone [[@lee2020keystone]], control-flow integrity via landing pads and shadow stacks [[@riscv-cfi]], and proposals for temporal partitioning are live design questions.

@@ -72,14 +72,14 @@ fix everything found, rebuild, and leave the repository submission-ready.
 
 ## Deliberately NOT changed
 
-- **Title keeps American "Defenses"** while the body keeps British "defences".
+- **Title keeps American "Defenses"** while the body keeps British "defenses".
   The title must match what was registered on the course form. Do not "fix" this
   without changing the form entry too.
 - **`tikz-timing` instead of WaveDrom.** Still the right call, still documented
   in Appendix B and in [[Open questions]] as a justified deviation.
 - **Illustrative figures stay illustrative.** `fig:hierarchy`, `fig:histogram`,
   `fig:overheads`, `fig:pareto` are labelled as not-measured and stay that way
-  until [[E1 Latency characterisation]] and [[E5 Defence cost]] land.
+  until [[E1 Latency characterisation]] and [[E5 Defense cost]] land.
 
 ## Second pass, same day
 

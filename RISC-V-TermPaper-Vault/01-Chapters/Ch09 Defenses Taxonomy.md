@@ -1,12 +1,12 @@
 ---
-chapter: "Defences: A Taxonomy with Residual Risk"
+chapter: "Defenses: A Taxonomy with Residual Risk"
 latex-label: ch:defenses
 words-v0.1: 1600
 words-target: 5000
 tags: [chapter, status/drafted]
 ---
 
-# Defences: A Taxonomy with Residual Risk
+# Defenses: A Taxonomy with Residual Risk
 
 > [!info] Textbook anchor
 > (no direct textbook counterpart; see the chapter itself)
@@ -25,12 +25,12 @@ tags: [chapter, status/drafted]
 
 
 ## Figures and tables in this chapter
-- Defence taxonomy
-- Comparison of defence mechanisms
+- Defense taxonomy
+- Comparison of defense mechanisms
 
 ## To write for v0.2 / v0.3
 - [ ] For v0.2: (a) replace the qualitative "reported cost" column with numeric values and, for each, the benchmark suite and baseline configuration used, so that the incomparability is documented rather than merely asserted;
-- [ ] (b) add a coverage matrix of defence attack-phase (`fig:anatomy`) showing which combinations compose; and (c) add a paragraph on formal verification of these mechanisms and on automated exploit synthesis (CheckMate [[@trippel2018checkmate]]) and cache-vulnerability benchmarking [[@deng2020benchmark]]. Target: +7 pages.
+- [ ] (b) add a coverage matrix of defense attack-phase (`fig:anatomy`) showing which combinations compose; and (c) add a paragraph on formal verification of these mechanisms and on automated exploit synthesis (CheckMate [[@trippel2018checkmate]]) and cache-vulnerability benchmarking [[@deng2020benchmark]]. Target: +7 pages.
 
 ## Sources cited here
 - [[@ainsworth2020muontrap]]

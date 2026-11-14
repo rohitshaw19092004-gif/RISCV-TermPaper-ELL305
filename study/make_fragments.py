@@ -48,7 +48,7 @@ def num(n):
 
 
 def tt(name):
-    return "\\texttt{%s}" % name
+    return "\\tcode{%s}" % name
 
 
 def geo(ratios):
@@ -90,12 +90,31 @@ def validation():
     macro("val.instructions", num(sum(int(x["instructions"]) for x in r)))
     macro("val.instructions.m", "%.1f" % (sum(int(x["instructions"]) for x in r) / 1e6))
     u = rows("unit_tests.csv")
-    body = [[x["test"], x["description"], "%.1f" % float(x["expected_cycles_per_iteration"]),
-             "%.3f" % float(x["measured_cycles_per_iteration"]), x["pass"]] for x in u]
-    emit("tab_unit", tabular("@{}rlrrc@{}",
-         ["\\textbf{\\#}", "\\textbf{Loop body under test}", "\\textbf{Derived}",
-          "\\textbf{Measured}", "\\textbf{Equal}"], body))
+    unit = {"iter": "per iteration", "commit": "at commit", "switch": "per switch"}
+    short = (("second-level load chain feeding a branch", "L2 load chain and branch"),
+             ("slow mispredicted branch", "slow mispredict"),
+             ("commit of a speculative first-level hit", "speculative first-level hit"),
+             ("switch flushing the first-level data cache", "flush of L1D"),
+             ("switch flushing the TLB", "flush of TLB"))
+    def named(t):
+        for a, b in short:
+            t = t.replace(a, b)
+        return re.sub(r"def=([a-z-]+)", lambda m: "no defense" if m.group(1) == "none"
+                      else DEFNAME[m.group(1)], t)
+    body = [[x["test"], named(x["description"]), unit[x["kind"]],
+             "%.1f" % float(x["expected_cycles"]), "%.3f" % float(x["measured_cycles"]),
+             x["pass"]] for x in u]
+    group = lambda x: (x["kind"] if x["kind"] != "iter" else "core" if int(x["test"]) <= 15
+                       else "walk" if "pages" in x["description"]
+                       else "undo" if "wrong-path" in x["description"] else "defense")
+    groups = [i for i in range(1, len(u)) if group(u[i]) != group(u[i - 1])]
+    emit("tab_unit", tabular("@{}rllrrc@{}",
+         ["\\textbf{\\#}", "\\textbf{Program under test}", "\\textbf{Cycles}",
+          "\\textbf{Derived}", "\\textbf{Measured}", "\\textbf{Equal}"], body,
+         rules=tuple(groups)))
     macro("val.unit", len(u))
+    macro("val.unit.core", sum(1 for x in u if int(x["test"]) <= 15))
+    macro("val.unit.new", sum(1 for x in u if int(x["test"]) > 15))
     inv = rows("invariants.csv")
     body = [[x["property"].capitalize(), num(x["measured"]), x["required"], x["holds"]] for x in inv]
     emit("tab_invariants", "\\begin{tabularx}{\\linewidth}{@{}Xrrc@{}}\n\\toprule\n"
@@ -133,7 +152,8 @@ def baseline():
     plot = ["\\begin{tikzpicture}", "\\begin{axis}[xbar stacked, width=0.80\\linewidth, height=7.4cm,",
             "  bar width=7pt, xmin=0, xmax=100, enlarge y limits=0.07,",
             "  symbolic y coords={%s}, ytick=data," % ",".join(reversed(KERNELS)),
-            "  yticklabel style={font=\\scriptsize\\ttfamily}, xticklabel style={font=\\scriptsize},",
+            "  yticklabels={%s}," % ",".join(tt(k) for k in reversed(KERNELS)) +
+            " yticklabel style={font=\\scriptsize}, xticklabel style={font=\\scriptsize},",
             "  xlabel={share of loads served at each level (\\%)}, label style={font=\\small},",
             "  legend style={font=\\scriptsize, draw=black!25, at={(0.5,1.03)}, anchor=south,",
             "    legend columns=4}, xmajorgrids, grid style={draw=black!12}]"]
@@ -163,7 +183,7 @@ def cache_sweep():
             pts = " ".join("(%d,%.4f)" % (v, max(0.05, float(x["l1d_miss_pct"]))) for v, x in get(k, param))
             plot.append("\\addplot+[mark=%s, mark size=1.5pt, thick] coordinates {%s};" % (m, pts))
             if param == "l1_ways":
-                plot.append("\\addlegendentry{\\texttt{%s}}" % k)
+                plot.append("\\addlegendentry{\\tcode{%s}}" % k)
     plot += ["\\end{groupplot}", "\\end{tikzpicture}"]
     emit("fig_l1sweep", "\n".join(plot))
     # last-level capacity: execution time relative to the 2 MiB configuration
@@ -179,7 +199,7 @@ def cache_sweep():
         ref = int(pts[2048]["cycles"])
         plot.append("\\addplot+[mark=%s, mark size=1.5pt, thick] coordinates {%s};" % (
             m, " ".join("(%d,%.4f)" % (v, int(pts[v]["cycles"]) / ref) for v in sorted(pts))))
-        plot.append("\\addlegendentry{\\texttt{%s}}" % k)
+        plot.append("\\addlegendentry{\\tcode{%s}}" % k)
         macro("llc.half.%s" % k, "%.1f" % (100 * (int(pts[1024]["cycles"]) / ref - 1)))
         macro("llc.quarter.%s" % k, "%.1f" % (100 * (int(pts[512]["cycles"]) / ref - 1)))
     plot += ["\\end{axis}", "\\end{tikzpicture}"]
@@ -230,7 +250,7 @@ def predictor_window():
             pts = " ".join("(%d,%.3f)" % (rob, float(get[(k, rob)][field])) for rob in (16, 32, 64, 128, 256))
             plot.append("\\addplot+[mark=%s, mark size=1.5pt, thick] coordinates {%s};" % (m, pts))
             if legend:
-                plot.append("\\addlegendentry{\\texttt{%s}}" % k)
+                plot.append("\\addlegendentry{\\tcode{%s}}" % k)
     plot += ["\\end{groupplot}", "\\end{tikzpicture}"]
     emit("fig_window", "\n".join(plot))
     body = []
@@ -276,10 +296,10 @@ def longtable(spec, header, body, group=0):
     return "\n".join(lines)
 
 
-# -------------------------------------------------------------------- defences
-def defences():
-    r = rows("defence.csv")
-    get = {(x["kernel"], x["model"], x["defence"]): x for x in r}
+# -------------------------------------------------------------------- defenses
+def defenses():
+    r = rows("defense.csv")
+    get = {(x["kernel"], x["model"], x["defense"]): x for x in r}
     for model in ("spectre", "futuristic"):
         body = []
         for k in KERNELS:
@@ -335,11 +355,15 @@ def defences():
     plot = ["\\begin{tikzpicture}", "\\begin{axis}[width=0.80\\linewidth, height=6.6cm,",
             "  xlabel={geometric-mean slowdown, Spectre model (\\%)},",
             "  ylabel={transient fills left in the cache (\\% of undefended)},",
-            "  xmin=-2, xmax=21, ymin=-8, ymax=118, tick label style={font=\\scriptsize},",
+            "  xmin=-4, xmax=21, ymin=-14, ymax=120, tick label style={font=\\scriptsize},",
             "  label style={font=\\small}, xmajorgrids, ymajorgrids, grid style={draw=black!12}]"]
     base = total["none"]["wp_fills"]
-    anchors = {"none": "south west", "nospec": "south east", "dom": "south west", "invis-e": "north west",
-               "invis-v": "south west", "stt": "south west", "nda": "north west", "undo": "south west"}
+    # label positions chosen so that the two clusters of points stay legible
+    anchors = {"none": "north east, xshift=-2pt, yshift=-2pt", "nospec": "south east",
+               "dom": "south west", "invis-e": "north, yshift=-3pt", "invis-v": "north, yshift=-3pt",
+               "stt": "south, xshift=-3pt, yshift=3pt", "nda": "west, xshift=4pt",
+               "undo": "south west, xshift=1pt, yshift=1pt"}
+    seen = {}
     for d in ["none"] + DEFS:
         x = 0.0 if d == "none" else float(MACROS["geo.spectre.%s" % d])
         y = 100.0 * total[d]["wp_fills"] / base
@@ -348,8 +372,13 @@ def defences():
         colour = "attack" if d == "none" else ("defense" if total[d]["wp_dependent_loads"] == 0 else "accent")
         plot.append("\\addplot[only marks, mark=%s, mark size=2.3pt, draw=%s, fill=%s] coordinates {(%.2f,%.2f)};"
                     % (mark, colour, colour, x, y))
+        name = "no defense" if d == "none" else DEFNAME[d]
+        if (x, y) in seen:                       # coincident points share one label
+            plot[seen[(x, y)]] = plot[seen[(x, y)]].replace("};", ", %s};" % name)
+            continue
+        seen[(x, y)] = len(plot)
         plot.append("\\node[font=\\tiny, anchor=%s] at (axis cs:%.2f,%.2f) {%s};"
-                    % (anchors[d], x, y, "no defence" if d == "none" else DEFNAME[d]))
+                    % (anchors[d], x, y, name))
     plot += ["\\end{axis}", "\\end{tikzpicture}"]
     emit("fig_pareto", "\n".join(plot))
     # memory-hierarchy traffic relative to the undefended machine
@@ -363,13 +392,13 @@ def defences():
             macro("traffic.%s.%s" % (d, f), "%+.1f" % (100.0 * (new / old - 1)))
         body.append(row)
     emit("tab_traffic", tabular("@{}lrrrrr@{}",
-         ["\\textbf{Defence}", "\\textbf{L1 accesses}", "\\textbf{L2 accesses}", "\\textbf{LLC accesses}",
+         ["\\textbf{Defense}", "\\textbf{L1 accesses}", "\\textbf{L2 accesses}", "\\textbf{LLC accesses}",
           "\\textbf{Memory accesses}", "\\textbf{Total cycles}"], body))
 
 
 def sensitivity():
     r = rows("sensitivity.csv")
-    get = {(x["parameter"], int(x["value"]), x["defence"]): x for x in r}
+    get = {(x["parameter"], int(x["value"]), x["defense"]): x for x in r}
     body, rules, i = [], [], 0
     for param, label, values in (("width", "Width", (2, 4, 8)), ("rob", "ROB entries", (32, 64, 128, 256)),
                                  ("l1_latency", "L1 latency", (2, 4, 6))):
@@ -395,7 +424,7 @@ def sensitivity():
             ("width", "pipeline width (instructions per cycle)", (2, 4, 8),
              "xmode=log, log basis x=2, xtick={2,4,8}, xticklabels={2,4,8}, ylabel={geometric-mean slowdown (\\%)}"),
             ("rob", "reorder-buffer entries", (32, 64, 128, 256),
-             "xmode=log, log basis x=2, xtick={32,64,128,256}, xticklabels={32,64,128,256}, legend pos=north west")):
+             "xmode=log, log basis x=2, xtick={32,64,128,256}, xticklabels={32,64,128,256}, legend style={at={(0.97,0.62)}, anchor=east}")):
         plot.append("\\nextgroupplot[%s, xlabel={%s}]" % (extra, xlabel))
         for d, m in zip(shown, marks):
             pts = " ".join("(%d,%.3f)" % (v, float(get[(param, v, d)]["geomean_slowdown_pct"])) for v in values)
@@ -413,7 +442,7 @@ def isolation():
     quanta = (10000, 30000, 100000, 300000)
     sel = lambda p, q, i: [x for x in r if x["pair"] == p and int(x["quantum"]) == q and x["isolation"] == i]
     stat = lambda xs, f: [float(x[f]) for x in xs]
-    pname = lambda p: "\\texttt{%s}" % p.replace("+", " + ")
+    pname = lambda p: "\\tcode{%s}" % p.replace("+", " + ")
     body = []
     for p in pairs:
         row = [pname(p)]
@@ -448,7 +477,7 @@ def isolation():
         pts = " ".join("(%d,%.1f)" % (q, statistics.mean(stat(sel(p, q, ISO[0]), "extra_cycles_per_switch")))
                        for q in quanta)
         plot.append("\\addplot+[mark=%s, mark size=1.5pt, thick] coordinates {%s};" % (m, pts))
-        plot.append("\\addlegendentry{\\texttt{%s}}" % p)
+        plot.append("\\addlegendentry{\\tcode{%s}}" % p)
     plot += ["\\end{groupplot}", "\\end{tikzpicture}"]
     emit("fig_flushq", "\n".join(plot))
     per = [statistics.mean(stat(sel(p, q, ISO[0]), "extra_cycles_per_switch")) for p in pairs for q in quanta]
@@ -495,12 +524,12 @@ def isolation():
     s = rows("seeds.csv")
     body = []
     for k in KERNELS:
-        c = [int(x["cycles"]) for x in s if x["kernel"] == k and x["defence"] == "none"]
-        d = [float(x["slowdown_pct"]) for x in s if x["kernel"] == k and x["defence"] == "dom"]
-        t = [float(x["slowdown_pct"]) for x in s if x["kernel"] == k and x["defence"] == "stt"]
+        c = [int(x["cycles"]) for x in s if x["kernel"] == k and x["defense"] == "none"]
+        d = [float(x["slowdown_pct"]) for x in s if x["kernel"] == k and x["defense"] == "dom"]
+        t = [float(x["slowdown_pct"]) for x in s if x["kernel"] == k and x["defense"] == "stt"]
         spread = 100.0 * (max(c) - min(c)) / statistics.mean(c)
         body.append([tt(k), num(min(c)), num(max(c)), "%.2f" % spread,
-                     "%.1f--%.1f" % (min(d), max(d)), "%.1f--%.1f" % (min(t), max(t))])
+                     "%.1f to %.1f" % (min(d), max(d)), "%.1f to %.1f" % (min(t), max(t))])
         macro("seed.spread.%s" % k, "%.1f" % spread)
     emit("tab_seeds", tabular("@{}lrrrrr@{}",
          ["\\textbf{Kernel}", "\\textbf{Fewest cycles}", "\\textbf{Most cycles}", "\\textbf{Spread (\\%)}",
@@ -534,18 +563,25 @@ def composition():
     r = rows("composition.csv")
     body, inter = [], []
     for x in r:
-        body.append(["\\texttt{%s}" % x["pair"].replace("+", " + "), ISONAME[x["isolation"]],
-                     DEFNAME[x["speculation_defence"]], "%.1f" % float(x["s_a_pct"]),
+        lo, hi = float(x["excess_min_pct"]), float(x["excess_max_pct"])
+        body.append(["\\tcode{%s}" % x["pair"].replace("+", " + "), ISONAME[x["isolation"]],
+                     DEFNAME[x["speculation_defense"]], "%.1f" % float(x["s_a_pct"]),
                      "%.1f" % float(x["s_b_pct"]), "%.1f" % float(x["s_ab_pct"]),
-                     "%.1f" % float(x["multiplicative_pct"]),
-                     "%+.1f" % (float(x["s_ab_pct"]) - float(x["multiplicative_pct"]))])
-        inter.append(float(x["s_ab_pct"]) - float(x["multiplicative_pct"]))
-    emit("tab_composition", tabular("@{}lllrrrrr@{}",
+                     "%.1f" % float(x["product_pct"]), "%+.1f" % float(x["excess_pct"]),
+                     "$%+.1f$ to $%+.1f$" % (lo, hi)])
+        inter.append(float(x["excess_pct"]))
+    emit("tab_composition", tabular("@{}lllrrrrrr@{}",
          ["\\textbf{Pair}", "\\textbf{A}", "\\textbf{B}", "$S_A$", "$S_B$", "$S_{AB}$",
-          "\\textbf{Product}", "\\textbf{Excess}"], body, rules=(5, 10, 15, 20)))
+          "\\textbf{Product}", "\\textbf{Excess}", "\\textbf{over layouts}"], body,
+         rules=(5, 10, 15, 20)))
+    over = [x for x in r if abs(float(x["excess_pct"])) > 1.0]
     macro("comp.n", len(r))
     macro("comp.maxabs", "%.1f" % max(abs(v) for v in inter))
     macro("comp.within1", sum(1 for v in inter if abs(v) <= 1.0))
+    macro("comp.withinsum1", sum(1 for x in r if abs(float(x["excess_over_sum_pct"])) <= 1.0))
+    macro("comp.over1", len(over))
+    macro("comp.stable", sum(1 for x in over
+                             if float(x["excess_min_pct"]) * float(x["excess_max_pct"]) > 0))
     macro("comp.max", "%+.1f" % max(inter))
     macro("comp.min", "%+.1f" % min(inter))
 
@@ -612,7 +648,7 @@ def main():
     baseline()
     cache_sweep()
     predictor_window()
-    defences()
+    defenses()
     sensitivity()
     isolation()
     randomised()

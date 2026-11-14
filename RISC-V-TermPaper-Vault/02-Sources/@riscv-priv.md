@@ -21,7 +21,7 @@ status: to-read
 - [[Ch02 Contract and Machine]]
 - [[Ch05 Pipelining and Speculation]]
 - [[Ch06 Memory System as Attack Surface]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > RISC-V separates a small base integer ISA from optional extensions [[@riscv-unpriv]], and separates the unprivileged ISA from the privileged architecture [[@riscv-priv]].

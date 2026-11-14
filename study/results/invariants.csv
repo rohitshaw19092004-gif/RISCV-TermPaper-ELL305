@@ -7,7 +7,7 @@ property,measured,required,holds
 "dependent transient loads executed under nospec, all kernels",0,0,yes
 "dependent transient loads executed under stt, all kernels",0,0,yes
 "dependent transient loads executed under nda, all kernels",0,0,yes
-dependent transient loads executed with no defence,7221,> 0,yes
+dependent transient loads executed with no defense,7221,> 0,yes
 "cross-domain evictions, way partitioning (all levels + TLB)",0,0,yes
 "predictions made from the other domain's entries, partitioned predictors",0,0,yes
 "cross-domain evictions in L2 and LLC, page colouring",0,0,yes

@@ -5,7 +5,7 @@ tags: [moc]
 # Reading queue
 
 Ordered by where the paper needs depth first: Chapter 6 (memory system) and
-Chapter 9 (defences) are the two chapters with the largest word gaps, so their
+Chapter 9 (defenses) are the two chapters with the largest word gaps, so their
 sources are read first.
 
 ## Priority: cited in Ch. 6, 9, 8, 10

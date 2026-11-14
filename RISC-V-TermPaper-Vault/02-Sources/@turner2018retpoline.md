@@ -4,7 +4,7 @@ title: "Retpoline: A Software Construct for Preventing Branch-Target-Injection"
 year: 2018
 venue: "Google technical whitepaper"
 type: misc
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2018 · **Venue:** Google technical whitepaper
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Speculative load hardening [[@carruth2018slh]] masks addresses with a predicate derived from the branch condition, so that a mis-speculated load reads a safe address; retpolines [[@turner2018retpoline]] replace indirect branches with a construct that steers speculation to a benign target; and explicit fences before sensitive loads stop the speculation window from opening at all.

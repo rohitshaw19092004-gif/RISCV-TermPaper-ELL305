@@ -28,13 +28,14 @@ def prose(tex):
     for env in DROPPED:
         tex = re.sub(r"\\begin\{%s\*?\}.*?\\end\{%s\*?\}" % (env, env), " ", tex, flags=re.S)
     tex = re.sub(r"\\(chapter|section|subsection)\*?\{[^{}]*(\{[^{}]*\}[^{}]*)*\}", "\n\n", tex)
-    tex = re.sub(r"\\(label|index)\{[^{}]*\}", "", tex)
+    tex = re.sub(r"\\(label|index|glsadd)\{[^{}]*\}", "", tex)
+    tex = re.sub(r"\\icode\|[^|]*\|", "code", tex)
     tex = re.sub(r"~?\\citep?\{[^{}]*\}", "", tex)
     tex = re.sub(r"\\citet\{[^{}]*\}", "they", tex)
     tex = re.sub(r"\\[Cc]ref\{[^{}]*\}", "ref", tex)
     tex = re.sub(r"\\SecRef\{[^{}]*\}", "section", tex)
     tex = re.sub(r"\\R\{[^{}]*\}", "ten", tex)
-    tex = re.sub(r"\\(code|texttt|url|nolinkurl)\{[^{}]*\}", "code", tex)
+    tex = re.sub(r"\\(code|tcode|texttt|url|nolinkurl)\{[^{}]*\}", "code", tex)
     tex = re.sub(r"\$[^$]*\$", "x", tex)
     tex = re.sub(r"\\(begin|end)\{[^{}]*\}(\[[^\]]*\])?", " ", tex)
     tex = re.sub(r"\\item(\[[^\]]*\])?", " ", tex)
@@ -75,7 +76,8 @@ def counts(text):
     syl = [sum(syllables(p) for p in w.split("-")) for w in words]
     return {"S": len(sents), "W": len(words), "Y": sum(syl), "C": letters,
             "P": sum(1 for s in syl if s >= 3),
-            "L": sum(1 for w in words if len(re.sub(r"[^A-Za-z0-9]", "", w)) > 6)}
+            "L": sum(1 for w in words if len(re.sub(r"[^A-Za-z0-9]", "", w)) > 6),
+            "L6": sum(1 for w in words if len(re.sub(r"[^A-Za-z0-9]", "", w)) >= 6)}
 
 
 def indices(c):
@@ -90,6 +92,30 @@ def indices(c):
         "lix": wps + 100.0 * c["L"] / c["W"],
         "rix": c["L"] / c["S"],
     }
+
+
+# Grade bands of the reference page named in the course guidelines
+# (analyzemywriting.com/readability_indices.html): lower bound, readers.
+BANDS = [(16, "graduate and professional readers (grade 16 and above)"),
+         (12, "undergraduate readers (grades 12 to 16)"),
+         (8, "general adult readers (grades 8 to 12)"),
+         (5, "young adult readers (grades 5 to 8)"),
+         (3, "children's texts (grades 3 to 5)"),
+         (-99, "emergent and early readers (grade 3 and below)")]
+
+
+def band(grade):
+    return next(text for low, text in BANDS if grade >= low)
+
+
+def longest_unit(body):
+    """Words of running prose under the longest single heading of Chapters 1-12."""
+    parts = re.split(r"^\\(?:chapter|section|subsection|subsubsection|paragraph)\*?\{", body, flags=re.M)
+    best = 0
+    for part in parts:
+        text = prose(part)
+        best = max(best, len(re.findall(r"[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*", text)))
+    return best
 
 
 def num(n):
@@ -110,25 +136,33 @@ def main():
     c = counts(prose(body))
     ix = indices(c)
     rows = [("Sentences ($S$)", num(c["S"])), ("Words ($W$)", num(c["W"])),
-            ("Syllables ($Y$)", num(c["Y"])), ("Polysyllabic words, three or more syllables ($P$)", num(c["P"])),
-            ("Long words, more than six letters ($L$)", num(c["L"])), ("Letters ($C$)", num(c["C"])),
+            ("Syllables ($Y$)", num(c["Y"])), ("Words of three syllables or more ($P$)", num(c["P"])),
+            ("Words longer than six letters ($L$)", num(c["L"])), ("Letters ($C$)", num(c["C"])),
             ("Words per sentence", "%.2f" % (c["W"] / c["S"])),
-            ("Syllables per word", "%.3f" % (c["Y"] / c["W"]))]
+            ("Syllables per word", "%.3f" % (c["Y"] / c["W"])),
+            ("Syllables per 100 words (Fry graph)", "%.1f" % (100.0 * c["Y"] / c["W"])),
+            ("Sentences per 100 words (Fry graph, Raygor estimate)", "%.2f" % (100.0 * c["S"] / c["W"])),
+            ("Words of six or more letters per 100 words (Raygor estimate)", "%.1f" % (100.0 * c["L6"] / c["W"]))]
     emit("read_counts", "\\begin{tabular}{@{}lr@{}}\n\\toprule\n\\textbf{Quantity} & \\textbf{Value} \\\\\n\\midrule\n"
          + "\n".join("%s & %s \\\\" % r for r in rows) + "\n\\bottomrule\n\\end{tabular}")
+    five = sorted(ix[k] for k in ("fk", "fog", "smog", "cli", "ari"))
+    mean, median = sum(five) / 5.0, five[2]
     table = [
-        ("Flesch Reading Ease", "$206.835 - 1.015\\,W/S - 84.6\\,Y/W$", ix["fre"], "higher is easier"),
-        ("Flesch--Kincaid Grade", "$0.39\\,W/S + 11.8\\,Y/W - 15.59$", ix["fk"], "school grade"),
-        ("Gunning Fog", "$0.4\\,(W/S + 100\\,P/W)$", ix["fog"], "years of education"),
-        ("SMOG", "$1.043\\sqrt{30\\,P/S} + 3.1291$", ix["smog"], "school grade"),
-        ("Coleman--Liau", "$5.88\\,C/W - 29.6\\,S/W - 15.8$", ix["cli"], "school grade"),
-        ("Automated Readability", "$4.71\\,C/W + 0.5\\,W/S - 21.43$", ix["ari"], "school grade"),
-        ("LIX", "$W/S + 100\\,L/W$", ix["lix"], "50--60: difficult"),
-        ("RIX", "$L/S$", ix["rix"], "from 7.2: college"),
+        ("FRE (Flesch)", "$206.835 - 1.015\\,W/S - 84.6\\,Y/W$", ix["fre"], "higher is easier"),
+        ("FKGL (Kincaid \\etal)", "$0.39\\,W/S + 11.8\\,Y/W - 15.59$", ix["fk"], "school grade"),
+        ("Fog (Gunning)", "$0.4\\,(W/S + 100\\,P/W)$", ix["fog"], "years of schooling"),
+        ("SMOG (McLaughlin)", "$1.043\\sqrt{30\\,P/S} + 3.1291$", ix["smog"], "school grade"),
+        ("CLI (Coleman, Liau)", "$5.88\\,C/W - 29.6\\,S/W - 15.8$", ix["cli"], "school grade"),
+        ("ARI (Smith, Senter)", "$4.71\\,C/W + 0.5\\,W/S - 21.43$", ix["ari"], "school grade"),
+        ("LIX (Bj\\\"{o}rnsson)", "$W/S + 100\\,L/W$", ix["lix"], "50 to 60: difficult"),
+        ("RIX (Anderson)", "$L/S$", ix["rix"], "from 7.2: college"),
     ]
-    emit("read_indices", "\\begin{tabular}{@{}llrl@{}}\n\\toprule\n\\textbf{Index} & \\textbf{Formula} & "
-         "\\textbf{Value} & \\textbf{Scale} \\\\\n\\midrule\n"
-         + "\n".join("%s & %s & %.1f & %s \\\\" % r for r in table) + "\n\\bottomrule\n\\end{tabular}")
+    emit("read_indices", "\\begin{tabular}{@{}lrll@{}}\n\\toprule\n\\textbf{Index} & \\textbf{Value} & "
+         "\\textbf{Scale} & \\textbf{Formula} \\\\\n\\midrule\n"
+         + "\n".join("%s & %.1f & %s & %s \\\\" % (r[0], r[2], r[3], r[1]) for r in table) + "\n\\midrule\n"
+         + "Average grade & %.1f & school grade & mean of the five grade levels \\\\\n" % mean
+         + "Median grade & %.1f & school grade & median of the five grade levels \\\\\n" % median
+         + "\\bottomrule\n\\end{tabular}")
     chapters = re.split(r"(?=\\chapter\{)", body)
     lines = []
     for i, ch in enumerate([x for x in chapters if x.startswith("\\chapter{")], 1):
@@ -140,14 +174,18 @@ def main():
         num(c["W"]), num(c["S"]), c["W"] / c["S"], ix["fre"], ix["fk"]))
     emit("read_chapters", "\\begin{tabular}{@{}rrrrrr@{}}\n\\toprule\n\\textbf{Chapter} & \\textbf{Words} & "
          "\\textbf{Sentences} & \\textbf{Words per sentence} & \\textbf{Reading Ease} & "
-         "\\textbf{Flesch--Kincaid} \\\\\n\\midrule\n" + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}")
+         "\\textbf{Flesch-Kincaid} \\\\\n\\midrule\n" + "\n".join(lines) + "\n\\bottomrule\n\\end{tabular}")
     grades = [ix[k] for k in ("fk", "fog", "smog", "cli", "ari")]
     macros = {"read.fre": "%.1f" % ix["fre"], "read.grade.min": "%.1f" % min(grades),
               "read.grade.max": "%.1f" % max(grades), "read.wps": "%.1f" % (c["W"] / c["S"]),
-              "read.poly.pct": "%.1f" % (100.0 * c["P"] / c["W"]), "read.words": num(c["W"])}
+              "read.poly.pct": "%.1f" % (100.0 * c["P"] / c["W"]), "read.words": num(c["W"]),
+              "read.grade.mean": "%.1f" % mean, "read.grade.median": "%.1f" % median,
+              "read.grade.band": band(mean), "read.sentences": num(c["S"]),
+              "read.unit.max": num(longest_unit(body))}
     emit("read_macros", "\n".join("\\expandafter\\def\\csname R@%s\\endcsname{%s}" % kv
                                   for kv in sorted(macros.items())))
-    print("body prose: %d words, %d sentences; FRE %.1f, FK %.1f" % (c["W"], c["S"], ix["fre"], ix["fk"]))
+    print("body prose: %d words, %d sentences; FRE %.1f, FK %.1f; grade mean %.1f, median %.1f; "
+          "longest unit %d words" % (c["W"], c["S"], ix["fre"], ix["fk"], mean, median, longest_unit(body)))
 
 
 if __name__ == "__main__":

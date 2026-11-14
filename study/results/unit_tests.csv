@@ -1,16 +1,36 @@
-test,description,expected_cycles_per_iteration,measured_cycles_per_iteration,pass
-1,"2 independent adds, width 4",1.000,1.000,yes
-2,"6 independent adds, width 4",2.000,2.000,yes
-3,"6 independent adds, width 2",4.000,4.000,yes
-4,chain of 6 dependent adds,6.000,6.000,yes
-5,multiply chain,3.000,3.000,yes
-6,divide chain,20.000,20.000,yes
-7,"load chain, first-level hit",4.000,4.000,yes
-8,"load chain, second-level hit",14.000,14.000,yes
-9,"load chain, last-level hit",45.000,45.000,yes
-10,"load chain, memory",220.000,220.000,yes
-11,8 lines in one 8-way set,4.000,4.000,yes
-12,9 lines in one 8-way set,14.000,14.000,yes
-13,9 lines in one 16-way set,4.000,4.000,yes
-14,"always-mispredicted branch, depth 4",8.000,8.000,yes
-15,"always-mispredicted branch, depth 6",10.000,10.000,yes
+test,kind,description,expected_cycles,measured_cycles,pass
+1,iter,"2 independent adds, width 4",1.000,1.000,yes
+2,iter,"6 independent adds, width 4",2.000,2.000,yes
+3,iter,"6 independent adds, width 2",4.000,4.000,yes
+4,iter,chain of 6 dependent adds,6.000,6.000,yes
+5,iter,multiply chain,3.000,3.000,yes
+6,iter,divide chain,20.000,20.000,yes
+7,iter,"load chain, first-level hit",4.000,4.000,yes
+8,iter,"load chain, second-level hit",14.000,14.000,yes
+9,iter,"load chain, last-level hit",45.000,45.000,yes
+10,iter,"load chain, memory",220.000,220.000,yes
+11,iter,8 lines in one 8-way set,4.000,4.000,yes
+12,iter,9 lines in one 8-way set,14.000,14.000,yes
+13,iter,9 lines in one 16-way set,4.000,4.000,yes
+14,iter,"always-mispredicted branch, depth 4",8.000,8.000,yes
+15,iter,"always-mispredicted branch, depth 6",10.000,10.000,yes
+16,iter,"load chain over 33 pages, 32-entry TLB",16.000,16.000,yes
+17,iter,"load chain over 32 pages, 32-entry TLB",4.000,4.000,yes
+18,iter,"two loads behind a slow branch, def=none",2.000,2.000,yes
+19,iter,"two loads behind a slow branch, def=dom",2.000,2.000,yes
+20,iter,"two loads behind a slow branch, def=invis-e",2.000,2.000,yes
+21,iter,"two loads behind a slow branch, def=invis-v",2.000,2.000,yes
+22,iter,"two loads behind a slow branch, def=stt",25.000,25.000,yes
+23,iter,"two loads behind a slow branch, def=nda",25.000,25.000,yes
+24,iter,"two loads behind a slow branch, def=nospec",29.000,29.000,yes
+25,iter,"second-level load chain feeding a branch, def=none",14.000,14.000,yes
+26,iter,"second-level load chain feeding a branch, def=dom",15.000,15.000,yes
+27,iter,"second-level load chain feeding a branch, def=nospec",15.000,15.000,yes
+28,iter,"slow mispredicted branch, 1 wrong-path miss, def=none",28.000,28.000,yes
+29,iter,"slow mispredicted branch, 1 wrong-path miss, def=undo",42.000,42.000,yes
+30,iter,"slow mispredicted branch, 5 wrong-path misses, def=undo",56.000,56.000,yes
+31,commit,"commit of a speculative first-level hit, def=invis-v",3.000,3.000,yes
+32,commit,"commit of a speculative first-level hit, def=invis-e",0.000,0.000,yes
+33,switch,"switch flushing the TLB, register-only loop",322.000,322.000,yes
+34,switch,"switch flushing the first-level data cache, load chain",332.000,332.000,yes
+35,switch,"switch flushing the TLB, load chain",334.000,334.000,yes

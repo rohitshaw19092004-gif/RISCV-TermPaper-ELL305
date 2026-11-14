@@ -27,7 +27,7 @@ medium behind it, as the course requires.
 - [[Ch06 Memory System as Attack Surface]]: 1900/6000 words
 - [[Ch07 Multicore and Coherence]]: 1200/3500 words
 - [[Ch08 Transient Execution Attacks]]: 1500/4000 words
-- [[Ch09 Defences Taxonomy]]: 1600/5000 words
+- [[Ch09 Defenses Taxonomy]]: 1600/5000 words
 - [[Ch10 Cost - Performance Power Area]]: 1100/3500 words
 - [[Ch11 Evaluation Plan]]: 800/1500 words
 - [[Ch12 Conclusion]]: 600/1500 words
@@ -46,7 +46,7 @@ medium behind it, as the course requires.
 - [[E2 Eviction set construction]]
 - [[E3 Speculation window]]
 - [[E4 Spectre-v1 replication]]
-- [[E5 Defence cost]]
+- [[E5 Defense cost]]
 - [[E6 Area and frequency]]
 - [[E7 Composition]]
 

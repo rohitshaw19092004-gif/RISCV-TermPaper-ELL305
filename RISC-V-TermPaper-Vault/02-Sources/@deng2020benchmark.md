@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2020 · **Venue:** ACM International Conference on Architectural Support for Programming Languages and Operating Systems (ASPLOS)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > _no context captured; read the paper section that cites it_

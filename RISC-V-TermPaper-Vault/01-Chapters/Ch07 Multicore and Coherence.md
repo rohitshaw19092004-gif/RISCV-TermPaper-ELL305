@@ -18,7 +18,7 @@ tags: [chapter, status/drafted]
 - Coherence as a channel
 - Memory consistency and fences
 - Simultaneous multithreading
-- Partitioning and colouring, viewed as defences
+- Partitioning and colouring, viewed as defenses
 
 
 
@@ -29,7 +29,7 @@ tags: [chapter, status/drafted]
 
 ## To write for v0.2 / v0.3
 - [ ] For v0.2 this chapter gains: (a) the directory-based coherence channel described quantitatively, with the transition-cost table that [[Ch10 Cost - Performance Power Area]] needs;
-- [ ] (b) a treatment of interconnect and memory-controller contention channels, which are the ones that survive every cache-level defence; and (c) a concrete mapping onto the coherence implementation of an open RISC-V uncore (TileLink), so the discussion is tied to inspectable RTL. Target: +5 pages.
+- [ ] (b) a treatment of interconnect and memory-controller contention channels, which are the ones that survive every cache-level defense; and (c) a concrete mapping onto the coherence implementation of an open RISC-V uncore (TileLink), so the discussion is tied to inspectable RTL. Target: +5 pages.
 
 ## Sources cited here
 - [[@kiriansky2018dawg]]

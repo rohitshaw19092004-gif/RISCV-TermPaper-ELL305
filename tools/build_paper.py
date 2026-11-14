@@ -112,6 +112,54 @@ def report(work, engine, passes):
     print("undefined references/citations: %d %s" % (len(undefined), undefined[:12]))
     worst = max((float(x) for x in overfull), default=0.0)
     print("overfull boxes: %d (worst %.1fpt)" % (len(overfull), worst))
+    readiness(work)
+
+
+def unreferenced_floats(body):
+    """Labels of figures, tables and listings without a reference in the text.
+    A \\crefrange covers every label of its kind between its two ends."""
+    where = {}
+    for m in re.finditer(r"\\label\{((?:fig|tab):[^}]*)\}|label=\{?(lst:[A-Za-z0-9_.-]+)", body):
+        where[m.group(1) or m.group(2)] = m.start()
+    used = set()
+    for m in re.finditer(r"\\(?:[Cc]ref|ref|pageref|autoref)\*?\{([^}]*)\}", body):
+        used.update(k.strip() for k in m.group(1).split(","))
+    for m in re.finditer(r"\\[Cc]refrange\{([^}]*)\}\{([^}]*)\}", body):
+        a, b = m.group(1).strip(), m.group(2).strip()
+        if a in where and b in where:
+            lo, hi = sorted((where[a], where[b]))
+            used.update(n for n, pos in where.items()
+                        if lo <= pos <= hi and n.split(":")[0] == a.split(":")[0])
+    return sorted(n for n in where if n not in used)
+
+
+def readiness(work):
+    """Submission checks that the compiler cannot make: fields still to be
+    filled in by hand, the page of the two required front-matter pages, and
+    the half-page rule."""
+    tex = open(os.path.join(ROOT, NAME + ".tex"), errors="replace").read()
+    empty = [name for name, value in re.findall(
+        r"\\newcommand\{\\(Turnitin[A-Za-z]*)\}\{([^{}]*)\}", tex)
+        if not value.strip() and name not in ("TurnitinSources",)]
+    toc = open(os.path.join(work, NAME + ".toc"), errors="replace").read()
+    pages = dict(re.findall(r"\\contentsline \{chapter\}\{(Copyright Assignment|Acknowledgements)\}\{([^{}]*)\}", toc))
+    unit = re.search(r"R@read\.unit\.max\\endcsname\{([\d\\,]+)\}", tex)
+    words = int(unit.group(1).replace("\\,", "")) if unit else None
+    print("copyright assignment on page %s, acknowledgements on page %s (required: ii, iii)"
+          % (pages.get("Copyright Assignment", "?"), pages.get("Acknowledgements", "?")))
+    if words is not None:
+        print("longest prose under one heading in the chapters: %d words%s"
+              % (words, "" if words <= 300 else "  <-- over half a page"))
+    body = re.sub(r"(?<!\\)%.*", "", tex[tex.index("\\end{filecontents*}"):])
+    plain = re.findall(r"\\texttt\b|\\verb[^a-zA-Z]|\\begin\{verbatim|\\includegraphics\s*[\[{]",
+                       re.sub(r"\\icode(\[[^\]]*\])?\|[^|]*\|", "", body))
+    print("typewriter text or images outside listings/TikZ (\\texttt, \\verb, verbatim, "
+          "\\includegraphics): %d (required: 0)" % len(plain))
+    lonely = unreferenced_floats(body)
+    print("figures, tables and listings that the text never refers to: %d %s"
+          % (len(lonely), lonely[:12]))
+    if empty:
+        print("STILL TO FILL IN before submission: " + ", ".join("\\" + e for e in empty))
 
 
 def main():

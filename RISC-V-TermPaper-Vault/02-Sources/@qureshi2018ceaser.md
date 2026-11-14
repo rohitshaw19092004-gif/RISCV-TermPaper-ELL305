@@ -4,7 +4,7 @@ title: "CEASER: Mitigating Conflict-Based Cache Attacks via Encrypted-Address an
 year: 2018
 venue: "IEEE/ACM International Symposium on Microarchitecture (MICRO)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2018 · **Venue:** IEEE/ACM International Symposium on Microarchitecture (MICRO)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > CEASER [[@qureshi2018ceaser]] encrypts the address before indexing, so the mapping from address to set is a keyed permutation; ScatterCache [[@werner2019scattercache]] goes further and gives each security domain a different mapping, so that collisions are not merely

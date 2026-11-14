@@ -17,7 +17,7 @@ tags: [chapter, status/drafted]
 - The pipeline
 - Precise exceptions do not undo microarchitectural effects
 - Out-of-order execution and the size of the window
-- Metrics: what a defence costs
+- Metrics: what a defense costs
 
 ### Subsections
 - Hazards and the pressure to speculate
@@ -31,7 +31,7 @@ tags: [chapter, status/drafted]
 - Out-of-order organisation
 
 ## To write for v0.2 / v0.3
-- [ ] For v0.2: `eq:iron,eq:slowdown,eq:power,eq:edp` will be instantiated with measured numbers from the author's own runs ([[Ch11 Evaluation Plan]]), and this section will gain a worked example computing the EDP cost of flushing a 32 L1 at every context switch on CVA6, cross-checked against the figures reported by Wistoff et al. [[@wistoff2021fencet]]. Also to be added: a short treatment of Amdahl's law applied to defences that only slow down a subset of instructions (e.g. loads only). Target: +2 pages.
+- [ ] For v0.2: `eq:iron,eq:slowdown,eq:power,eq:edp` will be instantiated with measured numbers from the author's own runs ([[Ch11 Evaluation Plan]]), and this section will gain a worked example computing the EDP cost of flushing a 32 L1 at every context switch on CVA6, cross-checked against the figures reported by Wistoff et al. [[@wistoff2021fencet]]. Also to be added: a short treatment of Amdahl's law applied to defenses that only slow down a subset of instructions (e.g. loads only). Target: +2 pages.
 
 ## Sources cited here
 - [[@asanovic2016rocket]]

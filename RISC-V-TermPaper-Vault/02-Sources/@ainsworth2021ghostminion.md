@@ -4,7 +4,7 @@ title: "GhostMinion: A Strictness-Ordered Cache System for Spectre Mitigation"
 year: 2021
 venue: "IEEE/ACM International Symposium on Microarchitecture (MICRO)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2021 · **Venue:** IEEE/ACM International Symposium on Microarchitecture (MICRO)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > MuonTrap [[@ainsworth2020muontrap]] confines speculative state to a small filter cache that is cleared at domain boundaries, and GhostMinion [[@ainsworth2021ghostminion]] adds a strict ordering discipline designed to close the timing paths that speculative interference exploits [[@behnia2021interference]].

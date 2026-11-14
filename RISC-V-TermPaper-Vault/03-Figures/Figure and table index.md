@@ -15,7 +15,7 @@ pass of 23 August 2026. See [[Correction pass v0.1]].
 > [!warning] Figures still labelled *illustrative*
 > `fig:hierarchy`, `fig:histogram`, `fig:overheads` and `fig:pareto` are not
 > measured data. They must be replaced from [[E1 Latency characterisation]] and
-> [[E5 Defence cost]] before the final version, or the labels must stay.
+> [[E5 Defense cost]] before the final version, or the labels must stay.
 
 ## Figures
 | Label | Short caption | Chapter |
@@ -41,8 +41,8 @@ pass of 23 August 2026. See [[Correction pass v0.1]].
 | `fig:mesi` | MESI states and their timing | Ch. 7: Multicore Systems: Sharing, Coherence and Cross-Domain Leakage |
 | `fig:partition` | Two partitioning mechanisms | Ch. 7: Multicore Systems: Sharing, Coherence and Cross-Domain Leakage |
 | `fig:anatomy` | Anatomy of a transient-execution attack | Ch. 8: Transient Execution Attacks |
-| `fig:taxonomy` | Defence taxonomy | Ch. 9: Defences: A Taxonomy with Residual Risk |
-| `fig:overheads` | Indicative cost by defence class | Ch. 10: What Security Costs: Performance, Power and Area |
+| `fig:taxonomy` | Defense taxonomy | Ch. 9: Defenses: A Taxonomy with Residual Risk |
+| `fig:overheads` | Indicative cost by defense class | Ch. 10: What Security Costs: Performance, Power and Area |
 | `fig:pareto` | Cost versus breadth of guarantee | Ch. 10: What Security Costs: Performance, Power and Area |
 | `fig:gantt` | Schedule to the final version | Ch. 11: Evaluation Plan for v0.2 and v0.3 |
 
@@ -58,8 +58,8 @@ pass of 23 August 2026. See [[Correction pass v0.1]].
 | `tab:hazards` | Hazards and their security consequence | Ch. 5: Pipelining, Speculation and the Birth of Transient State |
 | `tab:primitives` | Comparison of cache attack primitives | Ch. 6: The Memory System as an Attack Surface |
 | `tab:variants` | Transient-execution variants | Ch. 8: Transient Execution Attacks |
-| `tab:defenses` | Comparison of defence mechanisms | Ch. 9: Defences: A Taxonomy with Residual Risk |
-| `tab:area` | Storage and logic overheads by defence class | Ch. 10: What Security Costs: Performance, Power and Area |
+| `tab:defenses` | Comparison of defense mechanisms | Ch. 9: Defenses: A Taxonomy with Residual Risk |
+| `tab:area` | Storage and logic overheads by defense class | Ch. 10: What Security Costs: Performance, Power and Area |
 | `tab:platform` | Intended evaluation platform | Ch. 11: Evaluation Plan for v0.2 and v0.3 |
 | `tab:experiments` | Planned experiments | Ch. 11: Evaluation Plan for v0.2 and v0.3 |
 | `tab:tocdetail` | Sub-section-level mapping between the prescribed textbook and this paper | App. A: Detailed Mapping to the Textbook Table of Contents |

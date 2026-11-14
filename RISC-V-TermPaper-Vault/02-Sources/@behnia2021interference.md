@@ -19,10 +19,10 @@ status: to-read
 ## Where the paper uses this
 - [[Ch01 Introduction and Scope]]
 - [[Ch08 Transient Execution Attacks]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
-> A defence taxonomy with an explicit residual-risk column: for each mechanism, what it stops, what it provably does not stop, and the attack that broke it if one exists, for instance speculative interference against invisible-speculation schemes [[@behnia2021interference]].
+> A defense taxonomy with an explicit residual-risk column: for each mechanism, what it stops, what it provably does not stop, and the attack that broke it if one exists, for instance speculative interference against invisible-speculation schemes [[@behnia2021interference]].
 
 > MuonTrap [[@ainsworth2020muontrap]] confines speculative state to a small filter cache that is cleared at domain boundaries, and GhostMinion [[@ainsworth2021ghostminion]] adds a strict ordering discipline designed to close the timing paths that speculative interference exploits [[@behnia2021interference]].
 

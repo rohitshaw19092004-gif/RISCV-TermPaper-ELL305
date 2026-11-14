@@ -4,7 +4,7 @@ title: "Efficient Invisible Speculative Execution Through Selective Delay and Va
 year: 2019
 venue: "International Symposium on Computer Architecture (ISCA)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2019 · **Venue:** International Symposium on Computer Architecture (ISCA)
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Delay-on-miss [[@sakalis2019delay]] & Restrict & Substantially reduced by value prediction & Covers speculative loads that miss.

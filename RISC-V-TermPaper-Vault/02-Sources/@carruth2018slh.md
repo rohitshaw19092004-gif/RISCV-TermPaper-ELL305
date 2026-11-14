@@ -4,7 +4,7 @@ title: "Speculative Load Hardening: A Spectre Variant \#1 Mitigation Technique"
 year: 2018
 venue: "LLVM Project documentation"
 type: misc
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -17,7 +17,7 @@ status: to-read
 **Year:** 2018 · **Venue:** LLVM Project documentation
 
 ## Where the paper uses this
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Speculative load hardening [[@carruth2018slh]] masks addresses with a predicate derived from the branch condition, so that a mis-speculated load reads a safe address; retpolines [[@turner2018retpoline]] replace indirect branches with a construct that steers speculation to a benign t

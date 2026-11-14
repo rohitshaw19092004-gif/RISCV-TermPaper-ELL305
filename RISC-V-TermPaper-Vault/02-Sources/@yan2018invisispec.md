@@ -4,7 +4,7 @@ title: "InvisiSpec: Making Speculative Execution Invisible in the Cache Hierarch
 year: 2018
 venue: "IEEE/ACM International Symposium on Microarchitecture (MICRO)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -18,7 +18,7 @@ status: to-read
 
 ## Where the paper uses this
 - [[Ch05 Pipelining and Speculation]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Hiding and undoing speculative effects InvisiSpec [[@yan2018invisispec]] buffers speculative loads in a speculative buffer and only makes them visible in the cache hierarchy when they become non-speculative, restoring the cache to the state it would have had without speculation.

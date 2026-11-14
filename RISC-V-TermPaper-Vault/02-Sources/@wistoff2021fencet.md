@@ -4,7 +4,7 @@ title: "Microarchitectural Timing Channels and Their Prevention on an Open-Sourc
 year: 2021
 venue: "Design, Automation and Test in Europe (DATE)"
 type: inproceedings
-tags: [source/defence, status/to-read]
+tags: [source/defense, status/to-read]
 status: to-read
 ---
 
@@ -21,7 +21,7 @@ status: to-read
 - [[Ch02 Contract and Machine]]
 - [[Ch05 Pipelining and Speculation]]
 - [[Ch07 Multicore and Coherence]]
-- [[Ch09 Defences Taxonomy]]
+- [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
 > Spectre-style attacks have been replicated on an open RISC-V out-of-order core and mitigations evaluated on the same RTL [[@gonzalez2019replicating]], and timing-channel prevention via a context-flush instruction has been implemented and measured on CVA6 [[@wistoff2021fencet]].
