@@ -43,10 +43,10 @@ Length target: 150 to 200 pages. Single author.
 
 ```
 latexmk -pdf RISCV_Microarch_Security_TermPaper_Final.tex   # full TeX distribution
-python3 tools/build_paper.py                                # Tectonic only
+python3 tools/build_paper.py                                # same build, with a report
 ```
 
-Last build: 179 pages, no undefined references or citations, no overfull
+Last build (pdfLaTeX, TeX Live 2026): 178 pages, no undefined references or citations, no overfull
 boxes, 90 bibliography entries, all cited.
 
 ## Regenerating the results

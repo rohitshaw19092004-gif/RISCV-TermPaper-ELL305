@@ -27,13 +27,16 @@ latexmk -pdf RISCV_Microarch_Security_TermPaper_Final.tex
 ```
 
 or the same thing by hand: `pdflatex`, `bibtex`, `makeindex`, `pdflatex`,
-`pdflatex`. With only Tectonic installed:
+`pdflatex`. The script
 
 ```
 python3 tools/build_paper.py
 ```
 
-which runs Tectonic and produces the index (Tectonic has no `makeindex`).
+runs the `latexmk` build in a scratch directory, copies the PDF next to the
+source and reports the page count, unresolved references and overfull boxes.
+Where no TeX distribution is installed it falls back to Tectonic (also
+available as `--tectonic`) and produces the index itself.
 `refs.bib` is written at compile time by `filecontents*`; it is a build product
 and is not part of the submission.
 

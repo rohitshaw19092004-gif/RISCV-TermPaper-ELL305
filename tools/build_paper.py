@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""build_paper.py - compile the term paper with Tectonic.
+"""build_paper.py - compile the term paper and report on the result.
 
-Tectonic runs LaTeX and BibTeX to a fixed point by itself but has no index
-processor. If a `makeindex` binary is on the PATH it is used; otherwise the
-small routine below produces the same .ind file from the .idx file. On a full
-TeX distribution none of this is needed: `latexmk -pdf` builds the paper.
+With a full TeX distribution on the PATH the paper is built by `latexmk -pdf`,
+that is pdfLaTeX, BibTeX and makeindex, in a scratch directory, so that the
+repository root receives only the PDF. Without one, or with --tectonic, the
+paper is built with Tectonic. Tectonic runs LaTeX and BibTeX to a fixed point by
+itself but has no index processor, so the small routine below produces the .ind
+file when no `makeindex` binary is available.
 
-    python3 tools/build_paper.py            # builds the PDF next to the .tex
+    python3 tools/build_paper.py              # latexmk if installed, else Tectonic
+    python3 tools/build_paper.py --tectonic   # force Tectonic
 """
 import os
 import re
@@ -16,7 +19,8 @@ import sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 NAME = "RISCV_Microarch_Security_TermPaper_Final"
-WORK = os.path.join(ROOT, "build", "tex")
+WORK = os.path.join(ROOT, "build", "tex")          # Tectonic
+WORK_TL = os.path.join(ROOT, "build", "texlive")   # latexmk
 
 
 def sort_key(text):
@@ -85,7 +89,40 @@ def tectonic():
     return r.stderr
 
 
+def latexmk():
+    """pdfLaTeX + BibTeX + makeindex to a fixed point; returns the pdfLaTeX passes."""
+    cmd = ["latexmk", "-pdf", "-interaction=nonstopmode", "-halt-on-error",
+           "-file-line-error", NAME + ".tex"]
+    r = subprocess.run(cmd, cwd=WORK_TL, capture_output=True, text=True, errors="replace")
+    out = r.stdout + r.stderr
+    if r.returncode:
+        sys.stderr.write(out[-6000:])
+        sys.exit("latexmk failed")
+    return len(re.findall(r"Run number \d+ of rule 'pdflatex'", out))
+
+
+def report(work, engine, passes):
+    shutil.copy(os.path.join(work, NAME + ".pdf"), ROOT)
+    log = open(os.path.join(work, NAME + ".log"), errors="replace").read()
+    pages = re.findall(r"Output written on .*?\((\d+) pages", log.replace("\n", ""))
+    undefined = sorted(set(re.findall(r"(?:Reference|Citation) `([^']+)' on page", log)))
+    overfull = re.findall(r"Overfull \\hbox \(([\d.]+)pt too wide\)", log)
+    print("engine: %s" % engine)
+    print("pages: %s   passes: %s" % (pages[-1] if pages else "?", passes))
+    print("undefined references/citations: %d %s" % (len(undefined), undefined[:12]))
+    worst = max((float(x) for x in overfull), default=0.0)
+    print("overfull boxes: %d (worst %.1fpt)" % (len(overfull), worst))
+
+
 def main():
+    use_latexmk = "--tectonic" not in sys.argv[1:] and shutil.which("latexmk") \
+        and shutil.which("pdflatex")
+    if use_latexmk:
+        os.makedirs(WORK_TL, exist_ok=True)
+        shutil.copy(os.path.join(ROOT, NAME + ".tex"), WORK_TL)
+        passes = latexmk()
+        report(WORK_TL, "pdfLaTeX via latexmk", passes or "up to date")
+        return
     os.makedirs(WORK, exist_ok=True)
     shutil.copy(os.path.join(ROOT, NAME + ".tex"), WORK)
     ind = os.path.join(WORK, NAME + ".ind")
@@ -101,15 +138,7 @@ def main():
         if current == previous:
             break
         previous = current
-    shutil.copy(os.path.join(WORK, NAME + ".pdf"), ROOT)
-    log = open(os.path.join(WORK, NAME + ".log"), errors="replace").read()
-    pages = re.findall(r"Output written on .*?\((\d+) pages", log)
-    undefined = sorted(set(re.findall(r"(?:Reference|Citation) `([^']+)' on page", log)))
-    overfull = re.findall(r"Overfull \\hbox \(([\d.]+)pt too wide\)", log)
-    print("pages: %s   passes: %d" % (pages[-1] if pages else "?", attempt + 1))
-    print("undefined references/citations: %d %s" % (len(undefined), undefined[:12]))
-    worst = max((float(x) for x in overfull), default=0.0)
-    print("overfull boxes: %d (worst %.1fpt)" % (len(overfull), worst))
+    report(WORK, "Tectonic", attempt + 1)
 
 
 if __name__ == "__main__":
