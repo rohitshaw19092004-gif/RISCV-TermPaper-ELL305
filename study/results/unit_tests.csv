@@ -1,0 +1,16 @@
+test,description,expected_cycles_per_iteration,measured_cycles_per_iteration,pass
+1,"2 independent adds, width 4",1.000,1.000,yes
+2,"6 independent adds, width 4",2.000,2.000,yes
+3,"6 independent adds, width 2",4.000,4.000,yes
+4,chain of 6 dependent adds,6.000,6.000,yes
+5,multiply chain,3.000,3.000,yes
+6,divide chain,20.000,20.000,yes
+7,"load chain, first-level hit",4.000,4.000,yes
+8,"load chain, second-level hit",14.000,14.000,yes
+9,"load chain, last-level hit",45.000,45.000,yes
+10,"load chain, memory",220.000,220.000,yes
+11,8 lines in one 8-way set,4.000,4.000,yes
+12,9 lines in one 8-way set,14.000,14.000,yes
+13,9 lines in one 16-way set,4.000,4.000,yes
+14,"always-mispredicted branch, depth 4",8.000,8.000,yes
+15,"always-mispredicted branch, depth 6",10.000,10.000,yes

@@ -1,0 +1,9 @@
+# The digests in study/results/manifest.json identify bytes, so a checkout
+# must not convert line endings.
+*.tex -text
+*.bib -text
+*.py -text
+*.c -text
+*.s -text
+*.csv -text
+*.json -text

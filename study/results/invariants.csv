@@ -1,0 +1,18 @@
+property,measured,required,holds
+"transient first-level fills under nospec, all kernels",0,0,yes
+"transient first-level fills under dom, all kernels",0,0,yes
+"transient first-level fills under invis-e, all kernels",0,0,yes
+"transient first-level fills under invis-v, all kernels",0,0,yes
+"transient first-level fills under undo, all kernels",0,0,yes
+"dependent transient loads executed under nospec, all kernels",0,0,yes
+"dependent transient loads executed under stt, all kernels",0,0,yes
+"dependent transient loads executed under nda, all kernels",0,0,yes
+dependent transient loads executed with no defence,7221,> 0,yes
+"cross-domain evictions, way partitioning (all levels + TLB)",0,0,yes
+"predictions made from the other domain's entries, partitioned predictors",0,0,yes
+"cross-domain evictions in L2 and LLC, page colouring",0,0,yes
+"first-level, TLB and predictor residue after a flush",0,0,yes
+"predictions made from the other domain's entries, flushed predictors",0,0,yes
+cross-domain evictions with no isolation (first level),54406,> 0,yes
+"repeatability of cycle count, matmul",605057,605057,yes
+"repeatability of cycle count, bstree",9476276,9476276,yes

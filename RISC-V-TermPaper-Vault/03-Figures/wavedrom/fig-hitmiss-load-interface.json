@@ -1,0 +1,35 @@
+{
+  "signal": [
+    {
+      "name": "clk",
+      "wave": "P............."
+    },
+    {
+      "name": "load issued",
+      "wave": "010..........."
+    },
+    {
+      "name": "data back - L1 hit",
+      "wave": "0...10........"
+    },
+    {
+      "name": "data back - L1 miss",
+      "wave": "0..........10."
+    },
+    {
+      "name": "attacker's timer",
+      "wave": "2.3........4..",
+      "data": [
+        "rdcycle",
+        "measured interval",
+        "rdcycle"
+      ]
+    }
+  ],
+  "head": {
+    "text": "Hit vs miss on the load interface - Figure 6.2"
+  },
+  "foot": {
+    "text": "The horizontal gap between rows 3 and 4 is the entire channel."
+  }
+}

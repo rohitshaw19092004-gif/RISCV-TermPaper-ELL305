@@ -1,0 +1,40 @@
+# LaTeX build artefacts. refs.bib is written at compile time by filecontents*
+# and must NOT be committed — the submission is one .tex file with no companions.
+refs.bib
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.lol
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.run.xml
+*.bcf
+*.auxlock
+*.figlist
+*.makefile
+*.pgf-plot.*
+
+# Obsidian: keep the vault config and plugins list, drop per-machine UI state
+RISC-V-TermPaper-Vault/.obsidian/workspace.json
+RISC-V-TermPaper-Vault/.obsidian/workspace-mobile.json
+# Community plugin code is re-installed by Obsidian from community-plugins.json;
+# no need to carry a 5 MB bundle in the paper's repository.
+RISC-V-TermPaper-Vault/.obsidian/plugins/
+RISC-V-TermPaper-Vault/.trash/
+
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Build outputs and Python caches
+build/
+__pycache__/
+*.pyc

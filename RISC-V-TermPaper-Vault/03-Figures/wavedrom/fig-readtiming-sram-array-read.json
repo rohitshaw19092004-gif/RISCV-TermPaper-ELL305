@@ -1,0 +1,41 @@
+{
+  "signal": [
+    {
+      "name": "clk",
+      "wave": "P......."
+    },
+    {
+      "name": "precharge",
+      "wave": "1..0..1."
+    },
+    {
+      "name": "WL (word line)",
+      "wave": "0..1...0"
+    },
+    {
+      "name": "BL / BLn",
+      "wave": "2..x..3.",
+      "data": [
+        "precharged",
+        "dV resolved"
+      ]
+    },
+    {
+      "name": "sense enable",
+      "wave": "0....1.0"
+    },
+    {
+      "name": "data out",
+      "wave": "z....x4.",
+      "data": [
+        "valid"
+      ]
+    }
+  ],
+  "head": {
+    "text": "SRAM array read - fig:readtiming (textbook 7.4.1, Static RAM)"
+  },
+  "foot": {
+    "text": "Equivalent tikz-timing source is in the .tex; see Appendix B."
+  }
+}

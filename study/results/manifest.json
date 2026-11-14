@@ -1,0 +1,38 @@
+{
+ "cc": "Apple clang version 21.0.0 (clang-2100.4.1.1)",
+ "python": "3.14.7",
+ "qemu": "QEMU emulator version 11.0.1",
+ "results_sha256": {
+  "baseline.csv": "c5b174657e2bc5460d2dc3da4c15443e36fcdbf96fc7626be28439426c20c985",
+  "cache_sweep.csv": "4c0103cd4b001f0f902f6fff55b2ce28e0e2fe012c694951252e51685aa7f7e3",
+  "composition.csv": "c93d4c650e82945eca23ca4b4ac9915568a0b703b7a8dbf59afee059f69b3ed6",
+  "defence.csv": "fb729380cede59215d0b32b26a2457ff0c18b211e4f26c6074c5644f9f6c540d",
+  "domains.csv": "79ceea0a3ef2067374dc47b5bbd3a0b3839d775109f46e8414f38cd6566a5cd1",
+  "invariants.csv": "c5b13b99324f30ebcaf6029efcf733be10cebcdb12bd574d84767614c5c69962",
+  "predictor.csv": "7c67cbf12bf2db2b86a482fe0a1620be20749ae4254d74e8dad9bbe1763d42bf",
+  "random.csv": "98b85f9000145e56f055606e964026a904c2b9013c1a29f802d9a1a87dbfd151",
+  "seeds.csv": "22f08a0769ba9faac8ea14b1478459889b9574ea271c2c763ff3a8bec7b319e9",
+  "sensitivity.csv": "6ee6bf849186e7331d379b8ede54cb745a1b103f485afb7c6ec4f1cae09a2886",
+  "unit_tests.csv": "94ba3bcba12950908729755fe4c058e5392fd6125877e6e953da5a2b283679b3",
+  "validation.csv": "0fe4e54bbd3a3d8f5c58200a18dbd892eb3cdd636bb7d7e4f96e62d44bc5ec8b",
+  "window.csv": "e089c90612b3ea2c91389ad3f04758020ee8aa92981a1f291447df2e27077b38"
+ },
+ "sources_sha256": {
+  "reference.py": "56353b077dd7129e78a8696b90e643e19ac3f3a838efc8fc376d73d50ca7424b",
+  "run_study.py": "1709472b085a1c5c914c9e4fc71a77ef95a259d652211a31a85b489d6a40b54d",
+  "rvasm.py": "887c969bb28fa7e867f04903cfeb0a97547dca45d4c9d7e7ea831f056434ce48",
+  "rvmodel.c": "a30e2a4a22f85cc8f3ba11da6fefca16e739701887fd6ec343168946cbe37dac",
+  "workloads/bsearch.s": "6b5a9ed09f6d09ed3005006775188dc12fc05cec7b5d2c26030941789013aa85",
+  "workloads/bstree.s": "14b6ac217df5b45a80ce1167532ae988f2325652151e4b814d99da8075c31b59",
+  "workloads/crc32.s": "4cacdb6cc8f989253894880f3d3adcf06a3a33c44da65b36c6c46de366478f2d",
+  "workloads/crt.s": "ce33827a437e1f6d46ff132cbcb3146b8704b8ef76ce68a7833f178a414c2532",
+  "workloads/fibcall.s": "d23046f673b358ba87c674aef8acd97403e95fbab0eacec26b2afd544dc1c377",
+  "workloads/hashtab.s": "812fbb1634ecb81fff600c666ea7042d5e1a9eacfc3868c25d1b68e98784f971",
+  "workloads/heapsort.s": "91768fccf2b9d531385ffb129b353f32033254b41d062b436d745677ed6a4031",
+  "workloads/listwalk.s": "ebb78820ce2fcc415318749577054b052d154a38f747827e74dfe8e3c4bf5e02",
+  "workloads/matmul.s": "2e2f2a9174b02da50aa525862faf111d1d8a63d47882282339c0e38edc29fc6f",
+  "workloads/sieve.s": "0f60b4dc151e9ad5a4eac018e5441c08146e4ef030fe83a354b6805889f0d2dc",
+  "workloads/stream.s": "0fa09b96f58d5157c732b38be3bf666042d9a6dcaecd56fad43abdce03c83d8d",
+  "workloads/strsearch.s": "45327a878e7a63b1c97d9496284eae079461ba9db0607df2719505e562ef06e7"
+ }
+}

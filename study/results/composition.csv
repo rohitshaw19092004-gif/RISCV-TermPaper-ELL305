@@ -1,0 +1,26 @@
+pair,isolation,speculation_defence,s_a_pct,s_b_pct,s_ab_pct,additive_pct,multiplicative_pct,interaction_pct
+crc32+hashtab,flush + colouring,stt,13.427,2.657,17.681,16.084,16.441,1.597
+crc32+hashtab,flush + colouring,dom,13.427,27.356,47.991,40.783,44.456,7.208
+crc32+hashtab,way partitioning,stt,16.581,2.657,19.999,19.239,19.679,0.760
+crc32+hashtab,way partitioning,invis-v,16.581,6.367,26.457,22.948,24.004,3.509
+crc32+hashtab,randomised LLC,nda,0.272,3.346,3.686,3.618,3.627,0.068
+bsearch+stream,flush + colouring,stt,11.732,4.099,15.565,15.831,16.312,-0.266
+bsearch+stream,flush + colouring,dom,11.732,34.462,44.071,46.195,50.238,-2.123
+bsearch+stream,way partitioning,stt,19.506,4.099,24.617,23.604,24.404,1.013
+bsearch+stream,way partitioning,invis-v,19.506,1.653,14.971,21.158,21.481,-6.188
+bsearch+stream,randomised LLC,nda,-0.036,4.575,4.824,4.539,4.538,0.284
+heapsort+matmul,flush + colouring,stt,2.139,0.189,3.069,2.327,2.331,0.742
+heapsort+matmul,flush + colouring,dom,2.139,1.068,2.810,3.207,3.230,-0.397
+heapsort+matmul,way partitioning,stt,4.720,0.189,5.585,4.909,4.918,0.676
+heapsort+matmul,way partitioning,invis-v,4.720,0.053,3.263,4.774,4.776,-1.511
+heapsort+matmul,randomised LLC,nda,0.024,0.292,0.322,0.316,0.316,0.006
+listwalk+sieve,flush + colouring,stt,94.711,0.000,94.711,94.712,94.712,-0.000
+listwalk+sieve,flush + colouring,dom,94.711,1.500,95.815,96.212,97.632,-0.397
+listwalk+sieve,way partitioning,stt,121.960,0.000,121.960,121.960,121.961,-0.000
+listwalk+sieve,way partitioning,invis-v,121.960,0.046,122.132,122.006,122.063,0.125
+listwalk+sieve,randomised LLC,nda,5.752,0.087,5.840,5.839,5.844,0.001
+bstree+strsearch,flush + colouring,stt,11.784,2.615,14.406,14.399,14.707,0.008
+bstree+strsearch,flush + colouring,dom,11.784,1.643,13.429,13.427,13.621,0.002
+bstree+strsearch,way partitioning,stt,27.578,2.615,29.505,30.192,30.913,-0.687
+bstree+strsearch,way partitioning,invis-v,27.578,0.027,26.743,27.605,27.612,-0.862
+bstree+strsearch,randomised LLC,nda,0.250,3.459,3.709,3.708,3.717,0.001
