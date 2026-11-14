@@ -13,9 +13,9 @@ tags: [chapter, status/drafted]
 **Word budget:** 1600 in v0.1 → **5000** target (+3400 to write)
 
 ## Section structure as drafted
-- Organising the design space
+- Organizing the design space
 - Isolation: partitioning and flushing
-- Obscuring: randomised caches
+- Obscuring: randomized caches
 - Hiding and undoing speculative effects
 - Restricting speculation: information-flow tracking
 - Architectural containment in RISC-V

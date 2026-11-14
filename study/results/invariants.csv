@@ -10,7 +10,7 @@ property,measured,required,holds
 dependent transient loads executed with no defense,7221,> 0,yes
 "cross-domain evictions, way partitioning (all levels + TLB)",0,0,yes
 "predictions made from the other domain's entries, partitioned predictors",0,0,yes
-"cross-domain evictions in L2 and LLC, page colouring",0,0,yes
+"cross-domain evictions in L2 and LLC, page coloring",0,0,yes
 "first-level, TLB and predictor residue after a flush",0,0,yes
 "predictions made from the other domain's entries, flushed predictors",0,0,yes
 cross-domain evictions with no isolation (first level),54406,> 0,yes

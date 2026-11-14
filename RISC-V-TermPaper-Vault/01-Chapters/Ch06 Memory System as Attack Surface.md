@@ -15,7 +15,7 @@ tags: [chapter, status/drafted]
 
 ## Section structure as drafted
 - Locality, hierarchy, and the size of the signal
-- Cache organisation and the address split
+- Cache organization and the address split
 - The quantitative model
 - The four measurement primitives
 - Virtual memory and the translation path

@@ -5,7 +5,7 @@ tags: [experiment, status/not-started]
 status: not-started
 ---
 
-# E1: Latency characterisation
+# E1: Latency characterization
 
 **Answers:** RQ1, RQ2
 **What it does:** Measured hit/miss distributions for L1, L2, LLC and DRAM on both cores.
@@ -24,7 +24,7 @@ status: not-started
 ## Threats to validity
 - Simulated timing is not silicon timing: trends and relative costs only.
 - Microbenchmarks written to exercise a channel flatter the attack.
-- A self-implemented defense may be less optimised than its authors' version.
+- A self-implemented defense may be less optimized than its authors' version.
 
 ## Results
 _(paste raw numbers here; the paper gets the cleaned version)_

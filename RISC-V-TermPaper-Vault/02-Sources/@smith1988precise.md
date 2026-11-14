@@ -22,12 +22,12 @@ status: to-read
 
 ### Current wording in the draft
 > The definition quantifies over *architectural* state only, because when the
-> mechanism was standardised in the form we still use [[@smith1988precise]],
+> mechanism was standardized in the form we still use [[@smith1988precise]],
 > that was the only state anyone had reason to care about.
 
 ## Why it was added
 Added during the [[Correction pass v0.1]]. The draft asserted a date ("in 1988,
-when the mechanism was standardised") with no citation, the only uncited
+when the mechanism was standardized") with no citation, the only uncited
 historical claim in a paper that cites everything else. This is the reference
 that claim rests on.
 

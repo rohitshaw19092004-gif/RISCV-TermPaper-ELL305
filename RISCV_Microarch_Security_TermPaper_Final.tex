@@ -1024,7 +1024,7 @@
 
 
 %% --- glossary entries (printed by \printnoidxglossary in the front matter) ---
-\newglossaryentry{microarchitecture}{name={microarchitecture},description={The hardware organisation that implements an ISA: caches, TLBs, predictors, reorder buffer, queues and buffers. It is chosen for speed and is not described by the functional contract of the ISA.}}
+\newglossaryentry{microarchitecture}{name={microarchitecture},description={The hardware organization that implements an ISA: caches, TLBs, predictors, reorder buffer, queues and buffers. It is chosen for speed and is not described by the functional contract of the ISA.}}
 \newglossaryentry{microarchitecturalstate}{name={microarchitectural state},description={Processor state that a correct implementation is not obliged to restore on an exception or a context switch, such as cache contents, TLB entries, predictor tables and queue occupancy.}}
 \newglossaryentry{architecturalstate}{name={architectural state},description={What the ISA defines and a program can name: its integer registers, its PC, the CSRs it may access, and memory.}}
 \newglossaryentry{cache}{name={cache},description={A small, fast store of recently used memory blocks. A hit costs a few cycles and a miss goes on to a slower level; cache timing attacks measure exactly that difference.}}
@@ -1080,8 +1080,8 @@
 \newglossaryentry{receiver}{name={receiver},description={The structure that an observer measures to recover what a transmitter encoded.}}
 \newglossaryentry{mistraining}{name={mistraining},description={Exercising a prediction structure so that a later prediction made for another piece of code is wrong in a chosen way.}}
 \newglossaryentry{partitioning}{name={partitioning},description={A defense class dividing a shared resource by way or by set so that no domain can allocate into another's share.}}
-\newglossaryentry{pagecolouring}{name={page colouring},description={Set partitioning performed by the operating system: physical pages are allocated so that different domains map to disjoint cache sets. The number of available colours is the size of one cache way divided by the page size.}}
-\newglossaryentry{randomisation}{name={randomisation},description={A defense class that keeps sharing but makes the mapping from address to cache set a keyed function that is changed periodically.}}
+\newglossaryentry{pagecoloring}{name={page coloring},description={Set partitioning performed by the operating system: physical pages are allocated so that different domains map to disjoint cache sets. The number of available colors is the size of one cache way divided by the page size.}}
+\newglossaryentry{randomization}{name={randomization},description={A defense class that keeps sharing but makes the mapping from address to cache set a keyed function that is changed periodically.}}
 \newglossaryentry{invisiblespeculation}{name={invisible speculation},description={A defense class that lets loads execute speculatively but keeps their effect out of the cache hierarchy until they pass their visibility point.}}
 \newglossaryentry{tainttracking}{name={taint tracking},description={A defense class that marks the results of speculative accesses and delays any instruction that would transmit a marked value until the access can no longer be squashed.}}
 \newglossaryentry{ipc}{name={instructions per cycle (IPC)},description={The reciprocal of CPI. A ratio of IPCs equals a ratio of execution times only if the instruction count and the clock frequency are unchanged.}}
@@ -1375,24 +1375,24 @@
 \expandafter\def\csname R@geo.spectre.nospec\endcsname{17.9}
 \expandafter\def\csname R@geo.spectre.stt\endcsname{1.2}
 \expandafter\def\csname R@geo.spectre.undo\endcsname{1.9}
-\expandafter\def\csname R@inter.Colour.cross_predictions\endcsname{3}
-\expandafter\def\csname R@inter.Colour.l1d_cross_evictions\endcsname{329}
-\expandafter\def\csname R@inter.Colour.l2_cross_evictions\endcsname{0}
-\expandafter\def\csname R@inter.Colour.llc_cross_evictions\endcsname{0}
-\expandafter\def\csname R@inter.Colour.residue_btb\endcsname{7}
-\expandafter\def\csname R@inter.Colour.residue_l1d\endcsname{421}
-\expandafter\def\csname R@inter.Colour.residue_pht\endcsname{257}
-\expandafter\def\csname R@inter.Colour.residue_tlb\endcsname{22}
-\expandafter\def\csname R@inter.Colour.tlb_cross_evictions\endcsname{13}
-\expandafter\def\csname R@inter.Flush+Colour.cross_predictions\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.l1d_cross_evictions\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.l2_cross_evictions\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.llc_cross_evictions\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.residue_btb\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.residue_l1d\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.residue_pht\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.residue_tlb\endcsname{0}
-\expandafter\def\csname R@inter.Flush+Colour.tlb_cross_evictions\endcsname{0}
+\expandafter\def\csname R@inter.Color.cross_predictions\endcsname{3}
+\expandafter\def\csname R@inter.Color.l1d_cross_evictions\endcsname{329}
+\expandafter\def\csname R@inter.Color.l2_cross_evictions\endcsname{0}
+\expandafter\def\csname R@inter.Color.llc_cross_evictions\endcsname{0}
+\expandafter\def\csname R@inter.Color.residue_btb\endcsname{7}
+\expandafter\def\csname R@inter.Color.residue_l1d\endcsname{421}
+\expandafter\def\csname R@inter.Color.residue_pht\endcsname{257}
+\expandafter\def\csname R@inter.Color.residue_tlb\endcsname{22}
+\expandafter\def\csname R@inter.Color.tlb_cross_evictions\endcsname{13}
+\expandafter\def\csname R@inter.Flush+Color.cross_predictions\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.l1d_cross_evictions\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.l2_cross_evictions\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.llc_cross_evictions\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.residue_btb\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.residue_l1d\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.residue_pht\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.residue_tlb\endcsname{0}
+\expandafter\def\csname R@inter.Flush+Color.tlb_cross_evictions\endcsname{0}
 \expandafter\def\csname R@inter.Flush.cross_predictions\endcsname{0}
 \expandafter\def\csname R@inter.Flush.l1d_cross_evictions\endcsname{0}
 \expandafter\def\csname R@inter.Flush.l2_cross_evictions\endcsname{694}
@@ -1429,38 +1429,38 @@
 \expandafter\def\csname R@inter.shared.residue_pht\endcsname{257}
 \expandafter\def\csname R@inter.shared.residue_tlb\endcsname{22}
 \expandafter\def\csname R@inter.shared.tlb_cross_evictions\endcsname{13}
-\expandafter\def\csname R@iso.Colour.bsearch+stream\endcsname{17.5}
-\expandafter\def\csname R@iso.Colour.bsearch+stream.max\endcsname{25.1}
-\expandafter\def\csname R@iso.Colour.bsearch+stream.min\endcsname{11.3}
-\expandafter\def\csname R@iso.Colour.bstree+strsearch\endcsname{11.1}
-\expandafter\def\csname R@iso.Colour.bstree+strsearch.max\endcsname{13.0}
-\expandafter\def\csname R@iso.Colour.bstree+strsearch.min\endcsname{10.0}
-\expandafter\def\csname R@iso.Colour.crc32+hashtab\endcsname{9.0}
-\expandafter\def\csname R@iso.Colour.crc32+hashtab.max\endcsname{9.6}
-\expandafter\def\csname R@iso.Colour.crc32+hashtab.min\endcsname{8.2}
-\expandafter\def\csname R@iso.Colour.geo\endcsname{25.7}
-\expandafter\def\csname R@iso.Colour.heapsort+matmul\endcsname{1.2}
-\expandafter\def\csname R@iso.Colour.heapsort+matmul.max\endcsname{1.4}
-\expandafter\def\csname R@iso.Colour.heapsort+matmul.min\endcsname{1.0}
-\expandafter\def\csname R@iso.Colour.listwalk+sieve\endcsname{117.7}
-\expandafter\def\csname R@iso.Colour.listwalk+sieve.max\endcsname{144.2}
-\expandafter\def\csname R@iso.Colour.listwalk+sieve.min\endcsname{94.2}
-\expandafter\def\csname R@iso.Flush+Colour.bsearch+stream\endcsname{17.9}
-\expandafter\def\csname R@iso.Flush+Colour.bsearch+stream.max\endcsname{25.6}
-\expandafter\def\csname R@iso.Flush+Colour.bsearch+stream.min\endcsname{11.7}
-\expandafter\def\csname R@iso.Flush+Colour.bstree+strsearch\endcsname{12.0}
-\expandafter\def\csname R@iso.Flush+Colour.bstree+strsearch.max\endcsname{14.1}
-\expandafter\def\csname R@iso.Flush+Colour.bstree+strsearch.min\endcsname{10.9}
-\expandafter\def\csname R@iso.Flush+Colour.crc32+hashtab\endcsname{12.9}
-\expandafter\def\csname R@iso.Flush+Colour.crc32+hashtab.max\endcsname{13.5}
-\expandafter\def\csname R@iso.Flush+Colour.crc32+hashtab.min\endcsname{12.1}
-\expandafter\def\csname R@iso.Flush+Colour.geo\endcsname{27.1}
-\expandafter\def\csname R@iso.Flush+Colour.heapsort+matmul\endcsname{2.2}
-\expandafter\def\csname R@iso.Flush+Colour.heapsort+matmul.max\endcsname{2.4}
-\expandafter\def\csname R@iso.Flush+Colour.heapsort+matmul.min\endcsname{2.0}
-\expandafter\def\csname R@iso.Flush+Colour.listwalk+sieve\endcsname{117.9}
-\expandafter\def\csname R@iso.Flush+Colour.listwalk+sieve.max\endcsname{144.4}
-\expandafter\def\csname R@iso.Flush+Colour.listwalk+sieve.min\endcsname{94.7}
+\expandafter\def\csname R@iso.Color.bsearch+stream\endcsname{17.5}
+\expandafter\def\csname R@iso.Color.bsearch+stream.max\endcsname{25.1}
+\expandafter\def\csname R@iso.Color.bsearch+stream.min\endcsname{11.3}
+\expandafter\def\csname R@iso.Color.bstree+strsearch\endcsname{11.1}
+\expandafter\def\csname R@iso.Color.bstree+strsearch.max\endcsname{13.0}
+\expandafter\def\csname R@iso.Color.bstree+strsearch.min\endcsname{10.0}
+\expandafter\def\csname R@iso.Color.crc32+hashtab\endcsname{9.0}
+\expandafter\def\csname R@iso.Color.crc32+hashtab.max\endcsname{9.6}
+\expandafter\def\csname R@iso.Color.crc32+hashtab.min\endcsname{8.2}
+\expandafter\def\csname R@iso.Color.geo\endcsname{25.7}
+\expandafter\def\csname R@iso.Color.heapsort+matmul\endcsname{1.2}
+\expandafter\def\csname R@iso.Color.heapsort+matmul.max\endcsname{1.4}
+\expandafter\def\csname R@iso.Color.heapsort+matmul.min\endcsname{1.0}
+\expandafter\def\csname R@iso.Color.listwalk+sieve\endcsname{117.7}
+\expandafter\def\csname R@iso.Color.listwalk+sieve.max\endcsname{144.2}
+\expandafter\def\csname R@iso.Color.listwalk+sieve.min\endcsname{94.2}
+\expandafter\def\csname R@iso.Flush+Color.bsearch+stream\endcsname{17.9}
+\expandafter\def\csname R@iso.Flush+Color.bsearch+stream.max\endcsname{25.6}
+\expandafter\def\csname R@iso.Flush+Color.bsearch+stream.min\endcsname{11.7}
+\expandafter\def\csname R@iso.Flush+Color.bstree+strsearch\endcsname{12.0}
+\expandafter\def\csname R@iso.Flush+Color.bstree+strsearch.max\endcsname{14.1}
+\expandafter\def\csname R@iso.Flush+Color.bstree+strsearch.min\endcsname{10.9}
+\expandafter\def\csname R@iso.Flush+Color.crc32+hashtab\endcsname{12.9}
+\expandafter\def\csname R@iso.Flush+Color.crc32+hashtab.max\endcsname{13.5}
+\expandafter\def\csname R@iso.Flush+Color.crc32+hashtab.min\endcsname{12.1}
+\expandafter\def\csname R@iso.Flush+Color.geo\endcsname{27.1}
+\expandafter\def\csname R@iso.Flush+Color.heapsort+matmul\endcsname{2.2}
+\expandafter\def\csname R@iso.Flush+Color.heapsort+matmul.max\endcsname{2.4}
+\expandafter\def\csname R@iso.Flush+Color.heapsort+matmul.min\endcsname{2.0}
+\expandafter\def\csname R@iso.Flush+Color.listwalk+sieve\endcsname{117.9}
+\expandafter\def\csname R@iso.Flush+Color.listwalk+sieve.max\endcsname{144.4}
+\expandafter\def\csname R@iso.Flush+Color.listwalk+sieve.min\endcsname{94.7}
 \expandafter\def\csname R@iso.Flush.bsearch+stream\endcsname{0.5}
 \expandafter\def\csname R@iso.Flush.bsearch+stream.max\endcsname{0.5}
 \expandafter\def\csname R@iso.Flush.bsearch+stream.min\endcsname{0.4}
@@ -2046,16 +2046,16 @@
 \expandafter\def\csname R@read.grade.max\endcsname{14.6}
 \expandafter\def\csname R@read.grade.mean\endcsname{12.5}
 \expandafter\def\csname R@read.grade.median\endcsname{11.7}
-\expandafter\def\csname R@read.grade.min\endcsname{11.4}
+\expandafter\def\csname R@read.grade.min\endcsname{11.3}
 \expandafter\def\csname R@read.poly.pct\endcsname{16.2}
 \expandafter\def\csname R@read.sentences\endcsname{739}
 \expandafter\def\csname R@read.unit.max\endcsname{280}
-\expandafter\def\csname R@read.words\endcsname{15\,057}
+\expandafter\def\csname R@read.words\endcsname{15\,055}
 \expandafter\def\csname R@read.wps\endcsname{20.4}
 %% END GENERATED read_macros
 
 %%=====================================================================
-%% COLOUR PALETTE AND SHARED TIKZ STYLES
+%% COLOR PALETTE AND SHARED TIKZ STYLES
 %%=====================================================================
 \definecolor{accent}{RGB}{20,70,130}      % structural / architectural
 \definecolor{attack}{RGB}{160,35,45}      % attack-related
@@ -2356,7 +2356,7 @@ written consent of the Indian Institute of Technology Delhi. Short extracts may
 be quoted for study, research or review if the source is acknowledged.
 
 \medskip
-\textbf{Cited material.} This report quotes, summarises, adapts and builds upon
+\textbf{Cited material.} This report quotes, summarizes, adapts and builds upon
 published work by other authors. Intellectual property rights in all such cited
 material remain with the \textbf{respective authors and copyright holders of the
 source}, and nothing in this assignment is intended to transfer, diminish or
@@ -2536,7 +2536,7 @@ goes through the same topics in the order of the prescribed
 textbook~\citep{sarangi2025basic} and asks of each mechanism what it remembers
 about earlier execution and who else can find that out. That question is what
 \uarchadj{} security is about, and answering it needs the course material at
-every step. A cache timing attack depends on the hit and miss behaviour
+every step. A cache timing attack depends on the hit and miss behavior
 described in textbook Chapter~11, while a Spectre\index{Spectre} attack needs branch
 prediction, out-of-order execution and precise exceptions\index{precise exceptions}, all from
 Chapter~10. The cost of a defense is worked out with the same performance
@@ -2554,7 +2554,7 @@ tools of the course are also used to put a price on security mechanisms. The iro
 law of performance, the average memory access time\index{average memory access time (AMAT)}, Amdahl\index{Amdahl's law}'s law, two-bit
 branch predictors and the reorder-buffer view of out-of-order execution all
 appear in \Cref{ch:tradeoffs} and \Cref{app:metrics}. The practical part, lastly,
-is the kind of artefact the course builds towards. The model study of
+is the kind of artifact the course builds towards. The model study of
 \Cref{ch:study} consists of eleven programs\index{kernels of the model study} written in RISC-V assembly, an
 instruction-set simulator that implements the datapath of textbook Chapter~9,
 and timing models of the pipeline, the caches and the predictors of textbook
@@ -2586,7 +2586,7 @@ SRAM, CAM and DRAM arrays as the physical place where state is kept and where
 the latency gap originates. &
 \Cref{ch:memories}, \Cref{app:arraymodel} \\
 Processor design & Ch.~9 &
-The reference datapath against which every optimisation is compared; the
+The reference datapath against which every optimization is compared; the
 functional core of the simulator. &
 \Cref{ch:proc}, \Cref{app:source} \\
 Pipelining, hazards, exceptions & Ch.~10 &
@@ -2605,7 +2605,7 @@ The cache as the measuring instrument of an attack; the memory-system model as
 a cost model. &
 \Cref{ch:memsys}, \Cref{app:caches} \\
 Virtual memory & \S11.4 &
-The TLB and the page walk as channels; page colouring as a defense. &
+The TLB and the page walk as channels; page coloring as a defense. &
 \Cref{ch:memsys,ch:multicore}, \Cref{app:priv} \\
 Multiprocessors and coherence & Ch.~12 &
 Shared caches, coherence transitions and multithreading as cross-domain
@@ -2690,7 +2690,7 @@ instructions that drive predictors and caches, and for the encoding space in
 which security instructions (barriers, flushes) must be placed. \\
 \addlinespace
 Ch.~7 & 7.4 (7.4.1 to 7.4.3) & Supporting &
-How SRAM cells are organised into arrays, how a CAM searches its contents, and
+How SRAM cells are organized into arrays, how a CAM searches its contents, and
 how DRAM keeps bits. Used in
 \Cref{ch:memories} as the physical explanation of why cache, TLB and predictor
 accesses have data-dependent latency at all. \\
@@ -2717,12 +2717,12 @@ and its refinements. Used in \Cref{ch:memsys} for every cache and TLB attack
 primitive and for the AMAT-based cost model of flushing and partitioning. \\
 \addlinespace
 Ch.~12 & 12.2, 12.3, 12.4 (12.4.1 to 12.4.6, 12.4.8) & \textbf{Primary} &
-Parallel software and Amdahl's law; how multiprocessors are organised;
+Parallel software and Amdahl's law; how multiprocessors are organized;
 coherence and consistency; shared caches, private caches kept coherent, and
 multithreaded cores.
  Used in
 \Cref{ch:multicore} for cross-core and cross-thread leakage. Cache partitioning
-and colouring, used there as defenses, are not textbook material and are
+and coloring, used there as defenses, are not textbook material and are
 drawn from the research literature instead. \\
 \bottomrule
 \end{tabularx}
@@ -2879,7 +2879,7 @@ Patterson~\citep{hennessy2019quantitative} is used as a secondary source.
 \section{The questions this paper answers}
 \label{sec:rqs}
 
-The paper is organised around five questions.
+The paper is organized around five questions.
 
 \begin{enumerate}[label=\textbf{RQ\arabic*.}, leftmargin=*]
   \item Where does the state live? Which \uarchadj{} structures of a
@@ -2916,7 +2916,7 @@ Rowhammer\index{Rowhammer}~\citep{kim2014rowhammer}, which corrupt state instead
 Weaknesses of cryptographic protocols and software memory-safety errors are
 also excluded, except where the latter interact with speculation.
 No attack program is developed or run in this paper. The practical part
-measures the behaviour of benign programs on a model, and what defenses
+measures the behavior of benign programs on a model, and what defenses
 cost.
 
 \section{Method}
@@ -2970,7 +2970,7 @@ measurements of a RISC-V chip, and are presented only as such.
         independent factors (\Cref{ch:tradeoffs,ch:study}).
 \end{enumerate}
 
-\section{Organisation, and the role of the appendices}
+\section{Organization, and the role of the appendices}
 
 \Cref{ch:isa} sets out the distinction between architecture and \uarch{}, the
 RISC-V execution model and the threat model\index{threat model}. \Cref{ch:memories} goes down to
@@ -2999,7 +2999,7 @@ describes the build and checks the submission against the guidelines.
 \begin{tocmapbox}
 Background: Chapter~1 of the textbook, which separates \emph{architecture}, the
 machine as programmers see it, from \emph{organization}, the hardware that
-realises it, and explains in \SecRef{1.4}, \SecRef{1.5} and \SecRef{1.7} how
+realizes it, and explains in \SecRef{1.4}, \SecRef{1.5} and \SecRef{1.7} how
 instructions are expressed, how an instruction set is chosen and how real
 machines are built; and the RISC-V material of Chapter~6: the base and its
 extensions in \SecRef{6.1.1}, the registers in \SecRef{6.1.2}, control transfer
@@ -3017,7 +3017,7 @@ The textbook opens with the distinction on which this paper depends. The
 and the \emph{organization} is the hardware built to provide that view. Two
 implementations of one ISA must agree on the value written into every
 architectural register and memory location, but they are free to differ in
-pipeline\index{pipeline} depth, issue width, cache sizes, predictor organisation and
+pipeline\index{pipeline} depth, issue width, cache sizes, predictor organization and
 replacement policy\index{replacement policy}, and in practice they do.
 
 To state the contract, restrict attention to a single hart running a
@@ -3063,7 +3063,7 @@ outlines what such a contract looks like.
 
 \subsection{Base ISAs and extensions}
 
-RISC-V is organised as a minimal integer ISA, RV32I or RV64I,\index{RISC-V!base integer ISA} to which optional standard
+RISC-V is organized as a minimal integer ISA, RV32I or RV64I,\index{RISC-V!base integer ISA} to which optional standard
 extensions are added~\citep{riscv-unpriv}.
 The original extensions are named by single letters: M for integer multiply
 and divide, A for atomic memory operations, F and D for single- and
@@ -3114,7 +3114,7 @@ which narrows what branch-target injection can reach, but that is a property of 
 implementation. \\
 \addlinespace
 \tcode{fence}, \tcode{fence.i}, \tcode{sfence.vma} &
-Ordering of memory accesses, synchronisation of instruction fetch,
+Ordering of memory accesses, synchronization of instruction fetch,
 invalidation of cached translations~\citep{riscv-unpriv,riscv-priv}. &
 Erasure or a speculation barrier. A \tcode{fence} orders memory operations and
 is not specified to remove cache lines or to stop speculative execution. \\
@@ -3245,7 +3245,7 @@ control registers, which is one reason why many of the hardware defenses in
 \caption[RISC-V base instruction formats]{The six base RISC-V instruction
 formats, drawn to bit scale (textbook \SecRef{6.5}). Because every format puts
 \code{rs1}, \code{rs2} and \code{rd} in fixed places, registers can be read
-while the instruction is still being decoded, an optimisation of the \uarch{}
+while the instruction is still being decoded, an optimization of the \uarch{}
 that the architecture makes possible. The offsets of B- and J-type
 instructions (red) give the targets of direct branches and jumps. The
 predictors learn from the resolved outcomes and targets of these instructions
@@ -3337,7 +3337,7 @@ A claim about leakage has to say who the observer is,\index{threat model} and th
 paper uses the four scenarios of \Cref{tab:threat}. The scenarios cannot be
 ranked by strength, because a sandboxed script, for example, shares more hardware with
 its victim than an unprivileged process on another core does but is allowed
-to execute less. Each attack discussed later is labelled with the scenarios in
+to execute less. Each attack discussed later is labeled with the scenarios in
 which it has been shown to work.
 
 \begin{table}[t]
@@ -3481,7 +3481,7 @@ two bit lines of its column.
 
   % --- precharge and sense amp blocks -------------------------------
   \node[memblk, font=\scriptsize, minimum width=2.4cm, minimum height=6mm] (pc) at (0,2.7)
-        {precharge / equalise};
+        {precharge / equalize};
   \draw (pc.west) -- (-3.0,2.7);  \draw (pc.east) -- (3.0,2.7);
   \node[memblk, font=\scriptsize, minimum width=2.4cm, minimum height=6mm] (sa) at (0,-2.3)
         {sense amplifier};
@@ -3513,7 +3513,7 @@ memory hierarchy are chosen with this in mind.
 
 \section{From cell to array}
 
-\Cref{fig:array} shows how the array is organised (textbook \SecRef{7.4.1}). The
+\Cref{fig:array} shows how the array is organized (textbook \SecRef{7.4.1}). The
 cells are arranged in two dimensions, and a decoder turns the address into a
 single asserted word line. Sense amplifiers convert the small differential
 voltages into logic levels, and a column multiplexer selects the bits that are
@@ -3554,7 +3554,7 @@ wanted. \Cref{fig:readtiming} shows the same access as a timing diagram.
          that software can easily measure.};
 \end{tikzpicture}%
 }
-\caption[Array organisation]{Organisation of an SRAM array (textbook
+\caption[Array organization]{Organization of an SRAM array (textbook
 \SecRef{7.4.1}). Every cache, TLB, branch target buffer and predictor table in
 \Cref{ch:memsys,ch:pipeline} is one or more instances of this structure, with
 different tag and comparison logic wrapped around it.}
@@ -3701,9 +3701,9 @@ that controls it~\citep{sarangi2025basic}.
 
 \section{Purpose of this chapter}
 
-Pipelining\index{pipeline}, speculation, caches and coherence are all optimisations of one
+Pipelining\index{pipeline}, speculation, caches and coherence are all optimizations of one
 simple machine. This chapter defines that machine, so that later chapters can
-say what each optimisation adds and what the added structure retains. The
+say what each optimization adds and what the added structure retains. The
 reference is a single-cycle RV64I datapath of the kind described in textbook
 \SecRef{9.2}.
 
@@ -3711,7 +3711,7 @@ The machine of \Cref{fig:datapath}, taken literally, has almost no \uarchadj{}
 channels. It has no cache, no predictor, no speculation and no sharing, and the
 time it takes depends only on the sequence of instructions. With this machine
 as the baseline, each channel that appears later can be attributed to a
-specific optimisation.
+specific optimization.
 
 \section{The single-cycle datapath}
 
@@ -3775,7 +3775,7 @@ specific optimisation.
 (textbook \SecRef{9.2}), with the control path of \SecRef{9.3} shown dotted. As
 drawn, this machine has essentially no \uarchadj{} side channels, because memory
 is a flat array with fixed latency, the branch outcome is known before the next
-fetch, and nothing is shared. The four red boxes name the optimisations that later chapters
+fetch, and nothing is shared. The four red boxes name the optimizations that later chapters
 add, and the channel each one opens.}
 \label{fig:datapath}\index{side channel}
 \end{figure}
@@ -3816,27 +3816,27 @@ which persists.\index{control unit}
 
 \Cref{tab:stagestate} goes through the stages again and names, for each one,
 the structure that a high-performance implementation adds, the information
-that structure retains, and the chapter that analyses it.
+that structure retains, and the chapter that analyzes it.
 
 \begin{table}[t]
 \centering
-\caption[Pipeline stages and the state added by optimisation]{The six steps of
+\caption[Pipeline stages and the state added by optimization]{The six steps of
 the reference datapath of \Cref{fig:datapath}, of which decode and operand
 fetch form one stage of the pipeline of \Cref{fig:pipeline}; the \uarchadj{}
 structures a high-performance implementation adds to each; and where in this
-paper the resulting channel is analysed.}
+paper the resulting channel is analyzed.}
 \label{tab:stagestate}
 \footnotesize
 \begin{tabularx}{\linewidth}{@{}p{2.1cm}>{\raggedright\arraybackslash}p{3.8cm}X>{\raggedright\arraybackslash}p{1.9cm}@{}}
 
 \toprule
-\textbf{Stage} & \textbf{Structure added} & \textbf{Information retained} & \textbf{Analysed in} \\
+\textbf{Stage} & \textbf{Structure added} & \textbf{Information retained} & \textbf{Analyzed in} \\
 \midrule
 Fetch    & I-cache, BTB, RAS, direction predictor &
 Which lines were fetched; which branches were taken; call/return targets &
 \Cref{ch:pipeline,ch:memsys} \\
 Decode   & Micro-op cache or decoded-instruction buffer, where a core has one &
-Which instructions were decoded recently & not analysed here \\
+Which instructions were decoded recently & not analyzed here \\
 Operand fetch & Physical register file, rename map, issue queue &
 Occupancy and readiness, hence dependence structure & \Cref{ch:pipeline} \\
 Execute  & Multiple functional units, bypass network, execution window &
@@ -3866,7 +3866,7 @@ several instructions per cycle\index{instructions per cycle (IPC)} out of progra
 reorder buffer\index{reorder buffer (ROB)} and predicts branches from their history. It is the open core on which Spectre\index{Spectre} attacks were
 first replicated.
 
-The simulator written for \Cref{ch:study} is organised in two layers that
+The simulator written for \Cref{ch:study} is organized in two layers that
 correspond to this chapter and the next. Its functional core executes RV64IM
 instructions one at a time, as the reference machine does, and is checked
 against QEMU\index{QEMU}. Its timing layer then adds the pipeline, the predictors and the
@@ -3904,7 +3904,7 @@ timing difference that can only be observed into one that can be steered.
 \section{The pipeline and its hazards}
 
 \Cref{fig:pipeline} shows the five-stage pipeline of textbook \SecRef{10.2}.
-Rocket\index{Rocket core}~\citep{asanovic2016rocket} is organised in essentially this way.\index{pipeline!five-stage}
+Rocket\index{Rocket core}~\citep{asanovic2016rocket} is organized in essentially this way.\index{pipeline!five-stage}
 Pipeline registers hold the state of the instructions in flight, of which there
 can be up to five. \Cref{tab:hazards} lists the three hazard classes of
 \SecRef{10.4} and what the usual way of resolving each one leaves behind.
@@ -4159,7 +4159,7 @@ Out-of-order execution is introduced in textbook \SecRef{10.11.4}.\index{out-of-
 After renaming, instructions wait in issue queues and start whenever their
 inputs become available~\citep{tomasulo1967efficient}, and a reorder buffer then
 retires them in the original order.\index{reorder buffer (ROB)}\glsadd{rob} \Cref{fig:ooo}
-shows the organisation.
+shows the organization.
 
 \begin{figure}[t]
 \centering
@@ -4186,7 +4186,7 @@ shows the organisation.
        {\textbf{execution window}: instructions that may execute speculatively\\
         before any of them is known to be correct};
 \end{tikzpicture}
-\caption[Out-of-order organisation]{Organisation of an out-of-order
+\caption[Out-of-order organization]{Organization of an out-of-order
 core (\SecRef{10.11.4}). Instructions execute in any order, and the reorder
 buffer makes the architectural result sequential and precise again. Its size,
 with that of the issue and load queues, limits the instructions in flight.
@@ -4436,7 +4436,7 @@ miss latency is drawn compressed, and the true gap is far wider, as
 \label{fig:hitmiss}
 \end{figure}
 
-\section{Cache organisation and the address split}
+\section{Cache organization and the address split}
 
 Textbook \SecRef{11.2} builds up the set-associative cache. A lookup divides the
 address into three parts (\Cref{fig:addrsplit}).\index{cache!address split}\glsadd{blockoffset}\glsadd{index}\glsadd{set}\glsadd{tag}\glsadd{way}\glsadd{cacheline} The low
@@ -4524,7 +4524,7 @@ already requested but has not yet received.
 
 \begin{table}[t]
 \centering
-\caption[Baseline behaviour of the kernels]{The eleven kernels on the baseline
+\caption[Baseline behavior of the kernels]{The eleven kernels on the baseline
 model: instructions executed (millions), instructions per cycle, misprediction
 rate of conditional branches (\%), share of loads that each level serves (\%),
 and the mean load latency in cycles decomposed as AMAT (\Cref{eq:amat}) plus
@@ -4555,7 +4555,7 @@ page-walk time plus time spent waiting for a line already in flight.}
 \begin{finding}
 For the three kernels that are served almost entirely by the first-level
 cache, \code{matmul}, \code{fibcall} and \code{strsearch}, \Cref{eq:amat}
-predicts the mean load latency to within one per cent. For \code{listwalk} it predicts
+predicts the mean load latency to within one percent. For \code{listwalk} it predicts
 \R{base.listwalk.amat_formula} cycles and the model gives
 \R{base.listwalk.mean_load_latency}. Of the difference,
 \R{base.listwalk.walk_per_load} cycles per load go to page walks and
@@ -4574,7 +4574,7 @@ and \Cref{ch:tradeoffs} measures each of them. Flushing raises the miss rates
 for a while after every switch, because the working set has to be fetched
 again. Partitioning takes capacity away from each domain, which raises $m$ by
 an amount that depends on how close the working set is to the capacity that
-remains. Randomisation leaves the capacity intact, adds latency to the level
+remains. Randomization leaves the capacity intact, adds latency to the level
 whose index is encrypted, and changes which lines conflict. The equation cannot
 price defenses that act on the pipeline, such as delaying loads, which need the
 timing model of \Cref{ch:study}.
@@ -4619,7 +4619,7 @@ capacity of the LLC\index{last-level cache}.
 \end{tikzpicture}
 %% END GENERATED fig_l1sweep
 \caption[First-level miss rate against size and associativity]{First-level
-data-cache miss rate of six kernels in the model, in per cent of all accesses
+data-cache miss rate of six kernels in the model, in percent of all accesses
 and not of committed loads as in \Cref{tab:baseline}, against cache size at
 eight ways (left) and against associativity at 32\,KiB (right), both axes
 logarithmic. Halving the
@@ -4663,7 +4663,7 @@ working set fits in either case are unaffected.}
 The curves in \Cref{fig:llcsweep} have a sharp step, because a kernel is indifferent to
 capacity until its working set no longer fits and from that point slows
 down heavily. The isolation results of \Cref{ch:tradeoffs} are easiest to read
-with this behaviour in mind.
+with this behavior in mind.
 
 \section{The measurement primitives}
 \label{sec:primitives}
@@ -4751,8 +4751,8 @@ first-level cache indexed with bits of the page offset, such a set can be
 written down directly, but for a physically indexed last-level cache the observer
 does not know its physical addresses and has to find conflicting lines by
 experiment. The fastest published search needs a number of accesses that grows
-linearly with the pool of candidate addresses~\citep{vila2019theory}. Randomised
-caches (\Cref{sec:randomisation}) are designed to defeat this search.
+linearly with the pool of candidate addresses~\citep{vila2019theory}. Randomized
+caches (\Cref{sec:randomization}) are designed to defeat this search.
 
 \Needspace{15\baselineskip}
 \begin{lstlisting}[language=pseudo, caption={Prime+Probe against a single cache set,
@@ -4846,7 +4846,7 @@ information flow and are not tied to one structure.
 \begin{tocmapbox}
 Background: textbook \SecRef{12.2} on writing software for several processors,
 with Amdahl's law in \SecRef{12.2.3}; \SecRef{12.3} on the ways multiprocessors
-can be organised; and \SecRef{12.4} on machines that run several instruction
+can be organized; and \SecRef{12.4} on machines that run several instruction
 streams: how software sees them (\SecRef{12.4.1}), how caches are kept
 consistent (\SecRef{12.4.2}) and in which order memory operations become
 visible (\SecRef{12.4.3}), how memory is physically arranged (\SecRef{12.4.4}),
@@ -4861,7 +4861,7 @@ chip the observer can instead run on a different core concurrently with
 the victim, and the two remain joined by the LLC\index{last-level cache}, the on-chip network, the
 memory controller and DRAM\index{DRAM}. This is scenario S3 of \Cref{tab:threat}, which matters
 commercially because it is the setting of cloud co-tenancy.
-\Cref{fig:multicore} shows the organisation of \SecRef{12.3} to \SecRef{12.4.4}
+\Cref{fig:multicore} shows the organization of \SecRef{12.3} to \SecRef{12.4.4}
 for a four-core system.
 
 \begin{figure}[t]
@@ -4972,7 +4972,7 @@ order~\citep{riscv-unpriv}. What matters for this paper is that a memory fence
 is an ordering instruction.\index{fence instruction!ordering versus erasure}
 It does not remove cache lines, TLB\index{translation-lookaside buffer (TLB)} entries or predictor state, and the
 specification does not define it as a barrier to speculative execution. Whether
-a particular instruction happens to serialise the pipeline\index{pipeline} on a particular core
+a particular instruction happens to serialize the pipeline\index{pipeline} on a particular core
 is a property of that core. The measurements on commercial RISC-V cores\index{commercial RISC-V processors}
 discussed in \Cref{ch:transient} found no cheap, portable barrier. Erasing
 state is a different operation from ordering memory accesses, and the
@@ -4998,7 +4998,7 @@ space stay resident. Multithreading raises throughput by sharing the execution
 ports between threads, which lets each thread time the other's use of them.
 \end{takeaway}
 
-\section{Partitioning and colouring}
+\section{Partitioning and coloring}
 \label{sec:partitioning}
 
 The textbook explains why caches are shared (\SecRef{12.4.5},
@@ -5027,8 +5027,8 @@ mechanisms, and \Cref{app:isolation} gives the details of each.
      falls; no eviction can cross the boundary, so the channel closes. Cost scales
      with how badly each working set needs the lost capacity.};
 
-  % --- set partitioning / colouring ---
-  \node[font=\scriptsize\bfseries, anchor=west] at (7.0,3.1) {(b) Set colouring (page-based)};
+  % --- set partitioning / coloring ---
+  \node[font=\scriptsize\bfseries, anchor=west] at (7.0,3.1) {(b) Set coloring (page-based)};
   \foreach \s in {0,...,7}{
     \pgfmathsetmacro{\yy}{2.7-\s*0.19}
     \ifodd\s
@@ -5042,11 +5042,11 @@ mechanisms, and \Cref{app:isolation} gives the details of each.
      no hardware change at all, but constrains the page allocator and interacts
      badly with huge pages.};
 \end{tikzpicture}
-\caption[Two partitioning mechanisms]{Way partitioning and set colouring,
+\caption[Two partitioning mechanisms]{Way partitioning and set coloring,
 applied to the shared caches of \SecRef{12.4.5}. Both prevent one domain from
 displacing the lines of another, and both reduce the capacity left to each
 domain.}
-\label{fig:partition}\index{cache partitioning}\index{page colouring}
+\label{fig:partition}\index{cache partitioning}\index{page coloring}
 \end{figure}
 
 \subsection{Way partitioning}
@@ -5058,24 +5058,24 @@ in full, and it isolates hits and replacement metadata\index{replacement policy}
 allocation technology on commercial processors\index{commercial RISC-V processors} restricts fills only, and
 CATalyst~\citep{liu2016catalyst} builds a defense on it.
 
-\subsection{Page colouring}
+\subsection{Page coloring}
 
-\emph{Page colouring} needs no hardware support. The operating system gives each\index{page colouring}\glsadd{pagecolouring}
+\emph{Page coloring} needs no hardware support. The operating system gives each\index{page coloring}\glsadd{pagecoloring}
 domain physical pages whose frame numbers differ in the bits that take part in
 the cache index, so that the domains occupy disjoint sets~\citep{kessler1992page}.
-The number of colours that a cache offers is the size of one of its ways
-divided by the page size, and this number decides where colouring can be used.
+The number of colors that a cache offers is the size of one of its ways
+divided by the page size, and this number decides where coloring can be used.
 \begin{itemize}
   \item A 32\,KiB eight-way first-level cache\index{first-level cache} has ways of 4\,KiB, which is one
-        colour, so it cannot be coloured at all with 4\,KiB pages.
-  \item The 256\,KiB eight-way second level of the model has 8 colours, and its
+        color, so it cannot be colored at all with 4\,KiB pages.
+  \item The 256\,KiB eight-way second level of the model has 8 colors, and its
         2\,MiB sixteen-way last level has 32.
-  \item With 2\,MiB pages neither cache has any colours, because a page then
-        covers every set. Large pages are compatible with colouring in
+  \item With 2\,MiB pages neither cache has any colors, because a page then
+        covers every set. Large pages are compatible with coloring in
         principle, but for caches of this size they remove the index bits that
-        colouring relies on.
+        coloring relies on.
 \end{itemize}
-A complete spatial defense therefore colours the outer caches and handles the
+A complete spatial defense therefore colors the outer caches and handles the
 first-level cache, the TLB and the predictors separately, either by flushing
 them at a switch or by partitioning them.
 
@@ -5100,7 +5100,7 @@ by the other from each cache and from the TLB, and predictions made from the
 other domain's entries. Right: valid entries the outgoing domain leaves behind
 in L1D, the TLB, the BTB and the pattern table.
 \emph{Flush} clears the first-level caches, TLB and predictors at each switch.
-\emph{Colour} assigns page frames by parity. \emph{WayPart} halves every cache,
+\emph{Color} assigns page frames by parity. \emph{WayPart} halves every cache,
 the TLB and the predictor tables. \emph{RandLLC} encrypts the last-level
 index.}
 \label{tab:interference}\index{branch target buffer (BTB)}
@@ -5114,8 +5114,8 @@ index.}
 No isolation & 329 & 693 & 16 & 13 & 3 & 421 & 22 & 7 & 257 \\
 \midrule
 Flush & 0 & 694 & 16 & 0 & 0 & 0 & 0 & 0 & 0 \\
-Flush+Colour & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
-Colour & 329 & 0 & 0 & 13 & 3 & 421 & 22 & 7 & 257 \\
+Flush+Color & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+Color & 329 & 0 & 0 & 13 & 3 & 421 & 22 & 7 & 257 \\
 WayPart & 0 & 0 & 0 & 0 & 0 & 256 & 15 & 7 & 188 \\
 RandLLC & 329 & 693 & 17 & 13 & 3 & 421 & 22 & 7 & 257 \\
 \bottomrule
@@ -5129,17 +5129,17 @@ Without isolation a domain evicts on average
 \R{inter.shared.l2_cross_evictions} second-level lines of the other domain per
 switch, and finds \R{inter.shared.residue_l1d} of the 512 first-level lines
 still holding the other domain's data. Flushing removes the interference on
-the core and leaves the outer caches untouched, whereas colouring removes the
+the core and leaves the outer caches untouched, whereas coloring removes the
 interference in the outer caches and leaves the core untouched. The
 cross-domain evictions and uses fall to zero only when the two are combined, or
 when every structure is partitioned. Partitioning keeps the state left behind,
-but only in the writer's own partition. A randomised last-level index leaves the
+but only in the writer's own partition. A randomized last-level index leaves the
 counts essentially where they were, because one domain can still displace lines of the other but can no
 longer aim the displacement.
 \end{finding}
 
 The last row of the table says as much about the metric as about the mechanism,
-because randomisation is designed to make evictions unpredictable and a count of
+because randomization is designed to make evictions unpredictable and a count of
 evictions cannot show that. Its effect has to be judged from the cost of
 finding conflicting lines, which \Cref{app:random} works out analytically.
 
@@ -5199,14 +5199,14 @@ phase that mark is read out with one of the primitives of
   \node[def, minimum width=2.5cm, text width=2.3cm, minimum height=1.2cm] (d3) at (6.6,-2.75)
        {invisible speculation; undo on squash};
   \node[def, minimum width=2.5cm, text width=2.3cm, minimum height=1.2cm] (d4) at (9.9,-2.75)
-       {partition or randomise the cache; degrade the timer};
+       {partition or randomize the cache; degrade the timer};
   \foreach \a/\b in {p1/d1, p2/d2, p3/d3, p4/d4} {\draw[defsig, densely dashed] (\a) -- (\b);}
   \node[anchor=east, font=\scriptsize\itshape, text=attack]  at (-1.45,0)    {attack};
   \node[anchor=east, font=\scriptsize\itshape, text=defense] at (-1.45,-2.75) {defenses};
 \end{tikzpicture}
 \caption[Anatomy of a transient-execution attack]{The four phases of a
 transient-execution attack, and the defense class that targets each. The
-taxonomy of \Cref{ch:defenses} is organised by which phase a mechanism attacks,
+taxonomy of \Cref{ch:defenses} is organized by which phase a mechanism attacks,
 because that determines what it can and cannot cover.}
 \label{fig:anatomy}
 \end{figure}
@@ -5269,8 +5269,8 @@ core its performance, the defenses of \Cref{ch:defenses} cost performance.
 
 \section{The variant family}
 
-\Cref{tab:variants} organises the main variants by the mechanism each relies
-on, and summarises the evidence on RISC-V, which \Cref{tab:rvevidence} gives
+\Cref{tab:variants} organizes the main variants by the mechanism each relies
+on, and summarizes the evidence on RISC-V, which \Cref{tab:rvevidence} gives
 in detail.
 
 \begin{table}[t]
@@ -5407,22 +5407,22 @@ instructions, which then change cache state at a different time. Hiding a
 state change therefore does not hide the fact that the instructions were
 executed.
 
-Work on attacking randomised
+Work on attacking randomized
 caches~\citep{qureshi2019ceasers,purnal2021systematic} showed that a keyed
 index is secure only for as long as it takes to find conflicting lines under
 the current key. Faster search algorithms shortened that time by orders of
 magnitude, so that key lifetimes had to be shortened and new designs were
-proposed (\Cref{sec:randomisation}).
+proposed (\Cref{sec:randomization}).
 
 
 \chapter{Defenses: A Taxonomy with Residual Risk}
 \label{ch:defenses}
 
-\section{Organising the design space}
+\section{Organizing the design space}
 
 The defense literature is large and its mechanisms differ widely, so a\index{defenses!taxonomy}
 taxonomy is needed before anything can be compared. \Cref{fig:taxonomy}
-organises the space by what a mechanism does to the channel. A mechanism
+organizes the space by what a mechanism does to the channel. A mechanism
 can remove the sharing, or keep the sharing and hide the mapping. It can
 let speculation run and then conceal or undo its trace, or it can restrict what
 speculation may do. Finally, it can bound what a successful attack can reach.
@@ -5446,13 +5446,13 @@ first four in more detail.
     rounded corners, inner sep=3pt
     [{\textbf{Isolate}}\\{remove the sharing}, draw=defense, fill=defensefill, rounded corners, inner sep=2.5pt
       [{way partitioning (DAWG, CAT)}]
-      [{set colouring / page colouring}]
+      [{set coloring / page coloring}]
       [{temporal flushing (\tcode{fence.t})}]
     ]
     [{\textbf{Obscure}}\\{keep sharing, break the mapping}, draw=defense, fill=defensefill, rounded corners, inner sep=2.5pt
-      [{address randomisation (CEASER, ScatterCache)}]
+      [{address randomization (CEASER, ScatterCache)}]
       [{fully-associative emulation (Mirage)}]
-      [{random or non-monopolisable replacement}]
+      [{random or non-monopolizable replacement}]
     ]
     [{\textbf{Hide or undo}}\\{allow speculation, remove its trace}, draw=defense, fill=defensefill, rounded corners, inner sep=2.5pt
       [{invisible speculation (InvisiSpec, SafeSpec)}]
@@ -5505,7 +5505,7 @@ duration of the switch does not depend on what ran before, and reports an
 average slowdown of 0.7\pc{} on the SPLASH-2 benchmarks with a time slice
 equivalent to \SI{10}{\milli\second}. A third study applies the idea to an
 out-of-order core\index{out-of-order execution}~\citep{wistoff2024fencets}. In all three studies the caches
-outside the core are partitioned by colouring\index{page colouring} and are not flushed, which is the
+outside the core are partitioned by coloring\index{page coloring} and are not flushed, which is the
 combination for which \Cref{tab:interference} showed neither cross-domain
 evictions nor state left behind.\index{flushing!cost at context switch}
 
@@ -5516,13 +5516,13 @@ anything switches, whereas temporal isolation pays a refill at every switch
 and nothing in between. \Cref{ch:tradeoffs} measures both.
 \end{takeaway}
 
-\section{Obscuring: randomised caches}
-\label{sec:randomisation}
+\section{Obscuring: randomized caches}
+\label{sec:randomization}
 
-If an observer cannot tell which addresses collide in a set, it cannot build\index{cache!randomisation}\glsadd{randomisation}
+If an observer cannot tell which addresses collide in a set, it cannot build\index{cache!randomization}\glsadd{randomization}
 an eviction set\index{eviction set}, and Prime+Probe\index{Prime+Probe} on a chosen set fails. The idea is older than
 the modern designs. Wang and Lee proposed locking lines and permuting the
-address-to-set mapping~\citep{wang2007newcache}, and non-monopolisable caches
+address-to-set mapping~\citep{wang2007newcache}, and non-monopolizable caches
 showed that the attacker's cost rises even if one thread is merely prevented
 from occupying a whole set~\citep{domnitser2012nonmono}.
 CEASER~\citep{qureshi2018ceaser} passes the line address through a fast\index{CEASER}
@@ -5648,11 +5648,11 @@ for some structures only, ``no'' that the class does not address it, and ``n/a''
 that the question does not arise. Entries for the first five columns agree
 with the counts of \Cref{tab:interference,tab:footprint}, with two exceptions
 that a count cannot show. Way partitioning leaves state on the core, but only
-in the partition of the domain that wrote it. The randomised index leaves the
+in the partition of the domain that wrote it. The randomized index leaves the
 eviction counts unchanged and is marked ``part'' because the evictions can no
 longer be aimed. The row for software hardening and the last column follow the
 cited papers.}
-\label{tab:coverage}\index{cache partitioning}\index{cache!randomisation}
+\label{tab:coverage}\index{cache partitioning}\index{cache!randomization}
 \footnotesize
 \setlength{\tabcolsep}{4pt}%
 \begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}X*{6}{>{\centering\arraybackslash}p{1.62cm}}@{}}
@@ -5662,10 +5662,10 @@ cited papers.}
 \textbf{Defense class} & cache evictions & state left on core & predictor training & fills left in cache & dependent loads run & contention while running \\
 \midrule
 Way partitioning of all structures & yes & yes & yes & no & no & no \\
-Page colouring                     & part & no & no & no & no & no \\
+Page coloring                     & part & no & no & no & no & no \\
 Flush on-core state at a switch    & part & yes & yes & no & no & no \\
-Flush plus colouring               & yes & yes & yes & no & no & no \\
-Randomised last-level index        & part & no & no & no & no & no \\
+Flush plus coloring               & yes & yes & yes & no & no & no \\
+Randomized last-level index        & part & no & no & no & no & no \\
 \midrule
 Invisible speculation              & n/a & n/a & n/a & yes & no & no \\
 Undo on squash                     & n/a & n/a & n/a & yes & no & no \\
@@ -5696,7 +5696,7 @@ provides the vocabulary for stating it.
 
 \section{Comparison}
 
-\Cref{tab:defenses} summarises representative mechanisms with what each covers\index{residual risk}
+\Cref{tab:defenses} summarizes representative mechanisms with what each covers\index{residual risk}
 and what it leaves open. Reported costs are deliberately left out of this
 table and collected in \Cref{tab:reported} together with the platform on
 which each was measured, because a cost quoted without its baseline invites a
@@ -5717,9 +5717,9 @@ Covers cache channels between partitioned domains, including replacement
 state. Residual: domains limited by associativity; capacity lost; TLB and
 predictors need their own treatment. \\
 \addlinespace
-Page colouring \citep{kessler1992page} & Isolate &
+Page coloring \citep{kessler1992page} & Isolate &
 Covers set conflicts in caches whose way is larger than a page. Residual:
-first-level caches; no colours left with large pages; constrains the page
+first-level caches; no colors left with large pages; constrains the page
 allocator. \\
 \addlinespace
 \tcode{fence.t} \citep{wistoff2021fencet,wistoff2023systematic} & Isolate &
@@ -5745,7 +5745,7 @@ data caches. \\
 \addlinespace
 CleanupSpec \citep{saileshwar2019cleanupspec} & Undo &
 Covers the cache-state trace by rollback. Residual: as above; the duration of
-the rollback; relies on a randomised outer cache. \\
+the rollback; relies on a randomized outer cache. \\
 \addlinespace
 MuonTrap \citep{ainsworth2020muontrap}, GhostMinion \citep{ainsworth2021ghostminion} & Hide &
 Confine speculative state to small structures cleared or ordered by age;
@@ -5779,7 +5779,7 @@ ordinary processes. \\
 \end{tabularx}
 \end{table}
 
-Such claims can be checked mechanically. CheckMate synthesises
+Such claims can be checked mechanically. CheckMate synthesizes
 exploit patterns from a formal description of a
 \uarch{}~\citep{trippel2018checkmate}, and Deng \etal{} enumerate the timing
 vulnerabilities of a cache design as a benchmark
@@ -5878,7 +5878,7 @@ gem5, 8-wide, 192-entry ROB; SPEC CPU2017 &
 \addlinespace
 Delay-on-miss \citep{sakalis2019delay} &
 gem5 with an energy model, 8-wide; SPEC CPU2006 &
-19\pc{} lower performance (normalised IPC) and 13\pc{} more energy for
+19\pc{} lower performance (normalized IPC) and 13\pc{} more energy for
 delay-on-miss alone; 11\pc{} and 7\pc{} with value prediction added. \\
 \addlinespace
 CleanupSpec \citep{saileshwar2019cleanupspec} &
@@ -5937,11 +5937,11 @@ code that was recompiled.
 \section{Speculation defenses on one baseline}
 \label{sec:defcost}
 
-\subsection{The modelled mechanisms}
+\subsection{The modeled mechanisms}
 
 The model study removes the first two differences of \Cref{sec:incomparable} by
 construction, because every mechanism is applied to the same core and runs the
-same kernels. Seven simplified mechanisms are modelled, three from the
+same kernels. Seven simplified mechanisms are modeled, three from the
 hide-or-undo class of \Cref{ch:defenses} and four from the restrict class. They are specified in \Cref{app:specdef} and
 follow the ideas of published designs but are not implementations of
 those designs.
@@ -5978,7 +5978,7 @@ two threat models\index{threat model}, and \Cref{tab:defcost} gives the slowdown
 \end{tikzpicture}
 %% END GENERATED fig_overheads
 \caption[Cost of the speculation defenses in the model]{Geometric-mean slowdown
-of the seven modelled speculation defenses over the eleven kernels, under the
+of the seven modeled speculation defenses over the eleven kernels, under the
 Spectre model (a load is safe when all older branches have resolved) and the
 Futuristic model (a load is safe when all older instructions have completed).
 These are results of the model of \Cref{ch:study} and were not measured on
@@ -5988,8 +5988,8 @@ hardware.}
 
 \begin{table}[t]
 \centering
-\caption[Slowdown of each speculation defense per kernel]{Slowdown in per cent
-of each modelled speculation defense, Spectre model, against the undefended
+\caption[Slowdown of each speculation defense per kernel]{Slowdown in percent
+of each modeled speculation defense, Spectre model, against the undefended
 model. A negative value is a speedup. The Futuristic table is in
 \Cref{app:results}.}
 \label{tab:defcost}
@@ -6052,7 +6052,7 @@ cache. For \code{hashtab} the same schemes cost
 acting as prefetches. Both effects are known from the study of wrong-path
 references~\citep{mutlu2005analysis}.
 
-Finally, the modelled costs are lower than the published ones for the schemes
+Finally, the modeled costs are lower than the published ones for the schemes
 that have a published counterpart. The kernels are small, the model has no
 limit on execution ports or queue entries, and its invisible-load scheme omits
 the validation squashes and the buffer management of a real design. The model
@@ -6072,7 +6072,7 @@ mechanism, which \Cref{tab:footprint} gives summed over all kernels.
 \begin{table}[t]
 \centering
 \caption[Transient footprint under each defense]{Transient activity under each
-modelled defense, Spectre model, summed over the eleven kernels. The first four
+modeled defense, Spectre model, summed over the eleven kernels. The first four
 rows show what remains for an observer to find, and the last three show the
 work that the defense does.}
 \label{tab:footprint}\index{kernels of the model study}
@@ -6134,7 +6134,7 @@ mechanisms introduce lengthen some windows. \Cref{fig:pareto} plots the two dime
 \end{tikzpicture}
 %% END GENERATED fig_pareto
 \caption[Cost against residual transient footprint]{Cost against what remains,
-for the modelled defenses under the Spectre model. Horizontal: geometric-mean
+for the modeled defenses under the Spectre model. Horizontal: geometric-mean
 slowdown. Vertical: first-level fills left by transient loads, as a share of
 the undefended count. The red marker is the undefended model. Round green
 markers execute no dependent transient load, and square blue markers do. No
@@ -6158,7 +6158,7 @@ baseline core is varied, and \Cref{fig:sens} plots two of the sweeps.
 \begin{table}[t]
 \centering
 \caption[Defense cost against the baseline configuration]{Geometric-mean
-slowdown in per cent of each modelled defense (Spectre model) when the
+slowdown in percent of each modeled defense (Spectre model) when the
 baseline core is varied in pipeline width, reorder-buffer size or first-level
 cache latency. The second column is the geometric-mean IPC of the undefended
 baseline.}
@@ -6215,7 +6215,7 @@ L1 latency = 6 & 1.089 & 25.2 & 6.8 & 0.3 & 0.3 & 1.3 & 1.5 & 2.2 \\
 \end{tikzpicture}
 %% END GENERATED fig_sens
 \caption[Defense cost against pipeline width and window size]{Geometric-mean
-slowdown of five modelled defenses as the core is made wider (left) and as
+slowdown of five modeled defenses as the core is made wider (left) and as
 its reorder buffer grows (right). Every curve shown rises, so
 the same mechanism costs more on a more aggressive core. Of the two mechanisms
 not plotted, Invis-V falls from \R{sens.rob.32.invis-v}\pc{} to
@@ -6246,7 +6246,7 @@ result for a time slice of \num{100000} instructions.
 
 \begin{table}[t]
 \centering
-\caption[Cost of isolation mechanisms]{Slowdown in per cent of five isolation
+\caption[Cost of isolation mechanisms]{Slowdown in percent of five isolation
 mechanisms in the model for five pairs of kernels sharing one core, with a context switch
 every \num{100000} instructions. Each entry is the mean over five page-frame
 layouts, with the smallest and largest value in parentheses.}
@@ -6255,7 +6255,7 @@ layouts, with the smallest and largest value in parentheses.}
 %% BEGIN GENERATED tab_isolation
 \begin{tabular}{@{}lrrrrr@{}}
 \toprule
-\textbf{Pair of kernels} & \textbf{Flush} & \textbf{Flush+Colour} & \textbf{Colour} & \textbf{WayPart} & \textbf{RandLLC} \\
+\textbf{Pair of kernels} & \textbf{Flush} & \textbf{Flush+Color} & \textbf{Color} & \textbf{WayPart} & \textbf{RandLLC} \\
 \midrule
 \tcode{crc32 + hashtab} & 2.9 {\tiny(2.9 to 3.0)} & 12.9 {\tiny(12.1 to 13.5)} & 9.0 {\tiny(8.2 to 9.6)} & 16.1 {\tiny(15.3 to 16.8)} & 0.3 {\tiny(0.3 to 0.4)} \\
 \tcode{bsearch + stream} & 0.5 {\tiny(0.4 to 0.5)} & 17.9 {\tiny(11.7 to 25.6)} & 17.5 {\tiny(11.3 to 25.1)} & 24.6 {\tiny(19.5 to 30.0)} & 4.9 {\tiny(0.0 to 10.4)} \\
@@ -6313,7 +6313,7 @@ Flushing is paid for at each switch. In these runs flushing the first-level
 caches, the TLB\index{translation-lookaside buffer (TLB)} and the predictors costs between \R{flush.perswitch.min} and
 \R{flush.perswitch.max} cycles per switch (\Cref{fig:flushq}). The number
 grows with the amount of state that the incoming domain touches again during
-its slice. For four of the five pairs it has levelled off within the slices
+its slice. For four of the five pairs it has leveled off within the slices
 simulated, and the relative slowdown then falls in proportion to the slice. For
 the pair of \code{crc32} and \code{hashtab} it is still rising at the longest
 slice, so the upper figure is the largest value observed and not a bound. If
@@ -6325,7 +6325,7 @@ duration of every switch independent of what ran before.
 
 \subsection{Partitioning}
 
-Partitioning costs capacity instead. The cost of colouring\index{page colouring} and of way
+Partitioning costs capacity instead. The cost of coloring\index{page coloring} and of way
 partitioning does not fall as the slice grows (\Cref{app:results}), because
 both take away capacity and leave the warm state alone. How much they cost
 depends on the pair of kernels. For way partitioning\index{cache partitioning} it ranges from
@@ -6337,9 +6337,9 @@ close to that step the spread over page-frame layouts is also large, which is
 the page-placement effect described by Kessler and
 Hill~\citep{kessler1992page}.
 
-\subsection{Randomised indexing}
+\subsection{Randomized indexing}
 
-A randomised index\index{cache!randomisation} adds latency. Encrypting the last-level index adds two
+A randomized index\index{cache!randomization} adds latency. Encrypting the last-level index adds two
 cycles to every access that reaches that level and leaves the capacity alone.
 For single kernels the geometric-mean cost is \R{rand.1600.geo}\pc{} and the
 worst case is \R{rand.1600.worst}\pc{} at the remapping rate that corresponds
@@ -6372,7 +6372,7 @@ including the accesses that hiding schemes make out of sight.
 \centering
 \caption[Memory-hierarchy traffic under each defense]{Change in the number of
 accesses at each level of the hierarchy and in total cycles, summed over the
-eleven kernels, relative to the undefended model (per cent, Spectre model).
+eleven kernels, relative to the undefended model (percent, Spectre model).
 Invisible and rolled-back accesses are counted at the levels they reach.}
 \label{tab:traffic}\index{kernels of the model study}
 \footnotesize\setlength{\tabcolsep}{5pt}%
@@ -6416,7 +6416,7 @@ this reading.\index{energy-delay product (EDP)}\glsadd{edp}
 \section{Storage}
 \label{sec:storage}
 
-\Cref{tab:area} accounts for the state that each modelled mechanism needs in
+\Cref{tab:area} accounts for the state that each modeled mechanism needs in
 the configuration of the study. The figures are calculated from the parameters
 of the model, are not synthesis results, and say nothing about logic or
 timing. Where the authors of a design report storage, their figure is given for
@@ -6424,8 +6424,8 @@ comparison.
 
 \begin{table}[t]
 \centering
-\caption[Storage implied by each modelled mechanism]{State required by each
-mechanism as modelled, for the study configuration: 8-way first- and
+\caption[Storage implied by each modeled mechanism]{State required by each
+mechanism as modeled, for the study configuration: 8-way first- and
 second-level caches, a 16-way last level of 2\,MiB, a 128-entry reorder buffer
 and, for the per-load entries, the 32-entry load queue of the published
 baselines. This is the author's own accounting and is not a synthesis result.}
@@ -6440,11 +6440,11 @@ A fill mask and a hit mask per domain for each of four caches (8, 8, 8 and 16
 ways), two domains; a second history register (12 bits) and return stack
 ($16 \times 64$ bits). &
 $160 + 1036$ \\
-Page colouring & None in hardware; a constraint on the page allocator. & 0 \\
+Page coloring & None in hardware; a constraint on the page allocator. & 0 \\
 Flush at a switch &
 A counter that walks the largest structure flushed (4096 pattern-table
 entries). & 12 \\
-Randomised index &
+Randomized index &
 Two 64-bit keys, an 11-bit set pointer, an 11-bit access counter, and one
 key-epoch bit per line ($\num{32768}$ lines). CEASER reports under 24 bytes for
 its own bookkeeping. &
@@ -6466,7 +6466,7 @@ No forwarding & One ``unsafe'' bit per reorder-buffer entry. & 128 \\
 \end{tabularx}
 \end{table}
 
-The largest entry is about 4\,KiB, a fifth of a per cent of the last-level
+The largest entry is about 4\,KiB, a fifth of a percent of the last-level
 cache it protects, and most are far smaller. Storage is a minor part
 of the cost of these mechanisms, whose main costs are time (\Cref{tab:defcost}),
 capacity (\Cref{tab:isolation}) and memory traffic (\Cref{tab:traffic}). A real
@@ -6487,7 +6487,7 @@ give.
 
 \begin{table}[t]
 \centering
-\caption[Cost of combined defenses]{Slowdown in per cent, in the model, of an
+\caption[Cost of combined defenses]{Slowdown in percent, in the model, of an
 isolation mechanism $A$, a speculation defense $B$, and both together, for pairs of
 kernels switching every \num{100000} instructions. \emph{Product} is
 $(1+S_A)(1+S_B)-1$. \emph{Excess} is $S_{AB}$ minus the product, in percentage
@@ -6500,32 +6500,32 @@ gives the range of the excess over those layouts.}
 \toprule
 \textbf{Pair} & \textbf{A} & \textbf{B} & $S_A$ & $S_B$ & $S_{AB}$ & \textbf{Product} & \textbf{Excess} & \textbf{over layouts} \\
 \midrule
-\tcode{crc32 + hashtab} & Flush+Colour & Taint & 12.9 & 2.8 & 17.2 & 16.0 & +1.1 & $+1.1$ to $+1.2$ \\
-\tcode{crc32 + hashtab} & Flush+Colour & DoM & 12.9 & 27.6 & 47.4 & 44.1 & +3.3 & $+2.9$ to $+3.7$ \\
+\tcode{crc32 + hashtab} & Flush+Color & Taint & 12.9 & 2.8 & 17.2 & 16.0 & +1.1 & $+1.1$ to $+1.2$ \\
+\tcode{crc32 + hashtab} & Flush+Color & DoM & 12.9 & 27.6 & 47.4 & 44.1 & +3.3 & $+2.9$ to $+3.7$ \\
 \tcode{crc32 + hashtab} & WayPart & Taint & 16.1 & 2.8 & 19.5 & 19.3 & +0.2 & $+0.1$ to $+0.3$ \\
 \tcode{crc32 + hashtab} & WayPart & Invis-V & 16.1 & 6.5 & 25.9 & 23.6 & +2.3 & $+2.2$ to $+2.5$ \\
 \tcode{crc32 + hashtab} & RandLLC & NoFwd & 0.3 & 3.5 & 3.8 & 3.8 & +0.1 & $+0.1$ to $+0.1$ \\
 \midrule
-\tcode{bsearch + stream} & Flush+Colour & Taint & 17.9 & 4.1 & 21.8 & 22.7 & $-$0.9 & $-1.2$ to $-0.7$ \\
-\tcode{bsearch + stream} & Flush+Colour & DoM & 17.9 & 33.7 & 52.1 & 57.6 & $-$5.5 & $-6.9$ to $-3.2$ \\
+\tcode{bsearch + stream} & Flush+Color & Taint & 17.9 & 4.1 & 21.8 & 22.7 & $-$0.9 & $-1.2$ to $-0.7$ \\
+\tcode{bsearch + stream} & Flush+Color & DoM & 17.9 & 33.7 & 52.1 & 57.6 & $-$5.5 & $-6.9$ to $-3.2$ \\
 \tcode{bsearch + stream} & WayPart & Taint & 24.6 & 4.1 & 29.6 & 29.7 & $-$0.1 & $-0.8$ to $+0.7$ \\
 \tcode{bsearch + stream} & WayPart & Invis-V & 24.6 & 0.3 & 19.6 & 25.0 & $-$5.5 & $-6.5$ to $-3.8$ \\
 \tcode{bsearch + stream} & RandLLC & NoFwd & 4.9 & 4.6 & 9.9 & 9.7 & +0.2 & $+0.0$ to $+0.4$ \\
 \midrule
-\tcode{heapsort + matmul} & Flush+Colour & Taint & 2.2 & 0.2 & 3.1 & 2.4 & +0.6 & $+0.6$ to $+0.7$ \\
-\tcode{heapsort + matmul} & Flush+Colour & DoM & 2.2 & 1.1 & 2.8 & 3.3 & $-$0.5 & $-0.7$ to $-0.3$ \\
+\tcode{heapsort + matmul} & Flush+Color & Taint & 2.2 & 0.2 & 3.1 & 2.4 & +0.6 & $+0.6$ to $+0.7$ \\
+\tcode{heapsort + matmul} & Flush+Color & DoM & 2.2 & 1.1 & 2.8 & 3.3 & $-$0.5 & $-0.7$ to $-0.3$ \\
 \tcode{heapsort + matmul} & WayPart & Taint & 5.2 & 0.2 & 6.2 & 5.4 & +0.8 & $+0.7$ to $+0.9$ \\
 \tcode{heapsort + matmul} & WayPart & Invis-V & 5.2 & 0.0 & 3.3 & 5.2 & $-$1.9 & $-2.2$ to $-1.5$ \\
 \tcode{heapsort + matmul} & RandLLC & NoFwd & 0.0 & 0.3 & 0.4 & 0.3 & +0.0 & $+0.0$ to $+0.0$ \\
 \midrule
-\tcode{listwalk + sieve} & Flush+Colour & Taint & 117.9 & 0.0 & 117.9 & 117.9 & 0.0 & $-0.0$ to $-0.0$ \\
-\tcode{listwalk + sieve} & Flush+Colour & DoM & 117.9 & 1.5 & 118.8 & 121.2 & $-$2.3 & $-3.1$ to $-1.8$ \\
+\tcode{listwalk + sieve} & Flush+Color & Taint & 117.9 & 0.0 & 117.9 & 117.9 & 0.0 & $-0.0$ to $-0.0$ \\
+\tcode{listwalk + sieve} & Flush+Color & DoM & 117.9 & 1.5 & 118.8 & 121.2 & $-$2.3 & $-3.1$ to $-1.8$ \\
 \tcode{listwalk + sieve} & WayPart & Taint & 125.2 & 0.0 & 125.2 & 125.2 & 0.0 & $-0.0$ to $-0.0$ \\
 \tcode{listwalk + sieve} & WayPart & Invis-V & 125.2 & 0.1 & 125.4 & 125.3 & +0.0 & $-0.0$ to $+0.1$ \\
 \tcode{listwalk + sieve} & RandLLC & NoFwd & 4.3 & 0.1 & 4.4 & 4.4 & 0.0 & $-0.0$ to $+0.0$ \\
 \midrule
-\tcode{bstree + strsearch} & Flush+Colour & Taint & 12.0 & 2.6 & 14.7 & 15.0 & $-$0.3 & $-0.4$ to $-0.3$ \\
-\tcode{bstree + strsearch} & Flush+Colour & DoM & 12.0 & 1.6 & 13.7 & 13.9 & $-$0.2 & $-0.2$ to $-0.2$ \\
+\tcode{bstree + strsearch} & Flush+Color & Taint & 12.0 & 2.6 & 14.7 & 15.0 & $-$0.3 & $-0.4$ to $-0.3$ \\
+\tcode{bstree + strsearch} & Flush+Color & DoM & 12.0 & 1.6 & 13.7 & 13.9 & $-$0.2 & $-0.2$ to $-0.2$ \\
 \tcode{bstree + strsearch} & WayPart & Taint & 28.2 & 2.6 & 30.2 & 31.6 & $-$1.4 & $-1.6$ to $-1.3$ \\
 \tcode{bstree + strsearch} & WayPart & Invis-V & 28.2 & 0.0 & 27.4 & 28.3 & $-$0.8 & $-1.0$ to $-0.8$ \\
 \tcode{bstree + strsearch} & RandLLC & NoFwd & 0.2 & 3.5 & 3.7 & 3.7 & 0.0 & $-0.0$ to $-0.0$ \\
@@ -6685,7 +6685,7 @@ spread is reported. \\
 Context switch & 322 cycles when any structure is flushed, the difference
 between the fenced and unfenced switch measured on
 CVA6~\citep{wistoff2021fencet}. \\
-Randomised index & Two cycles added to last-level latency; one set remapped
+Randomized index & Two cycles added to last-level latency; one set remapped
 every 1600 accesses to that level. \\
 \bottomrule
 \end{tabularx}
@@ -6695,7 +6695,7 @@ every 1600 accesses to that level. \\
 \label{sec:kernels}
 
 The eleven kernels\index{kernels of the model study} of \Cref{tab:kernels} were written in RISC-V assembly for
-this study and chosen to cover the behaviours that decide what a
+this study and chosen to cover the behaviors that decide what a
 defense costs. Their working sets range from a stack frame to more than a
 megabyte, and their branches from perfectly predictable to essentially random.
 The load addresses depend on loaded data in some kernels but not in
@@ -6822,7 +6822,7 @@ E6 & Defense cost against width, window and cache latency & 5 & 880 &
 \Cref{tab:sensitivity}, \Cref{fig:sens} \\
 E7 & Combinations of an isolation mechanism and a speculation defense, five layouts & 4, 5 & 500 &
 \Cref{tab:composition} \\
-E8 & Randomised index; spread over page-frame layouts & 5 & 231 &
+E8 & Randomized index; spread over page-frame layouts & 5 & 231 &
 \Cref{tab:random,tab:seeds} \\
 \bottomrule
 \end{tabularx}
@@ -6833,7 +6833,7 @@ E8 & Randomised index; spread over page-frame layouts & 5 & 231 &
 
 The results are properties of a stated model, which is simpler than a\index{model study!limitations}
 processor in several ways that limit how far the results can be
-generalised. The first five simplifications concern the core and the memory
+generalized. The first five simplifications concern the core and the memory
 system, and the last three concern the defenses and the workloads.
 
 \subsection{The core and the memory system}
@@ -6852,7 +6852,7 @@ system, and the last three concern the defenses and the workloads.
         absent.
   \item There is no prefetcher\index{prefetcher} and no second-level TLB.
   \item There is one core, on which two domains alternate, and concurrent
-        observation from another core (scenario S3) is not modelled.
+        observation from another core (scenario S3) is not modeled.
 \end{enumerate}
 
 \subsection{The defenses and the workloads}
@@ -6866,7 +6866,7 @@ system, and the last three concern the defenses and the workloads.
         with working sets up to about a megabyte. Absolute slowdowns are
         specific to them, and \Cref{sec:defcost} notes where they are lower
         than published figures.
-  \item Latencies are parameters, and the clock period is not modelled, so a
+  \item Latencies are parameters, and the clock period is not modeled, so a
         mechanism that would lengthen a critical path shows no cost here.
         Energy and area are not measured.
 \end{enumerate}
@@ -6975,7 +6975,7 @@ factors, with deviations of up to \R{comp.maxabs} percentage points
 
 The survey covers the sources named in the Bibliography and does not claim to
 be complete. In particular, it does not cover Meltdown-type\index{Meltdown} or data-sampling
-behaviour on RISC-V cores beyond what \Cref{tab:rvevidence} lists. The
+behavior on RISC-V cores beyond what \Cref{tab:rvevidence} lists. The
 quantitative results come from a first-order model\index{model study!limitations} whose limits are set out in
 \Cref{sec:limits}. The model has no contention, no memory-dependence
 speculation and only one core, with simplified defenses and small
@@ -6990,7 +6990,7 @@ at the register-transfer level, for instance with the Chipyard
 framework~\citep{amid2020chipyard} and FPGA-accelerated
 simulation~\citep{karandikar2018firesim}. This would add the contention that
 the model lacks, the clock period that it ignores, and the area that it can
-only count in bits. Each modelled defense could also be stated as a
+only count in bits. Each modeled defense could also be stated as a
 hardware-software contract\index{hardware-software contract}~\citep{guarnieri2021hardware} and the model checked
 against it mechanically, so that the invariants of \Cref{tab:invariants} become
 proofs instead of tests. Lastly, if the kernels were extended to full
@@ -7098,7 +7098,7 @@ misconduct.
   \item \Cref{app:tocmap} quotes the section headings of the prescribed
         textbook~\citep{sarangi2025basic}, in quotation marks, so that a
         reader can align this paper with the syllabus heading by heading.
-        \Cref{tab:tocmap} summarises the same chapters in its own words.
+        \Cref{tab:tocmap} summarizes the same chapters in its own words.
   \item Standard terminology is used throughout. Phrases such as
         ``bounds-check bypass'', ``inclusive last-level cache'' and the names
         of the attacks and defenses are the fixed vocabulary of the field.
@@ -7124,7 +7124,7 @@ the report when it is entered above.
 The course guideline asks for reading indices and points to a reference page
 that describes them~\citep{analyzemywriting}. This appendix reports eight\index{reading indices}
 standard readability measures for the prose of this report, together with the
-average and the median grade level that the reference page uses to summarise
+average and the median grade level that the reference page uses to summarize
 them. It states what text they were computed over and how, and interprets the
 result.
 
@@ -7157,16 +7157,16 @@ indices, over the prose of \Cref{ch:intro} to \Cref{ch:conclusion}.}
 \textbf{Quantity} & \textbf{Value} \\
 \midrule
 Sentences ($S$) & 739 \\
-Words ($W$) & 15\,057 \\
+Words ($W$) & 15\,055 \\
 Syllables ($Y$) & 24\,352 \\
 Words of three syllables or more ($P$) & 2\,446 \\
-Words longer than six letters ($L$) & 3\,781 \\
-Letters ($C$) & 73\,252 \\
+Words longer than six letters ($L$) & 3\,779 \\
+Letters ($C$) & 73\,226 \\
 Words per sentence & 20.37 \\
-Syllables per word & 1.617 \\
-Syllables per 100 words (Fry graph) & 161.7 \\
+Syllables per word & 1.618 \\
+Syllables per 100 words (Fry graph) & 161.8 \\
 Sentences per 100 words (Fry graph, Raygor estimate) & 4.91 \\
-Words of six or more letters per 100 words (Raygor estimate) & 33.1 \\
+Words of six or more letters per 100 words (Raygor estimate) & 33.2 \\
 \bottomrule
 \end{tabular}
 %% END GENERATED read_counts
@@ -7195,7 +7195,7 @@ calibrated on samples of thirty sentences, and the reference page treats it as
 valid only for a text at least that long. The corpus here has
 \R{read.sentences} sentences.
 
-The last two rows of \Cref{tab:readindices} summarise the five grade levels as
+The last two rows of \Cref{tab:readindices} summarize the five grade levels as
 the reference page does, by their average and their median. The same page also
 describes two graphical methods, the Fry graph and the Raygor estimate, which
 place a text by plotting a point on a chart rather than by a formula. Their
@@ -7218,7 +7218,7 @@ FRE (Flesch) & 49.3 & higher is easier & $206.835 - 1.015\,W/S - 84.6\,Y/W$ \\
 FKGL (Kincaid \etal) & 11.4 & school grade & $0.39\,W/S + 11.8\,Y/W - 15.59$ \\
 Fog (Gunning) & 14.6 & years of schooling & $0.4\,(W/S + 100\,P/W)$ \\
 SMOG (McLaughlin) & 13.5 & school grade & $1.043\sqrt{30\,P/S} + 3.1291$ \\
-CLI (Coleman, Liau) & 11.4 & school grade & $5.88\,C/W - 29.6\,S/W - 15.8$ \\
+CLI (Coleman, Liau) & 11.3 & school grade & $5.88\,C/W - 29.6\,S/W - 15.8$ \\
 ARI (Smith, Senter) & 11.7 & school grade & $4.71\,C/W + 0.5\,W/S - 21.43$ \\
 LIX (Bj\"{o}rnsson) & 45.5 & 50 to 60: difficult & $W/S + 100\,L/W$ \\
 RIX (Anderson) & 5.1 & from 7.2: college & $L/S$ \\
@@ -7248,15 +7248,15 @@ so that a chapter that is much harder to read than the others would stand out.
 3 & 760 & 38 & 20.0 & 57.1 & 10.3 \\
 4 & 624 & 39 & 16.0 & 50.8 & 10.1 \\
 5 & 1\,025 & 46 & 22.3 & 46.5 & 12.3 \\
-6 & 1\,181 & 52 & 22.7 & 51.6 & 11.7 \\
+6 & 1\,180 & 52 & 22.7 & 51.5 & 11.7 \\
 7 & 1\,047 & 48 & 21.8 & 47.4 & 12.1 \\
 8 & 802 & 39 & 20.6 & 45.7 & 12.0 \\
 9 & 1\,553 & 76 & 20.4 & 46.9 & 11.8 \\
-10 & 2\,339 & 124 & 18.9 & 57.5 & 9.9 \\
+10 & 2\,338 & 124 & 18.9 & 57.5 & 9.9 \\
 11 & 1\,222 & 60 & 20.4 & 49.0 & 11.5 \\
 12 & 885 & 47 & 18.8 & 52.5 & 10.6 \\
 \midrule
-All & 15\,057 & 739 & 20.4 & 49.3 & 11.4 \\
+All & 15\,055 & 739 & 20.4 & 49.3 & 11.4 \\
 \bottomrule
 \end{tabular}
 %% END GENERATED read_chapters
@@ -7270,7 +7270,7 @@ years of university. Their average is \R{read.grade.mean} and their median
 \R{read.grade.median}. The reference page relates a grade level to a
 readership, and on its scale the average lies in the band of
 \R{read.grade.band}. The Flesch Reading Ease of \R{read.fre} lies in the band
-from 50 to 60 that is conventionally labelled fairly difficult. LIX and RIX
+from 50 to 60 that is conventionally labeled fairly difficult. LIX and RIX
 place the text below their thresholds for difficult and college-level prose.
 This is a reasonable level for a technical report on processor \uarch{}.
 
@@ -7329,7 +7329,7 @@ omit any cost that a mechanism would have in clock period. The software figures 
 \Cref{tab:reported} are ratios of run times on one chip, with $N_{\text{inst}}$
 increased and $f$ fixed.
 
-When a suite of programs is summarised, this paper uses the geometric mean\index{geometric mean} of
+When a suite of programs is summarized, this paper uses the geometric mean\index{geometric mean} of
 the ratios $T_{\text{defended}}/T_{\text{baseline}}$, which does not depend on
 which configuration is called the baseline. The worst program is always given
 next to the mean.
@@ -7411,7 +7411,7 @@ Patterson~\citep{hennessy2019quantitative} is cited as a secondary source only,
 and every other cited work is a research paper or specification used as evidence
 rather than as skeleton. Two topics in this paper have no counterpart in
 the prescribed text and are drawn entirely from the research literature: cache
-partitioning and colouring viewed as defenses (\Cref{sec:partitioning}), and the
+partitioning and coloring viewed as defenses (\Cref{sec:partitioning}), and the
 whole of transient-execution attacks and their defenses
 (\Cref{ch:transient,ch:defenses}).
 
@@ -7440,14 +7440,14 @@ several sub-sections, their headings are separated by semicolons.\label{tab:tocd
 \multicolumn{3}{@{}l}{\textbf{Chapter 1, ``Introduction to Computer Architecture'' (supporting)}}\\
 Ch.~1 opening & Definitions of \emph{architecture} and \emph{organization} &
 Source of the central distinction of \Cref{sec:contract}: architecture is the
-machine as programmers see it, organization the hardware that realises it. The ISA constrains results, not timing. \\
+machine as programmers see it, organization the hardware that realizes it. The ISA constrains results, not timing. \\
 \S1.4 & ``The Language of Instructions'' & Establishes the ISA as the language shared
 by hardware and software, used in \Cref{ch:isa} to argue that openness of the
 contract does not imply absence of implementation leakage. \\
 \S1.5 & ``Instruction Set Design'' & The completeness, conciseness, genericity and
-simplicity criteria; \Cref{ch:isa} observes that \emph{constant-time behaviour}
+simplicity criteria; \Cref{ch:isa} observes that \emph{constant-time behavior}
 is not among them. \\
-\S1.7 & ``Design of Practical Machines'' & Harvard and Von Neumann organisations, and
+\S1.7 & ``Design of Practical Machines'' & Harvard and Von Neumann organizations, and
 the move to registers. Supplies the theme that implementation pressure shapes the
 specification, illustrated by the fixed register-field positions of
 \Cref{fig:encoding}. \\
@@ -7517,7 +7517,7 @@ size bounds transient-attack capability. \\
 \S11.2 & ``Caches: lookup and design, read/write, insert, replace, evict'' & The
 mechanics behind Prime+Probe, Flush+Reload and eviction sets. \\
 \S11.3.1 & ``Mathematical Model of the Memory System'' & \Cref{eq:amat}: the cost
-model for flushing, partitioning and randomisation. \\
+model for flushing, partitioning and randomization. \\
 \S11.4.2 & ``The ``Overlap'' and ``Size'' Problems'' & Why virtual memory exists, and
 so why a translation cache is unavoidable. \\
 \S11.4.3 & ``Implementation of Virtual Memory with Paging'' & \Cref{fig:sv39}: the
@@ -7566,7 +7566,7 @@ timer has finite resolution, other activity adds jitter, and on a real system
 interrupts add outliers. Model the measured value as the true latency plus
 Gaussian noise of standard deviation $\sigma$, and let the observer decide
 ``miss'' when the measurement exceeds the midpoint $t_h + \Delta/2$. The
-decision is wrong when the noise exceeds $\Delta/2$ in the unfavourable
+decision is wrong when the noise exceeds $\Delta/2$ in the unfavorable
 direction, which happens with probability
 \begin{equation}
   \varepsilon \;=\; Q\!\left(\frac{d}{2}\right), \qquad d = \frac{\Delta}{\sigma},
@@ -7670,7 +7670,7 @@ The model also gives a compact way to say what each defense class of
         \Cref{eq:ni} holds for the structure that is partitioned or flushed,
         and the capacity of that channel is zero by construction, whatever $d$
         is.
-  \item Randomisation leaves $d$ unchanged but removes the observer's
+  \item Randomization leaves $d$ unchanged but removes the observer's
         knowledge of which access to time. The channel still exists,
         but using it requires a search that the re-keying interrupts
         (\Cref{app:random}).
@@ -7697,7 +7697,7 @@ interference counts of \Cref{tab:interference} and the invariants of
 difference between cache levels is a consequence of how arrays are built. This
 appendix gives the first-order argument, following the structure of the
 analytical model CACTI~\citep{muralimanohar2009cacti}, which estimates the
-access time of a cache from its organisation. Only the decomposition is taken
+access time of a cache from its organization. Only the decomposition is taken
 from that tool, and none of its numbers.
 
 \section{The components of an access}
@@ -7777,7 +7777,7 @@ A DRAM cell is one capacitor behind one transistor. A read drains it, so the
 whole row is copied into the row buffer and restored from there. A later access to the
 same row is served from the buffer without the activation, while an access to
 another row of the same bank must first close the open row. The difference is
-again set by the organisation of the array, and it is visible to any program
+again set by the organization of the array, and it is visible to any program
 that shares the memory~\citep{pessl2016drama}.\index{DRAM!row buffer}
 
 
@@ -7885,7 +7885,7 @@ is faster but adds one more structure that keeps history.
 Large pages and address-space identifiers both matter for security. A leaf
 entry at an upper level maps a
 large page of 2\,MiB or 1\,GiB, which reduces TLB pressure and also removes the
-address bits that page colouring\index{page colouring} relies on (\Cref{sec:partitioning}). The
+address bits that page coloring\index{page coloring} relies on (\Cref{sec:partitioning}). The
 address-space identifier in \code{satp} tags TLB entries, so that the operating\index{address-space identifier (ASID)!and the TLB}
 system can switch address spaces without flushing. The instruction
 \code{sfence.vma} invalidates entries by address, by identifier or both when a
@@ -8083,7 +8083,7 @@ program with thousands of active branches would be affected by the halved table
 through \Cref{eq:alias}.
 
 
-\chapter{Cache Organisation: Worked Examples}
+\chapter{Cache Organization: Worked Examples}
 \label{app:caches}
 
 This appendix works through the cache mechanics that \Cref{ch:memsys} uses:
@@ -8092,22 +8092,22 @@ and a numerical instance of \Cref{eq:amat}.
 
 \section{The address split of the model's caches}
 
-A cache of capacity $C$ bytes with associativity $W$ and lines of $B$ bytes has\index{cache!organisation of the model}
+A cache of capacity $C$ bytes with associativity $W$ and lines of $B$ bytes has\index{cache!organization of the model}
 $C/(W B)$ sets. The offset field has $\log_2 B$ bits, the index field
 $\log_2$ of the number of sets, and the tag is the rest of the address. One way
 covers $C/W$ bytes, and with pages of 4\,KiB the cache offers $C/(W \cdot 4096)$
-page colours. \Cref{tab:geometry} gives these quantities for the model.
+page colors. \Cref{tab:geometry} gives these quantities for the model.
 
 \begin{table}[ht]
 \centering
 \caption[Geometry of the caches of the model]{Cache geometry in the model,
 assuming lines of 64 bytes and physical addresses of 40 bits. The last column is the
-number of page colours with 4\,KiB pages.}
+number of page colors with 4\,KiB pages.}
 \label{tab:geometry}
 \footnotesize
 \begin{tabular}{@{}lrrrrrrr@{}}
 \toprule
-\textbf{Cache} & \textbf{Size} & \textbf{Ways} & \textbf{Sets} & \textbf{Index bits} & \textbf{Tag bits} & \textbf{Way size} & \textbf{Colours} \\
+\textbf{Cache} & \textbf{Size} & \textbf{Ways} & \textbf{Sets} & \textbf{Index bits} & \textbf{Tag bits} & \textbf{Way size} & \textbf{Colors} \\
 \midrule
 First level (I and D) & 32\,KiB  & 8  & 64   & 6  & 28 & 4\,KiB   & 1 \\
 Second level          & 256\,KiB & 8  & 512  & 9  & 25 & 32\,KiB  & 8 \\
@@ -8130,7 +8130,7 @@ first-level cache lies entirely within the page offset, so it can be indexed
 with the virtual address while the TLB\index{translation-lookaside buffer (TLB)} is consulted, which is why first-level
 caches are built with ways of exactly one page. For the same reason the
 operating system has no influence on which first-level set a page occupies,
-since the cache has only one colour.
+since the cache has only one color.
 
 \section{Replacement}
 
@@ -8172,8 +8172,8 @@ The kernel searches a 512\,KiB table. Its first probes hit a few hot lines near
 the middle of the table, which stay in the first level, while the later probes land
 on lines that only the last level holds. Halving the second level to 128\,KiB
 would move part of the middle probes outwards, and \Cref{eq:amat} gives the
-cost. Every per cent of loads that moves from the second level to the
-last costs $0.01 \times 31 = 0.31$ cycles per load, and every per cent that
+cost. Every percent of loads that moves from the second level to the
+last costs $0.01 \times 31 = 0.31$ cycles per load, and every percent that
 moves from the last level to memory costs 1.75.
 
 This arithmetic is the complete cost model of partitioning. A partition slows
@@ -8336,32 +8336,32 @@ second, eight ways and 1\,MiB at the last, and sixteen TLB entries. What this
 costs a given program can be read from \Cref{fig:l1sweep,fig:llcsweep}, and the
 cost is paid whether or not another domain is running.
 
-\section{Page colouring}
+\section{Page coloring}
 
-Colouring restricts the page frames a domain may receive so that the frame\index{page colouring!in the model}
+Coloring restricts the page frames a domain may receive so that the frame\index{page coloring!in the model}
 number, in the bits that reach into the cache index, differs between domains.
-\Cref{tab:geometry} gives the number of colours of each cache. The model splits
-the colours by the lowest bit of the frame number, so that one domain receives
+\Cref{tab:geometry} gives the number of colors of each cache. The model splits
+the colors by the lowest bit of the frame number, so that one domain receives
 even frames and the other odd frames. In the second and last levels each domain
-can then reach half of the sets, while in the first level, which has one colour,
+can then reach half of the sets, while in the first level, which has one color,
 nothing changes.
 
-Unlike way partitioning\index{cache partitioning}, colouring needs
+Unlike way partitioning\index{cache partitioning}, coloring needs
 no hardware. It halves the number of sets that a domain can use
 and keeps the associativity, which is gentler on programs with conflict misses
 and harsher on programs whose pages are few and hot. It also does nothing for
 the first-level caches, the TLB or the predictors, and so
 \Cref{tab:interference} shows the first-level and TLB evictions unchanged under
-colouring alone. With pages
-larger than a cache way there are no colours to distribute, so a system that
-uses 2\,MiB pages cannot colour a cache whose ways are 128\,KiB.
+coloring alone. With pages
+larger than a cache way there are no colors to distribute, so a system that
+uses 2\,MiB pages cannot color a cache whose ways are 128\,KiB.
 
 \section{Flushing at a switch}
 
 Temporal isolation clears a structure when the running domain changes. The\index{flushing!in the model}
 model can flush the first-level caches, the TLB, the predictors, and optionally
 the outer caches. The experiments flush the on-core state, as \code{fence.t}
-does, and leave the outer caches to colouring\index{page colouring}. A real implementation must also
+does, and leave the outer caches to coloring\index{page coloring}. A real implementation must also
 make the duration of the flush independent of the state being flushed,
 since otherwise the time taken would itself reveal how much the previous domain had
 touched. A write-back cache, for example, has a variable number of dirty lines
@@ -8394,25 +8394,25 @@ the time slice (\Cref{app:metrics}).
 The three mechanisms complement one another, and the arithmetic above shows
 where each one fits. The first-level caches, the TLB and the predictors are
 small, which makes them cheap to flush and costly to halve, and the first-level cache
-cannot be coloured at all. The last-level cache is large and expensive to
+cannot be colored at all. The last-level cache is large and expensive to
 flush, since refilling 2\,MiB from memory costs tens of thousands of misses at
-220 cycles each, but it is cheap to colour if the working sets leave room.
-Flushing the core and colouring\index{page colouring} the outer caches is then the obvious
+220 cycles each, but it is cheap to color if the working sets leave room.
+Flushing the core and coloring\index{page coloring} the outer caches is then the obvious
 division, and the temporal-partitioning work on CVA6\index{CVA6 (Ariane) core} adopts
 it~\citep{wistoff2023systematic}.
 
 
-\chapter{Randomised Caches in Detail}
+\chapter{Randomized Caches in Detail}
 \label{app:random}
 
-\Cref{sec:randomisation} described randomised caches\index{cache!randomisation} as a race between the
+\Cref{sec:randomization} described randomized caches\index{cache!randomization} as a race between the
 search for conflicting lines and the change of key. This appendix gives the
 mechanism as the model implements it, the arithmetic of the race, and one side
 effect that the model makes visible.
 
 \section{Encrypted index and gradual remapping}
 
-An ordinary cache takes the set directly from some bits of the line\index{cache!randomisation}
+An ordinary cache takes the set directly from some bits of the line\index{cache!randomization}
 address. CEASER\index{CEASER}~\citep{qureshi2018ceaser} first encrypts that address under a
 secret key with a fast block cipher and takes the set from the ciphertext. Which addresses collide then depends on the
 key, and an observer who does not know the key cannot compute an eviction set\index{eviction set}
@@ -8447,7 +8447,7 @@ How many memory accesses the testing takes depends on the algorithm. A
 straightforward search tests candidates in a way that costs a number of
 accesses quadratic in the size of the pool. Group-testing methods reduce this
 to a number linear in it~\citep{vila2019theory}, and methods that exploit the
-structure of a particular randomised design reduce it
+structure of a particular randomized design reduce it
 further~\citep{qureshi2019ceasers,purnal2021systematic}. The defense holds as
 long as an epoch contains fewer accesses than the search needs. At one remapped
 set per 1600 accesses an epoch of the model's cache is
@@ -8481,7 +8481,7 @@ line because of a set conflict at all.
 \Cref{tab:random} in \Cref{app:results} gives the cost for each kernel at four
 remapping rates. At the default rate the geometric-mean slowdown is
 \R{rand.1600.geo}\pc{} and the worst case \R{rand.1600.worst}\pc{}, consistent
-in magnitude with the roughly one per cent that CEASER\index{CEASER} reports for its own
+in magnitude with the roughly one percent that CEASER\index{CEASER} reports for its own
 workloads. Remapping sixteen times as often raises the worst case to
 \R{rand.100.worst}\pc{}, because each remapped set displaces lines that then
 have to be fetched again. The cost rises steeply with the remapping rate, which
@@ -8495,7 +8495,7 @@ fills a fraction $\rho$ of the cache, the count of its lines landing in any one
 set is close to a Poisson variable of mean $\rho W$, and
 sets that receive more than $W$ lines overflow even though the cache as a
 whole has room. For $W = 16$ and $\rho = 0.5$ the mean is 8 and the probability
-that a set overflows is under one per cent. For $\rho = 0.8$ the mean is 12.8
+that a set overflows is under one percent. For $\rho = 0.8$ the mean is 12.8
 and about 15\pc{} of the sets overflow. A conventional cache with well-placed
 pages would hold the same working set without a single conflict.
 
@@ -8506,11 +8506,11 @@ the direct one, and conflicts are the only cause. \code{stream} happens to run
 slightly faster, because the hash spreads its lines better than the page layout
 it replaces. The same effect also explains part of the spread over
 page-frame layouts in \Cref{tab:isolation}, because an operating system that
-hands out page frames without regard to colour produces the same kind of
+hands out page frames without regard to color produces the same kind of
 random placement at the granularity of a page.
 
 
-\chapter{The Modelled Speculation Defenses}
+\chapter{The Modeled Speculation Defenses}
 \label{app:specdef}
 
 \Cref{sec:defcost} reported the cost of seven speculation defenses. Here each
@@ -8552,7 +8552,7 @@ from.
 
 \begin{table}[ht]
 \centering
-\caption[Rules of the modelled speculation defenses]{The modelled speculation
+\caption[Rules of the modeled speculation defenses]{The modeled speculation
 defenses as rules on the timing model. ``VP'' is the visibility point of the
 instruction concerned.}
 \label{tab:specrules}\index{visibility point}
@@ -8645,7 +8645,7 @@ with NoSpecLoad.
 \emph{Undo} follows CleanupSpec\index{CleanupSpec}~\citep{saileshwar2019cleanupspec}. The
 published design invalidates transiently installed lines, restores the lines
 they evicted, discards fills that return after the squash, and relies on a
-randomised second-level cache to make evictions there harmless. The model
+randomized second-level cache to make evictions there harmless. The model
 keeps only the first-level rollback and its cost.
 
 \section{What the rules imply}
@@ -8814,7 +8814,7 @@ files from which every table and plot of the study is generated.
 \chapter{Validation of the Model}
 \label{app:validation}
 
-\Cref{sec:validation} summarised three checks. This appendix gives the method
+\Cref{sec:validation} summarized three checks. This appendix gives the method
 and the complete results of each, and a fourth check on the influence of the
 page-frame layout.
 
@@ -9028,7 +9028,7 @@ mechanisms of the same name.
 
 \begin{table}[ht]
 \centering
-\caption[Invariants of the modelled mechanisms]{Invariants checked on full
+\caption[Invariants of the modeled mechanisms]{Invariants checked on full
 runs. The two rows marked ``$> 0$'' confirm that the quantity being eliminated
 is present when the mechanism is switched off.}
 \label{tab:invariants}
@@ -9049,7 +9049,7 @@ Dependent transient loads executed under nda, all kernels & 0 & 0 & yes \\
 Dependent transient loads executed with no defense & 7\,221 & > 0 & yes \\
 Cross-domain evictions, way partitioning (all levels + tlb) & 0 & 0 & yes \\
 Predictions made from the other domain's entries, partitioned predictors & 0 & 0 & yes \\
-Cross-domain evictions in l2 and llc, page colouring & 0 & 0 & yes \\
+Cross-domain evictions in l2 and llc, page coloring & 0 & 0 & yes \\
 First-level, tlb and predictor residue after a flush & 0 & 0 & yes \\
 Predictions made from the other domain's entries, flushed predictors & 0 & 0 & yes \\
 Cross-domain evictions with no isolation (first level) & 54\,406 & > 0 & yes \\
@@ -9105,7 +9105,7 @@ defenses over the same layouts.}
 %% END GENERATED tab_seeds
 \end{table}
 
-Most kernels are insensitive to the layout or vary by a few per cent,
+Most kernels are insensitive to the layout or vary by a few percent,
 \code{hashtab} the most with \R{seed.spread.hashtab}\pc{}. The two whose
 working sets fill about half of the LLC\index{last-level cache},
 \code{listwalk} and \code{stream}, vary by \R{seed.spread.listwalk}\pc{} and
@@ -9121,7 +9121,7 @@ five.
 \chapter{Complete Results of the Model Study}
 \label{app:results}
 
-This appendix holds the result tables that the chapters summarise or plot. All
+This appendix holds the result tables that the chapters summarize or plot. All
 are generated from the result files of the study.
 
 \section{Speculation defenses under the Futuristic model}
@@ -9137,7 +9137,7 @@ little.
 \begin{table}[ht]
 \centering
 \caption[Slowdown of each speculation defense, Futuristic model]{Slowdown in per
-cent of each modelled speculation defense under the Futuristic model, against
+cent of each modeled speculation defense under the Futuristic model, against
 the undefended model.}
 \label{tab:defcostfut}
 \footnotesize
@@ -9173,7 +9173,7 @@ worst kernel & 427.7 & 122.0 & 5.8 & 29.8 & 5.6 & 79.8 & 14.9 \\
 \begin{table}[ht]
 \centering
 \caption[First-level miss rates for all kernels]{First-level data-cache miss
-rate in per cent of all accesses, against cache size at eight ways and against
+rate in percent of all accesses, against cache size at eight ways and against
 associativity at 32\,KiB.}
 \label{tab:cachesweep}
 \footnotesize
@@ -9199,7 +9199,7 @@ associativity at 32\,KiB.}
 %% END GENERATED tab_cachesweep
 \end{table}
 
-\section{Randomised last-level index}
+\section{Randomized last-level index}
 
 \Cref{tab:random} gives the cost of the encrypted, gradually remapped index for
 each kernel. The column ``Static'' uses a fixed key and no added latency, which
@@ -9210,8 +9210,8 @@ the default rate of 1600.
 
 \begin{table}[ht]
 \centering
-\caption[Cost of a randomised last-level index]{Per-kernel slowdown, in per
-cent, caused by randomising the LLC index, with the LLC access count of the
+\caption[Cost of a randomized last-level index]{Per-kernel slowdown, in per
+cent, caused by randomizing the LLC index, with the LLC access count of the
 baseline run for reference.}
 \label{tab:random}
 \footnotesize
@@ -9339,7 +9339,7 @@ reorder-buffer entries, with no defense.}
 pair of kernels at the four time slices, as the mean over five page-frame
 layouts, and the additional cycles per context switch\index{context switch} at a slice of
 \num{100000} instructions. The columns for flushing fall with the slice length,
-while those for colouring\index{page colouring} and way partitioning\index{cache partitioning} do not.
+while those for coloring\index{page coloring} and way partitioning\index{cache partitioning} do not.
 
 {\footnotesize\renewcommand{\arraystretch}{1.0}%
 %% BEGIN GENERATED tab_domains_full
@@ -9357,37 +9357,37 @@ while those for colouring\index{page colouring} and way partitioning\index{cache
 \bottomrule
 \endlastfoot
 \tcode{crc32 + hashtab} & Flush & 9.97 & 4.83 & 2.92 & 2.30 & 3\,105 \\
- & Flush+Colour & 20.34 & 15.06 & 12.93 & 12.48 & 13\,735 \\
- & Colour & 8.53 & 8.96 & 9.04 & 9.30 & 9\,608 \\
+ & Flush+Color & 20.34 & 15.06 & 12.93 & 12.48 & 13\,735 \\
+ & Color & 8.53 & 8.96 & 9.04 & 9.30 & 9\,608 \\
  & WayPart & 16.04 & 16.11 & 16.09 & 16.35 & 17\,097 \\
  & RandLLC & 0.29 & 0.30 & 0.30 & 0.29 & 322 \\
 \addlinespace
 \tcode{bsearch + stream} & Flush & 3.77 & 1.25 & 0.46 & 0.16 & 634 \\
- & Flush+Colour & 21.01 & 18.55 & 17.91 & 18.75 & 24\,484 \\
- & Colour & 17.18 & 17.28 & 17.45 & 18.60 & 23\,857 \\
+ & Flush+Color & 21.01 & 18.55 & 17.91 & 18.75 & 24\,484 \\
+ & Color & 17.18 & 17.28 & 17.45 & 18.60 & 23\,857 \\
  & WayPart & 24.30 & 24.37 & 24.60 & 25.83 & 33\,729 \\
  & RandLLC & 4.85 & 4.83 & 4.86 & 4.71 & 6\,542 \\
 \addlinespace
 \tcode{heapsort + matmul} & Flush & 10.95 & 3.67 & 1.08 & 0.36 & 545 \\
- & Flush+Colour & 12.00 & 4.80 & 2.21 & 1.68 & 1\,111 \\
- & Colour & 0.90 & 1.11 & 1.19 & 1.33 & 598 \\
+ & Flush+Color & 12.00 & 4.80 & 2.21 & 1.68 & 1\,111 \\
+ & Color & 0.90 & 1.11 & 1.19 & 1.33 & 598 \\
  & WayPart & 3.99 & 4.36 & 5.16 & 5.45 & 2\,594 \\
  & RandLLC & 0.02 & 0.02 & 0.02 & 0.01 & 12 \\
 \addlinespace
 \tcode{listwalk + sieve} & Flush & 1.50 & 0.49 & 0.14 & 0.05 & 463 \\
- & Flush+Colour & 118.17 & 117.35 & 117.90 & 118.19 & 397\,316 \\
- & Colour & 116.53 & 116.80 & 117.68 & 118.12 & 396\,584 \\
+ & Flush+Color & 118.17 & 117.35 & 117.90 & 118.19 & 397\,316 \\
+ & Color & 116.53 & 116.80 & 117.68 & 118.12 & 396\,584 \\
  & WayPart & 124.02 & 124.27 & 125.21 & 125.75 & 421\,484 \\
  & RandLLC & 4.14 & 4.26 & 4.33 & 3.01 & 13\,612 \\
 \addlinespace
 \tcode{bstree + strsearch} & Flush & 7.56 & 2.58 & 0.75 & 0.19 & 1\,737 \\
- & Flush+Colour & 18.70 & 13.79 & 12.03 & 11.26 & 27\,718 \\
- & Colour & 11.14 & 11.15 & 11.09 & 11.06 & 25\,550 \\
+ & Flush+Color & 18.70 & 13.79 & 12.03 & 11.26 & 27\,718 \\
+ & Color & 11.14 & 11.15 & 11.09 & 11.06 & 25\,550 \\
  & WayPart & 27.95 & 28.15 & 28.24 & 28.20 & 65\,079 \\
  & RandLLC & 0.24 & 0.24 & 0.24 & 0.25 & 554 \\
 \end{longtable}
 %% END GENERATED tab_domains_full
-\captionof{table}[Isolation cost at every time slice]{Slowdown in per cent of
+\captionof{table}[Isolation cost at every time slice]{Slowdown in percent of
 each isolation mechanism against the time slice in instructions, and
 additional cycles per switch at \num{100000} instructions.}
 \label{tab:domainsfull}
@@ -10232,8 +10232,8 @@ The results of the model study come from four programs, and a fifth turns their
 output into the tables, plots and quoted numbers of this report.
 \Cref{tab:programs} describes each of them. They are kept in the repository
 named on the title page, together with the kernels, which \Cref{app:kernels}
-reproduces in full because they are the RISC-V code whose behaviour the study
-measures. The behaviour of the simulator is specified in \Cref{app:model} and
+reproduces in full because they are the RISC-V code whose behavior the study
+measures. The behavior of the simulator is specified in \Cref{app:model} and
 its validation is reported in \Cref{app:validation}, so that the results can be
 judged without reading its source. \Cref{tab:manifest} gives the SHA-256 digest
 of every file with which the reported results were produced, so that a copy of
@@ -10346,9 +10346,9 @@ produced.}
 \textbf{Source file} & \textbf{SHA-256 (first 32 hexadecimal digits)} \\
 \midrule
 \tcode{reference.py} & \tcode{56353b077dd7129e78a8696b90e643e1} \\
-\tcode{run\_study.py} & \tcode{8e9a625c3b1df85f3c525f5dff44506c} \\
+\tcode{run\_study.py} & \tcode{84b40fd4047447f0ea388d491a8e5244} \\
 \tcode{rvasm.py} & \tcode{887c969bb28fa7e867f04903cfeb0a97} \\
-\tcode{rvmodel.c} & \tcode{85052957dde97064146dc47a2a11a375} \\
+\tcode{rvmodel.c} & \tcode{2b01a4082d9346c328f3680b7c1222e5} \\
 \tcode{workloads/bsearch.s} & \tcode{6b5a9ed09f6d09ed3005006775188dc1} \\
 \tcode{workloads/bstree.s} & \tcode{14b6ac217df5b45a80ce1167532ae988} \\
 \tcode{workloads/crc32.s} & \tcode{4cacdb6cc8f989253894880f3d3adcf0} \\

@@ -111,7 +111,7 @@ RISC-V-TermPaper-Vault/                        Obsidian vault with working notes
 
 As page ii of the paper states, all intellectual property rights in the paper
 and in the programs prepared for it are assigned to the Indian Institute of
-Technology Delhi; rights in cited material remain with its authors. No licence
+Technology Delhi; rights in cited material remain with its authors. No license
 is granted by publishing this repository.
 
 ## Prescribed textbook

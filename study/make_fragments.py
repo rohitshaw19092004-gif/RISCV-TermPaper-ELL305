@@ -20,11 +20,11 @@ KERNELS = ["matmul", "heapsort", "listwalk", "bsearch", "bstree", "crc32",
 DEFS = ["nospec", "dom", "invis-e", "invis-v", "stt", "nda", "undo"]
 DEFNAME = {"none": "none", "nospec": "NoSpecLoad", "dom": "DoM", "invis-e": "Invis-E",
            "invis-v": "Invis-V", "stt": "Taint", "nda": "NoFwd", "undo": "Undo"}
-ISO = ["flush on-core state", "flush + colouring", "colouring only",
-       "way partitioning", "randomised LLC"]
-ISONAME = {"shared": "shared", "flush on-core state": "Flush", "flush + colouring": "Flush+Colour",
-           "colouring only": "Colour", "way partitioning": "WayPart",
-           "randomised LLC": "RandLLC"}
+ISO = ["flush on-core state", "flush + coloring", "coloring only",
+       "way partitioning", "randomized LLC"]
+ISONAME = {"shared": "shared", "flush on-core state": "Flush", "flush + coloring": "Flush+Color",
+           "coloring only": "Color", "way partitioning": "WayPart",
+           "randomized LLC": "RandLLC"}
 MACROS = {}
 
 
@@ -157,9 +157,9 @@ def baseline():
             "  xlabel={share of loads served at each level (\\%)}, label style={font=\\small},",
             "  legend style={font=\\scriptsize, draw=black!25, at={(0.5,1.03)}, anchor=south,",
             "    legend columns=4}, xmajorgrids, grid style={draw=black!12}]"]
-    for field, label, colour in series:
+    for field, label, color in series:
         coords = " ".join("(%.3f,%s)" % (float(r[k][field]), k) for k in reversed(KERNELS))
-        plot.append("\\addplot+[fill=%s, draw=black!40] coordinates {%s};" % (colour, coords))
+        plot.append("\\addplot+[fill=%s, draw=black!40] coordinates {%s};" % (color, coords))
         plot.append("\\addlegendentry{%s}" % label)
     plot += ["\\end{axis}", "\\end{tikzpicture}"]
     emit("fig_service", "\n".join(plot))
@@ -328,10 +328,10 @@ def defenses():
             "  every node near coord/.append style={/pgf/number format/fixed, /pgf/number format/precision=1},",
             "  legend style={font=\\scriptsize, draw=black!25, at={(0.97,0.05)}, anchor=south east},",
             "  xmajorgrids, grid style={draw=black!12}]"]
-    for model, colour, label in (("futuristic", "attack!45", "Futuristic model"),
+    for model, color, label in (("futuristic", "attack!45", "Futuristic model"),
                                  ("spectre", "accent!45", "Spectre model")):
         coords = " ".join("(%s,%s)" % (MACROS["geo.%s.%s" % (model, d)], DEFNAME[d]) for d in order)
-        plot.append("\\addplot+[fill=%s, draw=black!45] coordinates {%s};" % (colour, coords))
+        plot.append("\\addplot+[fill=%s, draw=black!45] coordinates {%s};" % (color, coords))
         plot.append("\\addlegendentry{%s}" % label)
     plot += ["\\end{axis}", "\\end{tikzpicture}"]
     emit("fig_overheads", "\n".join(plot))
@@ -369,9 +369,9 @@ def defenses():
         y = 100.0 * total[d]["wp_fills"] / base
         macro("foot.pct.%s" % d, "%.1f" % y)
         mark = "*" if total[d]["wp_dependent_loads"] == 0 or d == "none" else "square*"
-        colour = "attack" if d == "none" else ("defense" if total[d]["wp_dependent_loads"] == 0 else "accent")
+        color = "attack" if d == "none" else ("defense" if total[d]["wp_dependent_loads"] == 0 else "accent")
         plot.append("\\addplot[only marks, mark=%s, mark size=2.3pt, draw=%s, fill=%s] coordinates {(%.2f,%.2f)};"
-                    % (mark, colour, colour, x, y))
+                    % (mark, color, color, x, y))
         name = "no defense" if d == "none" else DEFNAME[d]
         if (x, y) in seen:                       # coincident points share one label
             plot[seen[(x, y)]] = plot[seen[(x, y)]].replace("};", ", %s};" % name)
@@ -536,7 +536,7 @@ def isolation():
           "\\textbf{DoM (\\%)}", "\\textbf{Taint (\\%)}"], body))
 
 
-def randomised():
+def randomized():
     r = rows("random.csv")
     get = {(x["kernel"], x["mode"], int(x["accesses_per_remapped_set"])): x for x in r}
     body, ratios = [], []
@@ -651,7 +651,7 @@ def main():
     defenses()
     sensitivity()
     isolation()
-    randomised()
+    randomized()
     composition()
     channel()
     manifest()

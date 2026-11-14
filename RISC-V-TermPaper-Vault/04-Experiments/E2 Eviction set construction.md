@@ -24,7 +24,7 @@ status: not-started
 ## Threats to validity
 - Simulated timing is not silicon timing: trends and relative costs only.
 - Microbenchmarks written to exercise a channel flatter the attack.
-- A self-implemented defense may be less optimised than its authors' version.
+- A self-implemented defense may be less optimized than its authors' version.
 
 ## Results
 _(paste raw numbers here; the paper gets the cleaned version)_

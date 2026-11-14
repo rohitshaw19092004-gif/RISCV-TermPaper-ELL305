@@ -1,26 +1,26 @@
 pair,isolation,speculation_defense,s_a_pct,s_b_pct,s_ab_pct,product_pct,excess_pct,excess_min_pct,excess_max_pct,excess_over_sum_pct
-crc32+hashtab,flush + colouring,stt,12.926,2.766,17.169,16.049,1.121,1.058,1.240,1.478
-crc32+hashtab,flush + colouring,dom,12.926,27.596,47.404,44.087,3.317,2.871,3.689,6.882
+crc32+hashtab,flush + coloring,stt,12.926,2.766,17.169,16.049,1.121,1.058,1.240,1.478
+crc32+hashtab,flush + coloring,dom,12.926,27.596,47.404,44.087,3.317,2.871,3.689,6.882
 crc32+hashtab,way partitioning,stt,16.089,2.766,19.475,19.299,0.176,0.068,0.320,0.621
 crc32+hashtab,way partitioning,invis-v,16.089,6.450,25.918,23.576,2.342,2.172,2.462,3.379
-crc32+hashtab,randomised LLC,nda,0.303,3.458,3.836,3.772,0.065,0.059,0.073,0.075
-bsearch+stream,flush + colouring,stt,17.910,4.086,21.815,22.731,-0.916,-1.213,-0.663,-0.181
-bsearch+stream,flush + colouring,dom,17.910,33.666,52.072,57.618,-5.546,-6.875,-3.159,0.496
+crc32+hashtab,randomized LLC,nda,0.303,3.458,3.836,3.772,0.065,0.059,0.073,0.075
+bsearch+stream,flush + coloring,stt,17.910,4.086,21.815,22.731,-0.916,-1.213,-0.663,-0.181
+bsearch+stream,flush + coloring,dom,17.910,33.666,52.072,57.618,-5.546,-6.875,-3.159,0.496
 bsearch+stream,way partitioning,stt,24.604,4.086,29.642,29.700,-0.058,-0.811,0.744,0.952
 bsearch+stream,way partitioning,invis-v,24.604,0.345,19.554,25.033,-5.479,-6.510,-3.848,-5.395
-bsearch+stream,randomised LLC,nda,4.864,4.588,9.903,9.678,0.225,0.023,0.358,0.451
-heapsort+matmul,flush + colouring,stt,2.210,0.219,3.065,2.433,0.632,0.564,0.738,0.636
-heapsort+matmul,flush + colouring,dom,2.210,1.058,2.799,3.291,-0.491,-0.726,-0.279,-0.468
+bsearch+stream,randomized LLC,nda,4.864,4.588,9.903,9.678,0.225,0.023,0.358,0.451
+heapsort+matmul,flush + coloring,stt,2.210,0.219,3.065,2.433,0.632,0.564,0.738,0.636
+heapsort+matmul,flush + coloring,dom,2.210,1.058,2.799,3.291,-0.491,-0.726,-0.279,-0.468
 heapsort+matmul,way partitioning,stt,5.157,0.219,6.176,5.388,0.788,0.667,0.924,0.799
 heapsort+matmul,way partitioning,invis-v,5.157,0.043,3.253,5.202,-1.950,-2.246,-1.514,-1.948
-heapsort+matmul,randomised LLC,nda,0.024,0.320,0.357,0.344,0.013,0.005,0.023,0.013
-listwalk+sieve,flush + colouring,stt,117.898,0.000,117.898,117.898,-0.001,-0.001,-0.000,-0.000
-listwalk+sieve,flush + colouring,dom,117.898,1.492,118.827,121.163,-2.336,-3.080,-1.818,-0.562
+heapsort+matmul,randomized LLC,nda,0.024,0.320,0.357,0.344,0.013,0.005,0.023,0.013
+listwalk+sieve,flush + coloring,stt,117.898,0.000,117.898,117.898,-0.001,-0.001,-0.000,-0.000
+listwalk+sieve,flush + coloring,dom,117.898,1.492,118.827,121.163,-2.336,-3.080,-1.818,-0.562
 listwalk+sieve,way partitioning,stt,125.210,0.000,125.210,125.211,-0.001,-0.001,-0.000,-0.000
 listwalk+sieve,way partitioning,invis-v,125.210,0.054,125.366,125.334,0.033,-0.004,0.069,0.102
-listwalk+sieve,randomised LLC,nda,4.328,0.096,4.426,4.429,-0.003,-0.010,0.007,0.002
-bstree+strsearch,flush + colouring,stt,12.029,2.621,14.653,14.966,-0.313,-0.365,-0.284,0.003
-bstree+strsearch,flush + colouring,dom,12.029,1.650,13.677,13.879,-0.202,-0.234,-0.188,-0.003
+listwalk+sieve,randomized LLC,nda,4.328,0.096,4.426,4.429,-0.003,-0.010,0.007,0.002
+bstree+strsearch,flush + coloring,stt,12.029,2.621,14.653,14.966,-0.313,-0.365,-0.284,0.003
+bstree+strsearch,flush + coloring,dom,12.029,1.650,13.677,13.879,-0.202,-0.234,-0.188,-0.003
 bstree+strsearch,way partitioning,stt,28.236,2.621,30.191,31.597,-1.406,-1.599,-1.317,-0.666
 bstree+strsearch,way partitioning,invis-v,28.236,0.031,27.435,28.276,-0.842,-0.955,-0.772,-0.833
-bstree+strsearch,randomised LLC,nda,0.240,3.468,3.708,3.716,-0.008,-0.009,-0.005,0.001
+bstree+strsearch,randomized LLC,nda,0.240,3.468,3.708,3.716,-0.008,-0.009,-0.005,0.001

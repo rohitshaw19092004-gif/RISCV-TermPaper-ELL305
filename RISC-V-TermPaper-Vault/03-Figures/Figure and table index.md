@@ -12,9 +12,9 @@ Labels below are the stable identifiers; printed numbers move between drafts, so
 cross-reference by label. Regenerated from the v0.1 source after the correction
 pass of 23 August 2026. See [[Correction pass v0.1]].
 
-> [!warning] Figures still labelled *illustrative*
+> [!warning] Figures still labeled *illustrative*
 > `fig:hierarchy`, `fig:histogram`, `fig:overheads` and `fig:pareto` are not
-> measured data. They must be replaced from [[E1 Latency characterisation]] and
+> measured data. They must be replaced from [[E1 Latency characterization]] and
 > [[E5 Defense cost]] before the final version, or the labels must stay.
 
 ## Figures
@@ -24,13 +24,13 @@ pass of 23 August 2026. See [[Correction pass v0.1]].
 | `fig:roadmap` | Textbook-to-paper chapter mapping | Ch. 1: Introduction and Scope |
 | `fig:encoding` | RISC-V base instruction formats | Ch. 2: The Contract and the Machine: RISC-V as Architecture and as Implementation |
 | `fig:sram` | Six-transistor SRAM cell | Ch. 3: The Physical Substrate: Memory Arrays That Remember Too Much |
-| `fig:array` | Array organisation | Ch. 3: The Physical Substrate: Memory Arrays That Remember Too Much |
+| `fig:array` | Array organization | Ch. 3: The Physical Substrate: Memory Arrays That Remember Too Much |
 | `fig:readtiming` | Read timing of an SRAM array | Ch. 3: The Physical Substrate: Memory Arrays That Remember Too Much |
 | `fig:datapath` | Single-cycle RISC-V datapath | Ch. 4: The Reference Machine: Datapath and Control |
 | `fig:pipeline` | Five-stage pipeline | Ch. 5: Pipelining, Speculation and the Birth of Transient State |
 | `fig:predictors` | Branch prediction structures | Ch. 5: Pipelining, Speculation and the Birth of Transient State |
 | `fig:squash` | Squashed instructions leave state behind | Ch. 5: Pipelining, Speculation and the Birth of Transient State |
-| `fig:ooo` | Out-of-order organisation | Ch. 5: Pipelining, Speculation and the Birth of Transient State |
+| `fig:ooo` | Out-of-order organization | Ch. 5: Pipelining, Speculation and the Birth of Transient State |
 | `fig:hierarchy` | Representative memory hierarchy latencies | Ch. 6: The Memory System as an Attack Surface |
 | `fig:hitmiss` | Hit versus miss on the load interface | Ch. 6: The Memory System as an Attack Surface |
 | `fig:addrsplit` | Cache address split | Ch. 6: The Memory System as an Attack Surface |
@@ -54,7 +54,7 @@ pass of 23 August 2026. See [[Correction pass v0.1]].
 | `tab:statepartition` | Partition of processor state | Ch. 2: The Contract and the Machine: RISC-V as Architecture and as Implementation |
 | `tab:threat` | Threat model tiers | Ch. 2: The Contract and the Machine: RISC-V as Architecture and as Implementation |
 | `tab:arrayzoo` | Array-based structures in a RISC-V core | Ch. 3: The Physical Substrate: Memory Arrays That Remember Too Much |
-| `tab:stagestate` | Pipeline stages and the state added by optimisation | Ch. 4: The Reference Machine: Datapath and Control |
+| `tab:stagestate` | Pipeline stages and the state added by optimization | Ch. 4: The Reference Machine: Datapath and Control |
 | `tab:hazards` | Hazards and their security consequence | Ch. 5: Pipelining, Speculation and the Birth of Transient State |
 | `tab:primitives` | Comparison of cache attack primitives | Ch. 6: The Memory System as an Attack Surface |
 | `tab:variants` | Transient-execution variants | Ch. 8: Transient Execution Attacks |

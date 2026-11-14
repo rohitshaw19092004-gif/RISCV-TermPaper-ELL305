@@ -17,20 +17,21 @@ tags: [moc]
   2022MT61988, ELL 305, Computer Architecture, Prof. Subrat Kar, and the GitHub
   link are recorded in the LaTeX title page and vault home.
 - **Title spelling.** The title keeps American *"Defenses"* to match the course
-  form entry; the body keeps British *"defenses"* throughout. This is a
-  deliberate mismatch, not an oversight. See [[Correction pass v0.1]]. Only
-  change it if the form entry changes too.
-- **Illustrative figures stay labelled.** `fig:hierarchy`, `fig:histogram`,
-  `fig:overheads` and `fig:pareto` are synthesised, not measured, and every one
+  form entry. Until 15 November 2026 the body deliberately used British
+  spelling (see [[Correction pass v0.1]]); on that date the author decided to
+  use American spelling throughout, so title and body now agree. Do not
+  change the title unless the form entry changes too.
+- **Illustrative figures stay labeled.** `fig:hierarchy`, `fig:histogram`,
+  `fig:overheads` and `fig:pareto` are synthesized, not measured, and every one
   of them says so in its own caption. They stay that way until
-  [[E1 Latency characterisation]] and [[E5 Defense cost]] produce real numbers.
+  [[E1 Latency characterization]] and [[E5 Defense cost]] produce real numbers.
   The alternative, an authoritative-looking chart mixing incomparable numbers,
   is the failure mode Chapter 10 is written against.
 
 ## Outstanding
 
 
-- [ ] Finalise the benchmark selection for `tab:platform`.
+- [ ] Finalize the benchmark selection for `tab:platform`.
 - [ ] Decide the scope of E7 (composition): highest value, highest risk.
 
 ## Done

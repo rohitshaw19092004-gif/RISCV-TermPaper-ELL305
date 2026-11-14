@@ -24,7 +24,7 @@ tags: [chapter, status/drafted]
 
 ## Figures and tables in this chapter
 - Single-cycle RISC-V datapath
-- Pipeline stages and the state added by optimisation
+- Pipeline stages and the state added by optimization
 
 ## To write for v0.2 / v0.3
 - [ ] For v0.2: add a second figure showing the same datapath annotated with the actual module boundaries of an open RISC-V implementation (Rocket's RocketCore stages, or CVA6's six stages), so that the abstract textbook datapath is tied to code the reader can inspect. Also add a short subsection on the RISC-V privilege model in the datapath (mstatus, trap vectors), which [[Ch08 Transient Execution Attacks]] needs when discussing Meltdown-type faults. Target: +2.5 pages.

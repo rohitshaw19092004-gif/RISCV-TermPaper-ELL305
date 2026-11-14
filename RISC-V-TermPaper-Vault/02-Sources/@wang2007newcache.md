@@ -20,7 +20,7 @@ status: to-read
 - [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
-> The idea is older than the modern designs: Wang and Lee's partition-locked and random-permutation caches [[@wang2007newcache]] proposed both locking lines against eviction and randomising the address-to-set mapping, and non-monopolisable caches [[@domnitser2012nonmono]] showed that merely preventing one thread from occupying a whole set already raises the attac
+> The idea is older than the modern designs: Wang and Lee's partition-locked and random-permutation caches [[@wang2007newcache]] proposed both locking lines against eviction and randomizing the address-to-set mapping, and non-monopolizable caches [[@domnitser2012nonmono]] showed that merely preventing one thread from occupying a whole set already raises the attac
 
 ## One-line claim
 _What does this establish that nothing before it did?_

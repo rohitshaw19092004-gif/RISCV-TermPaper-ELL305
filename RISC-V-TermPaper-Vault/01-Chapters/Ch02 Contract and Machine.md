@@ -34,7 +34,7 @@ tags: [chapter, status/drafted]
 
 ## To write for v0.2 / v0.3
 - [ ] This section is intentionally short in v0.1. For v0.2 it will be developed into a formal treatment: (a) definition of an observation function over ;
-- [ ] (b) the standard channel-capacity bound for a binary asymmetric channel modelling a hit/miss observation with measurement noise;
+- [ ] (b) the standard channel-capacity bound for a binary asymmetric channel modeling a hit/miss observation with measurement noise;
 - [ ] (c) a worked estimate of achievable bits/second for Prime+Probe on an L1 of a given associativity, cross-checked against the rates reported by Yarom and Falkner [[@yarom2014flushreload]] and Liu et al. [[@liu2015llc]]; and (d) a discussion of why constant-time programming disciplines are exactly the requirement that this function be constant in s . Target length: 3-4 pages.
 
 ## Sources cited here

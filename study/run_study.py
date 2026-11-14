@@ -371,7 +371,7 @@ def invariants():
     check("predictions made from the other domain's entries, partitioned predictors",
           st["xpred"], 0)
     st = model(pair, quantum=50000, color=1)
-    check("cross-domain evictions in L2 and LLC, page colouring",
+    check("cross-domain evictions in L2 and LLC, page coloring",
           st["l2_xev"] + st["llc_xev"], 0)
     st = model(pair, quantum=50000, flush=15)
     check("first-level, TLB and predictor residue after a flush",
@@ -529,10 +529,10 @@ def exp_sensitivity():
 ISOLATION = [
     ("shared", {}),
     ("flush on-core state", {"flush": 15}),
-    ("flush + colouring", {"flush": 15, "color": 1}),
-    ("colouring only", {"color": 1}),
+    ("flush + coloring", {"flush": 15, "color": 1}),
+    ("coloring only", {"color": 1}),
     ("way partitioning", {"part": 1, "isolbp": 1}),
-    ("randomised LLC", {"rnd": 1}),
+    ("randomized LLC", {"rnd": 1}),
 ]
 
 
@@ -606,11 +606,11 @@ def exp_composition():
     """E7: do the costs of two defenses add when both are switched on? Every
     combination is run for five page-frame layouts; the means are reported
     together with the spread of the excess over the product."""
-    combos = [("flush + colouring", {"flush": 15, "color": 1}, "stt", {"def": "stt"}),
-              ("flush + colouring", {"flush": 15, "color": 1}, "dom", {"def": "dom"}),
+    combos = [("flush + coloring", {"flush": 15, "color": 1}, "stt", {"def": "stt"}),
+              ("flush + coloring", {"flush": 15, "color": 1}, "dom", {"def": "dom"}),
               ("way partitioning", {"part": 1, "isolbp": 1}, "stt", {"def": "stt"}),
               ("way partitioning", {"part": 1, "isolbp": 1}, "invis-v", {"def": "invis-v"}),
-              ("randomised LLC", {"rnd": 1}, "nda", {"def": "nda"})]
+              ("randomized LLC", {"rnd": 1}, "nda", {"def": "nda"})]
     jobs, tags = [], []
     for pair in PAIRS:
         for na, oa, nb, ob in combos:

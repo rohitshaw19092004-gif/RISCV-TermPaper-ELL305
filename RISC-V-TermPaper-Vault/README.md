@@ -15,5 +15,5 @@ Generated from the v0.1 LaTeX source, so the structure matches the paper exactly
 62 source notes, 15 chapter notes, 7 experiment notes. The exported Zotero
 database is at `02-Sources/zotero-library.bib`.
 
-> This vault is a **working artefact**, not the submission. The submission is the
+> This vault is a **working artifact**, not the submission. The submission is the
 > single `.tex` file and the PDF compiled from it.

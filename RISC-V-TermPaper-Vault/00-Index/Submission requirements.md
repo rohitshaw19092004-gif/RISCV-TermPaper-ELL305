@@ -165,10 +165,15 @@ Chapter titles were left as they were.
 - Spelling: the title has always read "Defenses", so the word is now spelled
   "defense" throughout the paper, the study scripts, the result files
   (`study/results/defense.csv`, column `defense`), the README and these notes.
-  Other British spellings (behaviour, colouring, randomised) are unchanged.
-  The study was re-run after the rename; every result file is identical to
-  the previous one apart from that word, and the digests in Appendix T were
-  regenerated.
+  In a second step the remaining British spellings were converted as well
+  (color, behavior, randomized, organization, modeled, summarize, analyze,
+  artifact, percent), in the paper, glossary, index, generated tables, study
+  scripts, README and these notes. Left as they are: bibliography entries,
+  the quoted textbook heading "Utilising locality" in Appendix D, and the
+  heading "Acknowledgements", which follows the wording of the course
+  guideline. The study was re-run after each step; every result file is
+  identical to the previous one apart from the spelling, and the digests in
+  Appendix T were regenerated.
 - The course withdrew the instruction to show the paper to a TA or lab staff
   member; the single-file rule stands and the file is submitted directly.
   The reviewer macros, the acknowledgement sentence that depended on them and

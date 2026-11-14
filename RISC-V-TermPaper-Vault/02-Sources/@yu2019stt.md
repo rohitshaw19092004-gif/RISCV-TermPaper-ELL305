@@ -20,7 +20,7 @@ status: to-read
 - [[Ch09 Defenses Taxonomy]]
 
 ### Current wording in the draft
-> Speculative Taint Tracking (STT) [[@yu2019stt]] formalises when data becomes safe (at the point where the instruction that produced it is no longer squashable) and blocks only transmitters that would act on tainted data before that point.
+> Speculative Taint Tracking (STT) [[@yu2019stt]] formalizes when data becomes safe (at the point where the instruction that produced it is no longer squashable) and blocks only transmitters that would act on tainted data before that point.
 
 > STT [[@yu2019stt]], SPT [[@choudhary2021spt]] & Restrict & Moderate; SPT reduces STT's cost & Principled: blocks transmission of speculatively accessed secrets, structure independent.
 

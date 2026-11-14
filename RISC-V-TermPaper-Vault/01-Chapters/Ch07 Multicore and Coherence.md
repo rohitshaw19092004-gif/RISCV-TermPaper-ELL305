@@ -18,7 +18,7 @@ tags: [chapter, status/drafted]
 - Coherence as a channel
 - Memory consistency and fences
 - Simultaneous multithreading
-- Partitioning and colouring, viewed as defenses
+- Partitioning and coloring, viewed as defenses
 
 
 

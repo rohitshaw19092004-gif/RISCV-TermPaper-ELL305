@@ -24,13 +24,13 @@ tags: [chapter, status/drafted]
 
 ## Figures and tables in this chapter
 - Six-transistor SRAM cell
-- Array organisation
+- Array organization
 - Read timing of an SRAM array
 - Array-based structures in a RISC-V core
 
 ## To write for v0.2 / v0.3
-- [ ] For v0.2 this chapter gains: (a) a short quantitative model relating array size to access latency, in the style of CACTI, so that [[Ch10 Cost - Performance Power Area]] can price the extra tag bits required by partitioned and randomised caches;
-- [ ] (b) a figure showing a set-associative tag/data array pair with the way-mux critical path highlighted; and (c) a paragraph on the DRAM organisation of §7.4.3 and its row buffers, for completeness of the "arrays that remember" theme. Target: +2 pages.
+- [ ] For v0.2 this chapter gains: (a) a short quantitative model relating array size to access latency, in the style of CACTI, so that [[Ch10 Cost - Performance Power Area]] can price the extra tag bits required by partitioned and randomized caches;
+- [ ] (b) a figure showing a set-associative tag/data array pair with the way-mux critical path highlighted; and (c) a paragraph on the DRAM organization of §7.4.3 and its row buffers, for completeness of the "arrays that remember" theme. Target: +2 pages.
 
 ## Sources cited here
 - [[@riscv-crypto]]

@@ -6,7 +6,7 @@
  * unmodified on QEMU). The timing part assigns every dynamic instruction a
  * fetch, dispatch, issue, completion and commit time using a reorder-buffer
  * window model, a three-level cache hierarchy, a TLB and branch predictors.
- * Defenses are modelled as changes to those rules. Wrong-path (transient)
+ * Defenses are modeled as changes to those rules. Wrong-path (transient)
  * execution after a misprediction is simulated explicitly so that its effect
  * on cache state can be counted.
  *
@@ -22,7 +22,7 @@ typedef uint64_t u64; typedef int64_t s64;
 typedef uint32_t u32; typedef int32_t s32; typedef uint8_t u8;
 
 #define BASE    0x80000000ULL       /* RAM base of the QEMU 'virt' machine   */
-#define MEMSZ   (64u << 20)         /* RAM modelled per domain               */
+#define MEMSZ   (64u << 20)         /* RAM modeled per domain               */
 #define UART    0x10000000ULL
 #define FINISH  0x00100000ULL
 #define NDOM    2
@@ -47,7 +47,7 @@ static struct {
     int def, fut;                            /* speculation defense, VP model */
     int part, color, flush, flushcost;       /* isolation between domains    */
     int frames;                              /* 1 = scattered page frames    */
-    int rnd, rndlat, remap;                  /* randomised LLC index         */
+    int rnd, rndlat, remap;                  /* randomized LLC index         */
     int wp;                                  /* simulate wrong-path execution */
     u64 quantum, seed, maxinst;
 } C = { 4, 128, 4,  4, 14, 45, 220, 3, 20,  64, 8, 512, 8, 2048, 16, 32,  0,
@@ -241,7 +241,7 @@ static int exec(Hart *h, u64 *x, u64 pc, Ev *e, int wp)
 typedef struct { u64 tag, ready; u32 lru; u8 valid, owner, ep; } Line;
 typedef struct {
     int sets, ways, part, rnd; Line *l;
-    u64 key[2], sptr, racc;                  /* randomised-index state       */
+    u64 key[2], sptr, racc;                  /* randomized-index state       */
     u64 acc, miss, evict, xevict, remapev;   /* statistics                   */
 } Cache;
 static Cache L1D, L1I, L2, LLC;
@@ -365,7 +365,7 @@ static u64 tlb_acc, tlb_miss, tlb_xevict;
 
 /* Page frames. Each domain owns 2^14 frames; within them a virtual page is
  * placed either at the same offset (frames=0) or at a pseudo-random one, as a
- * long-running allocator would (frames=1). With colouring a domain receives
+ * long-running allocator would (frames=1). With coloring a domain receives
  * only frames of its own parity, which halves the sets it can reach in every
  * cache whose way is larger than a page. */
 static u64 scatter(int dom, u64 v)            /* a bijection on 14-bit numbers */

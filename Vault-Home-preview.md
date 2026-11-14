@@ -4,7 +4,7 @@ tags: [moc]
 
 # Microarchitectural Security in Modern RISC-V Processors: Cache and Speculative-Execution Attacks, Defenses, and Performance Trade-offs
 
-Working vault for the term paper. The submitted artefact is a **single `.tex`
+Working vault for the term paper. The submitted artifact is a **single `.tex`
 file** plus the PDF compiled from it; this vault is the drafting and research
 medium behind it, as the course requires.
 
@@ -42,7 +42,7 @@ medium behind it, as the course requires.
 - [[Figure and table index]]
 
 ## Experiments
-- [[E1 Latency characterisation]]
+- [[E1 Latency characterization]]
 - [[E2 Eviction set construction]]
 - [[E3 Speculation window]]
 - [[E4 Spectre-v1 replication]]
