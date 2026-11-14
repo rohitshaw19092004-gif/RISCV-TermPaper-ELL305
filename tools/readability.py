@@ -108,6 +108,20 @@ def band(grade):
     return next(text for low, text in BANDS if grade >= low)
 
 
+# Flesch's interpretation of the Reading Ease score: lower bound, wording.
+FRE_BANDS = [(90, "the band from 90 to 100 that is conventionally labeled very easy"),
+             (80, "the band from 80 to 90 that is conventionally labeled easy"),
+             (70, "the band from 70 to 80 that is conventionally labeled fairly easy"),
+             (60, "the band from 60 to 70 that is conventionally labeled plain English"),
+             (50, "the band from 50 to 60 that is conventionally labeled fairly difficult"),
+             (30, "the band from 30 to 50 that is conventionally labeled difficult"),
+             (-999, "the band from 0 to 30 that is conventionally labeled very difficult")]
+
+
+def fre_band(score):
+    return next(text for low, text in FRE_BANDS if score >= low)
+
+
 def longest_unit(body):
     """Words of running prose under the longest single heading of Chapters 1-12."""
     parts = re.split(r"^\\(?:chapter|section|subsection|subsubsection|paragraph)\*?\{", body, flags=re.M)
@@ -180,7 +194,8 @@ def main():
               "read.grade.max": "%.1f" % max(grades), "read.wps": "%.1f" % (c["W"] / c["S"]),
               "read.poly.pct": "%.1f" % (100.0 * c["P"] / c["W"]), "read.words": num(c["W"]),
               "read.grade.mean": "%.1f" % mean, "read.grade.median": "%.1f" % median,
-              "read.grade.band": band(mean), "read.sentences": num(c["S"]),
+              "read.grade.band": band(mean), "read.fre.band": fre_band(ix["fre"]),
+              "read.sentences": num(c["S"]),
               "read.unit.max": num(longest_unit(body))}
     emit("read_macros", "\n".join("\\expandafter\\def\\csname R@%s\\endcsname{%s}" % kv
                                   for kv in sorted(macros.items())))

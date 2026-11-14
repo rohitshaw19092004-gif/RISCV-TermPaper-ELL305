@@ -33,6 +33,6 @@
   "workloads/matmul.s": "2e2f2a9174b02da50aa525862faf111d1d8a63d47882282339c0e38edc29fc6f",
   "workloads/sieve.s": "0f60b4dc151e9ad5a4eac018e5441c08146e4ef030fe83a354b6805889f0d2dc",
   "workloads/stream.s": "0fa09b96f58d5157c732b38be3bf666042d9a6dcaecd56fad43abdce03c83d8d",
-  "workloads/strsearch.s": "45327a878e7a63b1c97d9496284eae079461ba9db0607df2719505e562ef06e7"
+  "workloads/strsearch.s": "11fd8bb2f38d754a23a6b60946948dea8f759219f2e357920b285ded1911e891"
  }
 }

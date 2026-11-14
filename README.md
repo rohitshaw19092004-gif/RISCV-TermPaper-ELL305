@@ -12,7 +12,7 @@ Term paper for **ELL 305, Computer Architecture**, taught by Prof. Subrat Kar.
 | Instructor | Prof. Subrat Kar |
 | Submission | `RISCV_Microarch_Security_TermPaper_Final.tex` and the PDF compiled from it |
 
-The final paper is one LaTeX file of 160 pages: twelve chapters that follow the
+The final paper is one LaTeX file of 158 pages: twelve chapters that follow the
 prescribed textbook from the ISA to multicore sharing, and twenty appendices
 that hold the plagiarism report, the reading indices, the extended
 explanations, and the model study. Appendix R lists the eleven kernels in full;
@@ -89,12 +89,28 @@ byte. The tables, plots and numbers in the `.tex` sit between
   ii and iii);
 - the longest stretch of prose under one heading of the chapters (the half-page
   rule; the limit is 300 words);
+- the compiled PDF itself, measured with Ghostscript: A4 pages, painted content
+  inside the 1 inch margins, and the height of the body text under each heading
+  (run-in headings included), which must not exceed half the text block;
 - that no `\texttt`, `\verb`, `verbatim` or `\includegraphics` is left in the
   source, because all program text, inline or displayed, is typeset with
   `listings` (`\icode|...|`, `\code{...}` and `\tcode{...}` are `\lstinline`);
 - that every figure, table and listing is referred to in the text.
 
 The last build passes all of them except the two hand-filled items.
+
+```
+python3 tools/compliance_proof.py
+```
+
+gathers the evidence for each course guideline in one run and writes it to
+`build/compliance_proof.txt`: the single `.tex` built in an empty directory
+(files read, images, warnings), the figure and listing environments, page size,
+margins, font sizes and line pitch measured on the PDF, the Turnitin fields,
+the reading indices recomputed from the text, the longest run of text under a
+heading, the generated lists, the full text of pages ii and iii, the
+bibliography and the cross-references. It ends with one PASS, FAIL or ACTION
+line per guideline (`--no-build` reuses `build/texlive`).
 
 ## Repository layout
 
@@ -103,7 +119,7 @@ RISCV_Microarch_Security_TermPaper_Final.tex   the submission
 RISCV_Microarch_Security_TermPaper_Final.pdf   compiled from it
 RISCV_Microarch_Security_TermPaper_v0.1.*      the first submission
 study/                                         model study: programs and results
-tools/                                         build and reading-index scripts
+tools/                                         build, reading-index and compliance-proof scripts
 RISC-V-TermPaper-Vault/                        Obsidian vault with working notes
 ```
 

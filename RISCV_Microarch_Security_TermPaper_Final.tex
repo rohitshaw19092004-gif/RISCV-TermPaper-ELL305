@@ -613,6 +613,14 @@
   pages     = {5335--5354}
 }
 
+@inproceedings{gerlach2023security,
+  author    = {Gerlach, Lukas and Weber, Daniel and Zhang, Ruiyi and Schwarz, Michael},
+  title     = {A Security {RISC}: Microarchitectural Attacks on Hardware {RISC-V} {CPUs}},
+  booktitle = {IEEE Symposium on Security and Privacy (S\&P)},
+  year      = {2023},
+  pages     = {2321--2338}
+}
+
 @misc{balucea2023software,
   author       = {B{\u{a}}lucea, Ruxandra and Irofti, Paul},
   title        = {Software Mitigation of {RISC-V} {Spectre} Attacks},
@@ -998,6 +1006,9 @@
 \usepackage{circuitikz}
 \usepackage{pgfplots}
 \pgfplotsset{compat=1.16}
+%% Six distinct line colors (the default cycle repeats blue as its fifth); the
+%% markers of the line plots are given explicitly where the plots are drawn.
+\pgfplotsset{cycle list={blue,red,brown!60!black,black,green!50!black,violet}}
 \usepgfplotslibrary{groupplots,statistics,dateplot}
 \usepackage{tikz-timing}   % clocked timing diagrams
 \usepackage{forest}        % taxonomy trees
@@ -2041,17 +2052,18 @@
 \expandafter\def\csname R@wp.fills.strsearch\endcsname{267}
 %% END GENERATED macros
 %% BEGIN GENERATED read_macros
-\expandafter\def\csname R@read.fre\endcsname{49.3}
+\expandafter\def\csname R@read.fre\endcsname{49.2}
+\expandafter\def\csname R@read.fre.band\endcsname{the band from 30 to 50 that is conventionally labeled difficult}
 \expandafter\def\csname R@read.grade.band\endcsname{undergraduate readers (grades 12 to 16)}
-\expandafter\def\csname R@read.grade.max\endcsname{14.6}
-\expandafter\def\csname R@read.grade.mean\endcsname{12.5}
+\expandafter\def\csname R@read.grade.max\endcsname{14.7}
+\expandafter\def\csname R@read.grade.mean\endcsname{12.6}
 \expandafter\def\csname R@read.grade.median\endcsname{11.7}
 \expandafter\def\csname R@read.grade.min\endcsname{11.3}
 \expandafter\def\csname R@read.poly.pct\endcsname{16.2}
-\expandafter\def\csname R@read.sentences\endcsname{739}
+\expandafter\def\csname R@read.sentences\endcsname{736}
 \expandafter\def\csname R@read.unit.max\endcsname{280}
-\expandafter\def\csname R@read.words\endcsname{15\,055}
-\expandafter\def\csname R@read.wps\endcsname{20.4}
+\expandafter\def\csname R@read.words\endcsname{15\,087}
+\expandafter\def\csname R@read.wps\endcsname{20.5}
 %% END GENERATED read_macros
 
 %%=====================================================================
@@ -2170,10 +2182,32 @@
   xrightmargin = 0pt,
   numbersep    = 8pt,
 }
+%% A long program listing is not broken within its first or its last six lines,
+%% so that no page starts or ends with a fragment of one to five lines. The
+%% listings package sets every line as a paragraph of its own; here a break is
+%% forbidden after the lines near either end. \ltTotal, the number of lines of the
+%% listing that follows, is set in front of each long listing and is 0 otherwise.
+\makeatletter
+\newcommand{\ltTotal}{0}
+\def\lst@NewLine{%
+    \ifx\lst@OutputBox\@gobble\else
+        \par
+        \ifnum\ltTotal>\z@
+          \ifnum\c@lstnumber<6 \nobreak\fi
+          \ifnum\c@lstnumber>\numexpr\ltTotal-7\relax \nobreak\fi
+        \fi
+        \noindent \hbox{}%
+    \fi
+    \global\advance\lst@newlines\m@ne
+    \lst@newlinetrue}
+\makeatother
 %% The List of Listings needs a little more room than the default for numbers
 %% such as R.12.
 \makeatletter
 \renewcommand*{\l@lstlisting}[2]{\@dottedtocline{1}{1.5em}{2.8em}{#1}{#2}}
+%% Room for section numbers such as 10.10 and subsection numbers such as 10.7.1.
+\renewcommand*{\l@section}{\@dottedtocline{1}{1.5em}{2.9em}}
+\renewcommand*{\l@subsection}{\@dottedtocline{2}{4.4em}{3.7em}}
 \makeatother
 %% Pseudocode is typeset with listings as well.
 \lstdefinelanguage{pseudo}{
@@ -2186,17 +2220,17 @@
 %% CALL-OUT BOXES
 %%=====================================================================
 \newtcolorbox{takeaway}[1][]{
-  enhanced, breakable, colback=lightfill, colframe=accent!70!black,
+  enhanced, unbreakable, colback=lightfill, colframe=accent!70!black,
   boxrule=0.4pt, left=6pt, right=6pt, top=5pt, bottom=5pt, arc=2pt,
   fonttitle=\bfseries\small, title={Main point}, #1}
 
 \newtcolorbox{finding}[1][]{
-  enhanced, breakable, colback=defensefill, colframe=defense!80!black,
+  enhanced, unbreakable, colback=defensefill, colframe=defense!80!black,
   boxrule=0.4pt, left=6pt, right=6pt, top=5pt, bottom=5pt, arc=2pt,
   fonttitle=\bfseries\small, title={Result of the model study}, #1}
 
 \newtcolorbox{tocmapbox}[1][]{
-  enhanced, breakable, colback=greyfill, colframe=muted,
+  enhanced, unbreakable, colback=greyfill, colframe=muted,
   boxrule=0.4pt, left=6pt, right=6pt, top=5pt, bottom=5pt, arc=2pt,
   fonttitle=\bfseries\small, title={Textbook anchor}, #1}
 
@@ -2311,6 +2345,7 @@ Diagrams        & All drawn from text inside this file: TikZ, CircuiTikZ, \tcode
 Code            & All program text, displayed or inline, typeset with the \tcode{listings} package. \\
 References      & BibTeX database embedded in the source with \tcode{filecontents*}. \\
 Authorship      & Single author. \\
+Review          & Shown to a teaching assistant before submission. \\
 Repository      & \href{\githuburl}{\nolinkurl{github.com/rohitshaw19092004-gif/RISCV-TermPaper-ELL305}} \\
 \end{tabularx}
 \end{tcolorbox}
@@ -2477,8 +2512,11 @@ baseline. In this model, under its Spectre attack model, delaying every
 speculative load costs
 \R{geo.spectre.nospec}\pc{} in the geometric mean, delaying only the loads that
 miss costs \R{geo.spectre.dom}\pc{}, and tracking speculative data costs
-\R{geo.spectre.stt}\pc{}. Each of the three removes a different part of the
-transient footprint. Flushing on-core state at a context switch costs between
+\R{geo.spectre.stt}\pc{}. Each of the three removes, by construction of its rules,
+a different part of the transient footprint. These costs are lower than the
+published costs of the designs that the mechanisms stand for, because the model
+has no issue-port, load-queue or miss-register limits, so they support
+comparisons between mechanisms and not absolute numbers. Flushing on-core state at a context switch costs between
 \R{flush.perswitch.min} and \R{flush.perswitch.max} cycles per switch, while halving
 the caches by way partitioning costs between \R{iso.WayPart.heapsort+matmul}\pc{}
 and \R{iso.WayPart.listwalk+sieve}\pc{}, depending on how close the working sets
@@ -2494,6 +2532,7 @@ overhead; trace-driven simulation.
 
 %%---------------------------------------------------------------------
 \microtypesetup{protrusion=false}
+\renewcommand{\contentsname}{Table of Contents}
 \tableofcontents
 \clearpage\phantomsection
 \addcontentsline{toc}{chapter}{List of Tables}
@@ -3337,8 +3376,8 @@ A claim about leakage has to say who the observer is,\index{threat model} and th
 paper uses the four scenarios of \Cref{tab:threat}. The scenarios cannot be
 ranked by strength, because a sandboxed script, for example, shares more hardware with
 its victim than an unprivileged process on another core does but is allowed
-to execute less. Each attack discussed later is labeled with the scenarios in
-which it has been shown to work.
+to execute less. The cache measurement primitives of \Cref{tab:primitives} are labeled with the
+scenarios in which each has been shown to work.
 
 \begin{table}[t]
 \centering
@@ -3409,18 +3448,11 @@ latencies and from the noise of the timer, how many repetitions a given
 reliability needs, and why the capacity is only an upper bound on the bandwidth
 of an attack.
 
-Later chapters use ideas that follow from this model. \emph{Constant-time
-programming}\index{constant-time code} means writing the victim so that its
-branch outcomes, its memory addresses and the operands of its variable-latency
-instructions, such as division, do not depend on $s$. For committed
-instructions this removes the dependence of $\mu$ on the secret, but it does
-nothing about transient instructions. A \emph{hardware-software
-contract}~\citep{guarnieri2021hardware}\index{hardware-software contract} covers
-the hardware side. It states which observations the hardware may expose, for
-committed and for transient execution\index{transient execution}, so that software written in
-constant-time style really is non-interferent. The defenses of
-\Cref{ch:defenses} can be read as hardware that meets stronger or weaker
-contracts of this kind.
+Two ideas that follow from this model recur in later chapters:
+\emph{constant-time programming}\index{constant-time code}, which makes the
+victim's branches, addresses and variable-latency operands independent of $s$,
+and the \emph{hardware-software contract}~\citep{guarnieri2021hardware}\index{hardware-software contract},
+which states what the hardware may expose. \Cref{sec:ctcontract} explains both.
 
 
 \chapter{The Physical Substrate: Memory Arrays That Remember}
@@ -3742,19 +3774,19 @@ specific optimization.
   \draw[sig] (alu.east) -- (dmem.west);
   \draw[sig] (dmem.east) -- (wb.west);
   % write-back path
-  \draw[sig] (wb.south) |- (5.6,-1.75) -| (rf.south);
+  \draw[sig] (wb.south) |- (6.4,-1.75) -- (rf.south);
   \node[note, anchor=north] at (8.6,-1.75) {write-back to \tcode{rd} (\SecRef{9.2.6})};
   % PC + 4 loop
   \draw[sig] (pc.north) |- (0.9,1.5) -| (1.35,0.7);
   \node[note, anchor=west] at (1.42,1.18) {PC$+4$ or target};
   % branch resolution feedback
-  \draw[sig] (alu.north) |- (5.0,1.9) -| (0,0.5);
-  \node[note, anchor=south, text=accent] at (3.0,1.95) {branch outcome resolves \emph{here}};
+  \draw[sig] ($(alu.north)+(-0.35,0)$) |- (5.0,1.9) -| (0,0.5);
+  \node[note, anchor=south west, text=accent] at (0.2,1.95) {branch outcome resolves \emph{here}};
 
   % ---- stage labels --------------------------------------------------
   \foreach \x/\l in {2.0/{IF (\SecRef{9.2.1})}, 4.2/{ID}, 6.4/{OF (\SecRef{9.2.3})},
                      8.7/{EX (\SecRef{9.2.4})}, 11.0/{MEM (\SecRef{9.2.5})}, 13.1/{WB}}
-     {\node[note, anchor=north] at (\x,-1.05) {\l};}
+     {\node[note, anchor=north west] at (\x+0.12,-1.05) {\l};}
 
   % ---- security annotations -------------------------------------------
   \node[atk, font=\scriptsize, text width=2.5cm, anchor=north west] at (0.4,-2.4)
@@ -4169,8 +4201,8 @@ shows the organization.
   \node[memblk, minimum width=1.7cm, minimum height=1.6cm] (iq) at (4.7,0) {issue\\queues};
   \node[blk, minimum width=1.5cm, minimum height=1.6cm] (fu) at (7.0,0) {functional\\units};
   \node[memblk, minimum width=1.7cm, minimum height=1.3cm] (lsq) at (7.0,-3.5) {load-store\\queue + MSHRs};
-  \node[memblk, minimum width=1.9cm, minimum height=0.9cm] (rob) at (9.9,0) {reorder buffer\\(in-order commit)};
-  \node[memblk, minimum width=1.7cm, minimum height=0.9cm] (dc) at (9.9,-3.5) {L1 D-cache};
+  \node[memblk, minimum width=1.9cm, minimum height=0.9cm] (rob) at (10.5,0) {reorder buffer\\(in-order commit)};
+  \node[memblk, minimum width=1.7cm, minimum height=0.9cm] (dc) at (10.5,-3.5) {L1 D-cache};
 
   \draw[sig] (fe)--(rn); \draw[sig] (rn)--(iq); \draw[sig] (iq)--(fu);
   \draw[sig] (fu)--(rob);
@@ -4180,11 +4212,12 @@ shows the organization.
   \node[note, anchor=south] at (5.0,1.55) {squash / redirect on misprediction or fault};
 
   \draw[decorate, decoration={brace, amplitude=5pt, mirror}, attack]
-       (3.6,-1.15) -- (10.85,-1.15)
-       node[midway, below=6pt, text=attack, align=center, font=\scriptsize,
-            fill=white, inner sep=2pt]
-       {\textbf{execution window}: instructions that may execute speculatively\\
-        before any of them is known to be correct};
+       (3.6,-1.15) -- (11.45,-1.15)
+       node[pos=0.86, below=6pt, text=attack, align=center, font=\scriptsize,
+            inner sep=2pt]
+       {\textbf{execution window}: instructions\\
+        that may execute speculatively before\\
+        any of them is known to be correct};
 \end{tikzpicture}
 \caption[Out-of-order organization]{Organization of an out-of-order
 core (\SecRef{10.11.4}). Instructions execute in any order, and the reorder
@@ -4226,7 +4259,7 @@ entries.
   xtick={16,32,64,128,256}, xticklabels={16,32,64,128,256},
   xlabel={reorder-buffer entries}, tick label style={font=\scriptsize},
   label style={font=\small}, ymajorgrids, grid style={draw=black!12},
-  legend style={font=\tiny, draw=black!25}, ymin=0]
+  legend style={font=\scriptsize, draw=black!25}, ymin=0]
 \nextgroupplot[ylabel={transient instructions executed per squash}]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(16,13.417) (32,22.994) (64,42.301) (128,63.292) (256,75.256)};
 \addplot+[mark=square*, mark size=1.5pt, thick] coordinates {(16,11.912) (32,18.784) (64,28.192) (128,35.551) (256,38.830)};
@@ -4252,9 +4285,9 @@ entries.
 %% END GENERATED fig_window
 \caption[Transient work per squash against reorder-buffer size]{Transient
 instructions (left) and transient loads (right) executed per squash in the
-model, against the number of reorder-buffer entries. The curves flatten once
-the resolution time of the branch becomes the limit instead of the buffer, as
-\Cref{eq:window} predicts.}
+model, against the number of reorder-buffer entries. For most kernels the curves flatten once
+the resolution time of the branch becomes the limit instead of the buffer, in
+line with the upper bound of \Cref{eq:window}.}
 \label{fig:window}
 \end{figure}
 
@@ -4298,8 +4331,9 @@ and \R{wp.exec256.bsearch} with 256. Over the whole run the transient loads of
 this kernel bring \R{wp.fills.bsearch} lines into the first-level cache that no
 committed instruction had asked for at the time. In \code{bstree},
 \R{wp.dep.bstree} transient loads used an address that had itself been loaded
-transiently. This is the access-then-transmit pattern of \Cref{ch:transient},
-and here it occurs in an ordinary tree search with no attacker involved.
+transiently. This has the shape of the access-then-transmit pattern of \Cref{ch:transient},
+without a secret, and it occurs in an ordinary tree search with no attacker
+involved.
 \end{finding}
 
 The window grows with the same parameters that are increased to gain
@@ -4594,7 +4628,7 @@ capacity of the LLC\index{last-level cache}.
 \begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.5cm},
   width=0.50\linewidth, height=6.0cm, ymode=log, ymin=0.05, ymax=100,
   tick label style={font=\scriptsize}, label style={font=\small},
-  ymajorgrids, grid style={draw=black!12}, legend style={font=\tiny, draw=black!25}]
+  ymajorgrids, grid style={draw=black!12}, legend style={font=\scriptsize, draw=black!25}]
 \nextgroupplot[xmode=log, log basis x=2, xtick={8,16,32,64,128}, xticklabels={8,16,32,64,128}, xlabel={first-level cache size (KiB), 8 ways}, ylabel={first-level miss rate (\%)}]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(8,8.6134) (16,6.3053) (32,4.0090) (64,1.9079) (128,0.3889)};
 \addplot+[mark=square*, mark size=1.5pt, thick] coordinates {(8,42.1187) (16,41.4731) (32,40.3138) (64,34.9056) (128,25.8355)};
@@ -4635,7 +4669,7 @@ table is in \Cref{app:results}.}
 \begin{axis}[width=0.74\linewidth, height=6.0cm, xmode=log, log basis x=2,
   xtick={256,512,1024,2048,4096}, xticklabels={0.25,0.5,1,2,4},
   xlabel={last-level cache size (MiB), 16 ways}, ylabel={execution time relative to 2\,MiB},
-  tick label style={font=\scriptsize}, label style={font=\small}, ymin=0.9,
+  tick label style={font=\scriptsize}, label style={font=\small}, ymin=0.8,
   ymajorgrids, grid style={draw=black!12}, legend style={font=\scriptsize, draw=black!25},
   legend pos=north east]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(256,3.8626) (512,3.8554) (1024,2.2090) (2048,1.0000) (4096,0.9924)};
@@ -4677,26 +4711,26 @@ established\glsadd{flushreload}\glsadd{evicttime}\glsadd{flushflush}.
 \begin{tikzpicture}[scale=0.95, every node/.style={font=\scriptsize}]
   % ---------- Flush+Reload ----------
   \node[anchor=west, font=\small\bfseries] at (-0.4,2.1) {Flush+Reload};
-  \node[note, anchor=west] at (2.6,2.1) {requires \emph{shared memory} with the victim
+  \node[note, anchor=west] at (3.2,2.1) {requires \emph{shared memory} with the victim
        (shared library, page dedup)};
-  \draw[->, thick, muted] (0,0.6) -- (12.4,0.6);
-  \foreach \x/\lab/\c in {0.6/{\textsf{FLUSH}\\line $X$}/attack,
-                          4.2/{victim runs;\\may touch $X$}/accent,
-                          8.4/{\textsf{RELOAD} $X$\\and time it}/attack,
-                          11.2/{fast $\Rightarrow$ victim\\touched $X$}/defense}
+  \draw[->, thick, muted] (0,0.6) -- (13.1,0.6);
+  \foreach \x/\lab/\c in {0.5/{\textsf{FLUSH}\\line $X$}/attack,
+                          3.8/{victim runs;\\may touch $X$}/accent,
+                          7.1/{\textsf{RELOAD} $X$\\and time it}/attack,
+                          10.4/{fast $\Rightarrow$ victim\\touched $X$}/defense}
      {\node[draw=\c, fill=\c!8, rounded corners=2pt, minimum height=7mm, inner sep=3pt,
-            align=center, font=\tiny, anchor=south] at (\x+0.9,0.75) {\lab};
+            align=center, font=\scriptsize, anchor=south] at (\x+0.9,0.75) {\lab};
       \draw[\c, thick] (\x+0.9,0.5) -- (\x+0.9,0.7);}
   % ---------- Prime+Probe ----------
   \node[anchor=west, font=\small\bfseries] at (-0.4,-1.5) {Prime+Probe};
-  \node[note, anchor=west] at (2.6,-1.5) {requires \emph{no shared memory}, only a shared cache};
-  \draw[->, thick, muted] (0,-3.0) -- (12.4,-3.0);
-  \foreach \x/\lab/\c in {0.6/{\textsf{PRIME}: fill set $s$\\with $W$ own lines}/attack,
-                          4.2/{victim runs;\\may use set $s$}/accent,
-                          8.4/{\textsf{PROBE}: re-read\\own lines, time}/attack,
-                          11.2/{slow $\Rightarrow$ victim\\evicted us from $s$}/defense}
+  \node[note, anchor=west] at (3.2,-1.5) {requires \emph{no shared memory}, only a shared cache};
+  \draw[->, thick, muted] (0,-3.0) -- (13.1,-3.0);
+  \foreach \x/\lab/\c in {0.5/{\textsf{PRIME}: fill set $s$\\with $W$ own lines}/attack,
+                          3.8/{victim runs;\\may use set $s$}/accent,
+                          7.1/{\textsf{PROBE}: re-read\\own lines, time}/attack,
+                          10.4/{slow $\Rightarrow$ victim\\evicted us from $s$}/defense}
      {\node[draw=\c, fill=\c!8, rounded corners=2pt, minimum height=7mm, inner sep=3pt,
-            align=center, font=\tiny, anchor=south] at (\x+0.9,-2.85) {\lab};
+            align=center, font=\scriptsize, anchor=south] at (\x+0.9,-2.85) {\lab};
       \draw[\c, thick] (\x+0.9,-3.1) -- (\x+0.9,-2.9);}
 \end{tikzpicture}
 \caption[Flush+Reload and Prime+Probe]{The two canonical cache measurement
@@ -4947,8 +4981,8 @@ cache-state channel of \Cref{ch:memsys}.
 \caption[MESI states and their timing]{The MESI coherence protocol
 (\SecRef{12.4.2}, \SecRef{12.4.6}) and the transitions that create a channel. Coherence is a
 correctness mechanism, and the timing asymmetry between its transitions is a side
-effect that was not intended. It can be removed only by making the cheaper
-transition as slow as the dearer one.}
+effect that was not intended. Short of not sharing the line, it can be removed
+only by making the cheaper transition as slow as the dearer one.}
 \label{fig:mesi}
 \end{figure}
 
@@ -5367,6 +5401,14 @@ Branch-target and return-stack variants within one address space; a
 compiler-based software mitigation prototype. Its run-time cost is not
 established by the authors. \\
 \addlinespace
+Gerlach \etal, 2023 \citep{gerlach2023security} &
+SiFive U74 and T-Head XuanTie C906; commercial silicon &
+Known cache attacks apply to these in-order cores. The paper adds Cache+Time, a
+cache-line-granular attack without shared memory; Flush+Fault, which exploits the
+separate instruction and data caches; and CycleDrift, which uses unprivileged
+access to retired-instruction information. One case study breaks KASLR. These are
+results about cache and timing channels, and not about transient execution. \\
+\addlinespace
 Gerlach \etal, 2026 \citep{gerlach2026spectre} &
 XuanTie C910 and C920, SiFive P550; commercial silicon &
 Each of the four variants tested (v1, v2, return-stack and v4) leaked. The in-order SiFive U74 and XuanTie C906 and C908 were tested and
@@ -5387,7 +5429,8 @@ no inherent protection, because the attacks arise from prediction and from
 executing instructions early, and neither is specific to an instruction set.
 The in-order cores tested so far did not leak in this way, which agrees with
 the small window of \Cref{fig:squash} and with \Cref{eq:window}, although
-these cores remain exposed to the cache channels of \Cref{ch:memsys}. Lastly,
+these cores remain exposed to the cache channels of \Cref{ch:memsys}, as
+the 2023 study of silicon shows~\citep{gerlach2023security}. Lastly,
 the configuration matters as much as the core. A predictor that is disabled by
 firmware changes the result, and so each row of the table carries its
 qualification.
@@ -5473,7 +5516,8 @@ first four in more detail.
 \end{forest}%
 }
 \caption[Defense taxonomy]{Taxonomy of defenses by the operation each performs on
-the channel, indexed against the attack phases of \Cref{fig:anatomy}.
+the channel. The text below names the attack phase of \Cref{fig:anatomy} on which
+each operation acts.
 \emph{Isolate} and \emph{obscure} both attack the receiver by different means,
 \emph{hide or undo} removes the trace that the transmitter leaves,
 \emph{restrict} keeps transiently accessed data from reaching a transmitter,
@@ -5526,7 +5570,7 @@ address-to-set mapping~\citep{wang2007newcache}, and non-monopolizable caches
 showed that the attacker's cost rises even if one thread is merely prevented
 from occupying a whole set~\citep{domnitser2012nonmono}.
 CEASER~\citep{qureshi2018ceaser} passes the line address through a fast\index{CEASER}
-block cipher before indexing, and re-keys gradually, a few sets at a time.
+block cipher before indexing, and re-keys gradually, remapping one set at a time.
 ScatterCache~\citep{werner2019scattercache} derives a different set for every\index{ScatterCache}
 way and makes the mapping depend on the security domain.
 MIRAGE~\citep{saileshwar2021mirage} goes further and decouples the tag and data\index{Mirage}
@@ -5563,7 +5607,9 @@ The residual risk\index{residual risk} of this class is the one that \citet{behn
 identified. Concealing the change of cache state does not conceal the
 contention that transient instructions cause while they run. Of the designs
 above, GhostMinion addresses this explicitly. For the others it is a limit of
-the guarantee, and \Cref{tab:defenses} lists it as such.
+the guarantee. \Cref{tab:defenses} lists it for the designs that hide the cache
+trace, and Behnia \etal{} show that it applies to MuonTrap and to delay-on-miss as
+well.
 
 \section{Restricting speculation}
 \label{sec:taint}
@@ -5626,7 +5672,7 @@ in a modified compiler and evaluate them on BOOM\index{BOOM (SonicBOOM) core} in
 \etal~\citep{gerlach2026spectre} measure SLH on a commercial core\index{commercial RISC-V processors} and find
 that RISC-V lacks a cheap instruction that reliably stops speculation. The
 barriers that worked on the cores they tested were side effects of other
-instructions and had a high cost (\Cref{tab:reported}). All software mitigations add instructions,
+instructions and had a high cost in absolute terms (\Cref{tab:reported}). All software mitigations add instructions,
 so they raise the instruction count of \Cref{eq:iron}, and they protect only
 code that has been recompiled.
 
@@ -5750,11 +5796,13 @@ the rollback; relies on a randomized outer cache. \\
 MuonTrap \citep{ainsworth2020muontrap}, GhostMinion \citep{ainsworth2021ghostminion} & Hide &
 Confine speculative state to small structures cleared or ordered by age;
 GhostMinion also orders contention. Residual: MuonTrap protects across domain
-switches, not within a domain. \\
+switches, not within a domain, and contention remains for it
+\citep{behnia2021interference}. \\
 \addlinespace
 Delay-on-miss \citep{sakalis2019delay} & Restrict &
-Covers transient loads that would miss. Residual: loads that hit execute; the
-lost overlap of misses is the cost. \\
+Covers transient loads that would miss. Residual: loads that hit execute and can
+still interfere \citep{behnia2021interference}; the lost overlap of misses is the
+cost. \\
 \addlinespace
 STT \citep{yu2019stt}, SPT \citep{choudhary2021spt} & Restrict &
 Cover transmission of speculatively accessed data (STT) and of data that is
@@ -5845,7 +5893,7 @@ the same simulator, gem5~\citep{binkert2011gem5,lowepower2020gem5}, with the sam
 core configuration, an 8-wide machine whose reorder buffer\index{reorder buffer (ROB)} holds 192 entries.
 Even these six differ in instruction set, predictor and benchmark suite.
 
-\begin{table}[p]
+\begin{table}[t]
 \centering
 \caption[Published costs of defenses]{Costs as reported by the authors of each
 mechanism, with the platform and workloads of the evaluation. ``S'' and ``F''
@@ -5919,8 +5967,9 @@ Out-of-order OpenC910 on FPGA; SPLASH-2 &
 SLH on RISC-V \citep{gerlach2026spectre} &
 XuanTie C910 silicon; SPEC CPU2017 rate, test inputs &
 Geometric-mean run time 1.34 times the unprotected run. Inserting a barrier
-after every branch costs a factor of 2.69 with the cheapest instruction that
-acted as a barrier, and 46.6 with \tcode{fence.i}. \\
+after every branch costs a factor of 2.69 with the cheaper of the two barrier
+instructions that were timed, and 46.6 with \tcode{fence.i}. The SLH measured is
+an out-of-tree port of SLH to RISC-V. \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -5966,7 +6015,7 @@ two threat models\index{threat model}, and \Cref{tab:defcost} gives the slowdown
   symbolic y coords={Undo,NoFwd,Taint,Invis-V,Invis-E,DoM,NoSpecLoad}, ytick=data,
   yticklabel style={font=\scriptsize}, xticklabel style={font=\scriptsize},
   xlabel={geometric-mean slowdown over the eleven kernels (\%)}, label style={font=\small},
-  nodes near coords, nodes near coords style={font=\tiny},
+  nodes near coords, nodes near coords style={font=\tiny, text=black!75},
   every node near coord/.append style={/pgf/number format/fixed, /pgf/number format/precision=1},
   legend style={font=\scriptsize, draw=black!25, at={(0.97,0.05)}, anchor=south east},
   xmajorgrids, grid style={draw=black!12}]
@@ -6193,7 +6242,7 @@ L1 latency = 6 & 1.089 & 25.2 & 6.8 & 0.3 & 0.3 & 1.3 & 1.5 & 2.2 \\
 \begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.5cm},
   width=0.50\linewidth, height=5.8cm, tick label style={font=\scriptsize},
   label style={font=\small}, ymajorgrids, grid style={draw=black!12}, ymin=0,
-  legend style={font=\tiny, draw=black!25}]
+  legend style={font=\scriptsize, draw=black!25}]
 \nextgroupplot[xmode=log, log basis x=2, xtick={2,4,8}, xticklabels={2,4,8}, ylabel={geometric-mean slowdown (\%)}, xlabel={pipeline width (instructions per cycle)}]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(2,11.002) (4,17.865) (8,22.178)};
 \addplot+[mark=square*, mark size=1.5pt, thick] coordinates {(2,5.503) (4,6.543) (8,7.171)};
@@ -6276,7 +6325,7 @@ layouts, with the smallest and largest value in parentheses.}
 \begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.7cm},
   width=0.48\linewidth, height=6.0cm, xmode=log, tick label style={font=\scriptsize},
   xlabel={time slice (instructions)}, label style={font=\small},
-  ymajorgrids, grid style={draw=black!12}, legend style={font=\tiny, draw=black!25}]
+  ymajorgrids, grid style={draw=black!12}, legend style={font=\scriptsize, draw=black!25}]
 \nextgroupplot[ymode=log, ylabel={slowdown of flushing on-core state (\%)}]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(10000,9.9738) (30000,4.8258) (100000,2.9214) (300000,2.3014)};
 \addplot+[mark=square*, mark size=1.5pt, thick] coordinates {(10000,3.7702) (30000,1.2482) (100000,0.4600) (300000,0.1576)};
@@ -6358,7 +6407,11 @@ cheap whenever the time slices are long, and partitioning is cheap whenever the
 working sets are small. Neither is cheap for a workload that both switches
 often and fills the cache. A single average over pairs, here
 \R{iso.Flush.geo}\pc{} for flushing against \R{iso.WayPart.geo}\pc{} for way
-partitioning, hides the cases that a system designer has to plan for.
+partitioning, hides the cases that a system designer has to plan for. The two
+do not give the same protection either: flushing on-core state leaves the
+shared cache levels alone (\Cref{tab:coverage}), and the comparable cost of
+closing that channel too is that of flushing together with coloring,
+\R{iso.Flush+Color.geo}\pc{} here.
 \end{finding}
 
 \section{Memory traffic and energy}
@@ -6431,7 +6484,7 @@ and, for the per-load entries, the 32-entry load queue of the published
 baselines. This is the author's own accounting and is not a synthesis result.}
 \label{tab:area}
 \footnotesize
-\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}X>{\raggedright\arraybackslash}p{2.1cm}@{}}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}p{2.6cm}X>{\raggedright\arraybackslash}p{3.3cm}@{}}
 \toprule
 \textbf{Mechanism} & \textbf{State and how it is counted} & \textbf{Bits} \\
 \midrule
@@ -6451,16 +6504,16 @@ its own bookkeeping. &
 $\num{32918}$ \\
 Invisible loads &
 One line buffer per load-queue entry: 512 data bits, 58 address bits, one valid
-bit. & $32 \times 571 = \num{18272}$ \\
+bit. & \mbox{$32 \times 571 = \num{18272}$} \\
 Undo &
 Per load-queue entry: set and way of the installed line (9 bits), address of
 the evicted line (58 bits), one valid bit. CleanupSpec reports under 1\,KB. &
-$32 \times 68 = \num{2176}$ \\
+\mbox{$32 \times 68 = \num{2176}$} \\
 Delay-on-miss & One ``delayed'' bit per load-queue entry. & 32 \\
 Taint &
 Per physical register, the reorder-buffer index of the youngest speculative
 access it depends on (7 bits) and a valid bit; 160 physical registers. &
-$160 \times 8 = \num{1280}$ \\
+\mbox{$160 \times 8 = \num{1280}$} \\
 No forwarding & One ``unsafe'' bit per reorder-buffer entry. & 128 \\
 \bottomrule
 \end{tabularx}
@@ -6498,7 +6551,7 @@ gives the range of the excess over those layouts.}
 %% BEGIN GENERATED tab_composition
 \begin{tabular}{@{}lllrrrrrr@{}}
 \toprule
-\textbf{Pair} & \textbf{A} & \textbf{B} & $S_A$ & $S_B$ & $S_{AB}$ & \textbf{Product} & \textbf{Excess} & \textbf{over layouts} \\
+\textbf{Pair} & \textbf{A} & \textbf{B} & $\boldsymbol{S_A}$ & $\boldsymbol{S_B}$ & $\boldsymbol{S_{AB}}$ & \textbf{Product} & \textbf{Excess} & \textbf{over layouts} \\
 \midrule
 \tcode{crc32 + hashtab} & Flush+Color & Taint & 12.9 & 2.8 & 17.2 & 16.0 & +1.1 & $+1.1$ to $+1.2$ \\
 \tcode{crc32 + hashtab} & Flush+Color & DoM & 12.9 & 27.6 & 47.4 & 44.1 & +3.3 & $+2.9$ to $+3.7$ \\
@@ -6510,25 +6563,25 @@ gives the range of the excess over those layouts.}
 \tcode{bsearch + stream} & Flush+Color & DoM & 17.9 & 33.7 & 52.1 & 57.6 & $-$5.5 & $-6.9$ to $-3.2$ \\
 \tcode{bsearch + stream} & WayPart & Taint & 24.6 & 4.1 & 29.6 & 29.7 & $-$0.1 & $-0.8$ to $+0.7$ \\
 \tcode{bsearch + stream} & WayPart & Invis-V & 24.6 & 0.3 & 19.6 & 25.0 & $-$5.5 & $-6.5$ to $-3.8$ \\
-\tcode{bsearch + stream} & RandLLC & NoFwd & 4.9 & 4.6 & 9.9 & 9.7 & +0.2 & $+0.0$ to $+0.4$ \\
+\tcode{bsearch + stream} & RandLLC & NoFwd & 4.9 & 4.6 & 9.9 & 9.7 & +0.2 & $0.0$ to $+0.4$ \\
 \midrule
 \tcode{heapsort + matmul} & Flush+Color & Taint & 2.2 & 0.2 & 3.1 & 2.4 & +0.6 & $+0.6$ to $+0.7$ \\
 \tcode{heapsort + matmul} & Flush+Color & DoM & 2.2 & 1.1 & 2.8 & 3.3 & $-$0.5 & $-0.7$ to $-0.3$ \\
 \tcode{heapsort + matmul} & WayPart & Taint & 5.2 & 0.2 & 6.2 & 5.4 & +0.8 & $+0.7$ to $+0.9$ \\
 \tcode{heapsort + matmul} & WayPart & Invis-V & 5.2 & 0.0 & 3.3 & 5.2 & $-$1.9 & $-2.2$ to $-1.5$ \\
-\tcode{heapsort + matmul} & RandLLC & NoFwd & 0.0 & 0.3 & 0.4 & 0.3 & +0.0 & $+0.0$ to $+0.0$ \\
+\tcode{heapsort + matmul} & RandLLC & NoFwd & 0.0 & 0.3 & 0.4 & 0.3 & 0.0 & $0.0$ to $0.0$ \\
 \midrule
-\tcode{listwalk + sieve} & Flush+Color & Taint & 117.9 & 0.0 & 117.9 & 117.9 & 0.0 & $-0.0$ to $-0.0$ \\
+\tcode{listwalk + sieve} & Flush+Color & Taint & 117.9 & 0.0 & 117.9 & 117.9 & 0.0 & $0.0$ to $0.0$ \\
 \tcode{listwalk + sieve} & Flush+Color & DoM & 117.9 & 1.5 & 118.8 & 121.2 & $-$2.3 & $-3.1$ to $-1.8$ \\
-\tcode{listwalk + sieve} & WayPart & Taint & 125.2 & 0.0 & 125.2 & 125.2 & 0.0 & $-0.0$ to $-0.0$ \\
-\tcode{listwalk + sieve} & WayPart & Invis-V & 125.2 & 0.1 & 125.4 & 125.3 & +0.0 & $-0.0$ to $+0.1$ \\
-\tcode{listwalk + sieve} & RandLLC & NoFwd & 4.3 & 0.1 & 4.4 & 4.4 & 0.0 & $-0.0$ to $+0.0$ \\
+\tcode{listwalk + sieve} & WayPart & Taint & 125.2 & 0.0 & 125.2 & 125.2 & 0.0 & $0.0$ to $0.0$ \\
+\tcode{listwalk + sieve} & WayPart & Invis-V & 125.2 & 0.1 & 125.4 & 125.3 & 0.0 & $0.0$ to $+0.1$ \\
+\tcode{listwalk + sieve} & RandLLC & NoFwd & 4.3 & 0.1 & 4.4 & 4.4 & 0.0 & $0.0$ to $0.0$ \\
 \midrule
 \tcode{bstree + strsearch} & Flush+Color & Taint & 12.0 & 2.6 & 14.7 & 15.0 & $-$0.3 & $-0.4$ to $-0.3$ \\
 \tcode{bstree + strsearch} & Flush+Color & DoM & 12.0 & 1.6 & 13.7 & 13.9 & $-$0.2 & $-0.2$ to $-0.2$ \\
 \tcode{bstree + strsearch} & WayPart & Taint & 28.2 & 2.6 & 30.2 & 31.6 & $-$1.4 & $-1.6$ to $-1.3$ \\
 \tcode{bstree + strsearch} & WayPart & Invis-V & 28.2 & 0.0 & 27.4 & 28.3 & $-$0.8 & $-1.0$ to $-0.8$ \\
-\tcode{bstree + strsearch} & RandLLC & NoFwd & 0.2 & 3.5 & 3.7 & 3.7 & 0.0 & $-0.0$ to $-0.0$ \\
+\tcode{bstree + strsearch} & RandLLC & NoFwd & 0.2 & 3.5 & 3.7 & 3.7 & 0.0 & $0.0$ to $0.0$ \\
 \bottomrule
 \end{tabular}
 %% END GENERATED tab_composition
@@ -6621,15 +6674,15 @@ once by the simulator \code{rvmodel}, which was written for this paper.
   \draw[sig] (bin.east) -| (qemu.south);
   \draw[sig] (bin.south) |- (fn.west);
   \draw[sig] (fn) -- (tm); \draw[sig] (fn) -- (wp);
-  \draw[sig] (tm.south) -- ++(0,-0.35) -| (ca.north);
-  \draw[sig] (tm.south) ++(0.9,0) -- ++(0,-0.35) -| (bp.north);
+  \draw[sig] (tm.south -| ca.north) -- (ca.north);
+  \draw[sig] (tm.south -| bp.north) -- (bp.north);
   \draw[sig] (wp) -- (ca);
   \draw[atksig] (df.east) -- (sim.west |- df.east);
   \draw[sig] (sim.south) -- (csv.north);
   \draw[sig] (csv) -- (tex);
   \draw[defsig, densely dashed] (qemu.east) -- (ref.west);
-  \draw[defsig, densely dashed] (qemu.south) -- (qemu.south |- sim.north)
-        node[midway, right, font=\tiny, text=defense] {checksums must agree};
+  \draw[defsig, densely dashed] ($(qemu.south)+(0.55,0)$) -- ($(qemu.south |- sim.north)+(0.55,0)$)
+        node[midway, right, font=\scriptsize, text=defense] {checksums must agree};
 \end{tikzpicture}
 \caption[Tool chain of the model study]{The tool chain of the model study. One
 binary runs on QEMU and on the simulator. The checksum that each kernel prints must
@@ -6865,7 +6918,9 @@ system, and the last three concern the defenses and the workloads.
   \item The kernels are small, running for one to four million instructions
         with working sets up to about a megabyte. Absolute slowdowns are
         specific to them, and \Cref{sec:defcost} notes where they are lower
-        than published figures.
+        than published figures. Each kernel is measured over its whole run, input
+        generation included, and the sensitivity of the geometric means to the
+        choice of kernels was not measured.
   \item Latencies are parameters, and the clock period is not modeled, so a
         mechanism that would lengthen a critical path shows no cost here.
         Energy and area are not measured.
@@ -6892,8 +6947,7 @@ python3 study/make_fragments.py   # CSV results -> LaTeX tables, plots, numbers
 \end{lstlisting}
 
 The first command needs a C compiler, Python~3 and \code{qemu-system-riscv64},
-but no RISC-V cross-compiler, because the assembler is part of the study.
-The runs are deterministic, so the result files are reproduced byte for byte.
+but no RISC-V cross-compiler. The runs are deterministic, and
 \Cref{app:toolchain} lists the tool versions and the digests of the sources.
 
 
@@ -6926,9 +6980,10 @@ instructions that the program did not ask for, and conventional cores keep the
 cache state that those instructions leave. The amount of such work is bounded
 by the reorder buffer\index{reorder buffer (ROB)} and by the time a branch takes to resolve
 (\Cref{eq:window}). In the model it reaches \R{wp.exec.bsearch} executed
-instructions per squash\index{squash} for a kernel whose branches wait on memory. Ordinary
-programs also execute dependent pairs of transient loads when no attacker is
-present (\Cref{tab:window}). On RISC-V the attacks that exploit this have been
+instructions per squash\index{squash} for a kernel whose branches wait on memory. Two of the
+eleven ordinary kernels also execute dependent pairs of transient loads when no
+attacker is present (\Cref{tab:window}), which is the shape of a gadget but
+carries no secret. On RISC-V the attacks that exploit this have been
 demonstrated in RTL simulation and on commercial silicon\index{commercial RISC-V processors}
 (\Cref{tab:rvevidence}).
 
@@ -6940,8 +6995,7 @@ withholding speculative data leaves the independent transient fills in place
 (\Cref{tab:footprint}). Each class has a documented residual risk\index{residual risk}
 (\Cref{tab:defenses}).
 
-\paragraph{RQ5: what security costs.} Published costs range from under one per
-cent to more than a hundred and cannot be ranked, because baseline, workload,
+\paragraph{RQ5: what security costs.} Published costs range from under one percent to more than a hundred and cannot be ranked, because baseline, workload,
 coverage and reporting all differ (\Cref{tab:reported}). On the single baseline
 of the model, speculation defenses cost between
 $\R{geo.spectre.invis-e}$\pc{} and \R{geo.spectre.nospec}\pc{} in the geometric
@@ -7088,7 +7142,7 @@ report gives them.
         written for it.
 \end{itemize}
 
-\section{Material that a similarity checker is expected to flag}
+\section{Matches a similarity checker will flag}
 \label{sec:plagexpected}
 
 Five kinds of overlap with other documents are expected, and none of them is
@@ -7156,17 +7210,17 @@ indices, over the prose of \Cref{ch:intro} to \Cref{ch:conclusion}.}
 \toprule
 \textbf{Quantity} & \textbf{Value} \\
 \midrule
-Sentences ($S$) & 739 \\
-Words ($W$) & 15\,055 \\
-Syllables ($Y$) & 24\,352 \\
+Sentences ($S$) & 736 \\
+Words ($W$) & 15\,087 \\
+Syllables ($Y$) & 24\,395 \\
 Words of three syllables or more ($P$) & 2\,446 \\
-Words longer than six letters ($L$) & 3\,779 \\
-Letters ($C$) & 73\,226 \\
-Words per sentence & 20.37 \\
-Syllables per word & 1.618 \\
-Syllables per 100 words (Fry graph) & 161.8 \\
-Sentences per 100 words (Fry graph, Raygor estimate) & 4.91 \\
-Words of six or more letters per 100 words (Raygor estimate) & 33.2 \\
+Words longer than six letters ($L$) & 3\,783 \\
+Letters ($C$) & 73\,348 \\
+Words per sentence & 20.50 \\
+Syllables per word & 1.617 \\
+Syllables per 100 words (Fry graph) & 161.7 \\
+Sentences per 100 words (Fry graph, Raygor estimate) & 4.88 \\
+Words of six or more letters per 100 words (Raygor estimate) & 33.1 \\
 \bottomrule
 \end{tabular}
 %% END GENERATED read_counts
@@ -7214,16 +7268,16 @@ letters.}
 \toprule
 \textbf{Index} & \textbf{Value} & \textbf{Scale} & \textbf{Formula} \\
 \midrule
-FRE (Flesch) & 49.3 & higher is easier & $206.835 - 1.015\,W/S - 84.6\,Y/W$ \\
-FKGL (Kincaid \etal) & 11.4 & school grade & $0.39\,W/S + 11.8\,Y/W - 15.59$ \\
-Fog (Gunning) & 14.6 & years of schooling & $0.4\,(W/S + 100\,P/W)$ \\
+FRE (Flesch) & 49.2 & higher is easier & $206.835 - 1.015\,W/S - 84.6\,Y/W$ \\
+FKGL (Kincaid \etal) & 11.5 & school grade & $0.39\,W/S + 11.8\,Y/W - 15.59$ \\
+Fog (Gunning) & 14.7 & years of schooling & $0.4\,(W/S + 100\,P/W)$ \\
 SMOG (McLaughlin) & 13.5 & school grade & $1.043\sqrt{30\,P/S} + 3.1291$ \\
 CLI (Coleman, Liau) & 11.3 & school grade & $5.88\,C/W - 29.6\,S/W - 15.8$ \\
 ARI (Smith, Senter) & 11.7 & school grade & $4.71\,C/W + 0.5\,W/S - 21.43$ \\
-LIX (Bj\"{o}rnsson) & 45.5 & 50 to 60: difficult & $W/S + 100\,L/W$ \\
+LIX (Bj\"{o}rnsson) & 45.6 & 50 to 60: difficult & $W/S + 100\,L/W$ \\
 RIX (Anderson) & 5.1 & from 7.2: college & $L/S$ \\
 \midrule
-Average grade & 12.5 & school grade & mean of the five grade levels \\
+Average grade & 12.6 & school grade & mean of the five grade levels \\
 Median grade & 11.7 & school grade & median of the five grade levels \\
 \bottomrule
 \end{tabular}
@@ -7244,19 +7298,19 @@ so that a chapter that is much harder to read than the others would stand out.
 \textbf{Chapter} & \textbf{Words} & \textbf{Sentences} & \textbf{Words per sentence} & \textbf{Reading Ease} & \textbf{Flesch-Kincaid} \\
 \midrule
 1 & 1\,962 & 96 & 20.4 & 40.3 & 12.7 \\
-2 & 1\,657 & 74 & 22.4 & 47.1 & 12.2 \\
+2 & 1\,592 & 69 & 23.1 & 46.5 & 12.5 \\
 3 & 760 & 38 & 20.0 & 57.1 & 10.3 \\
 4 & 624 & 39 & 16.0 & 50.8 & 10.1 \\
-5 & 1\,025 & 46 & 22.3 & 46.5 & 12.3 \\
+5 & 1\,030 & 46 & 22.4 & 46.4 & 12.3 \\
 6 & 1\,180 & 52 & 22.7 & 51.5 & 11.7 \\
 7 & 1\,047 & 48 & 21.8 & 47.4 & 12.1 \\
-8 & 802 & 39 & 20.6 & 45.7 & 12.0 \\
-9 & 1\,553 & 76 & 20.4 & 46.9 & 11.8 \\
-10 & 2\,338 & 124 & 18.9 & 57.5 & 9.9 \\
-11 & 1\,222 & 60 & 20.4 & 49.0 & 11.5 \\
-12 & 885 & 47 & 18.8 & 52.5 & 10.6 \\
+8 & 809 & 39 & 20.7 & 45.7 & 12.0 \\
+9 & 1\,576 & 76 & 20.7 & 46.8 & 11.9 \\
+10 & 2\,376 & 125 & 19.0 & 57.3 & 10.0 \\
+11 & 1\,232 & 61 & 20.2 & 48.9 & 11.5 \\
+12 & 899 & 47 & 19.1 & 52.4 & 10.7 \\
 \midrule
-All & 15\,055 & 739 & 20.4 & 49.3 & 11.4 \\
+All & 15\,087 & 736 & 20.5 & 49.2 & 11.5 \\
 \bottomrule
 \end{tabular}
 %% END GENERATED read_chapters
@@ -7269,8 +7323,8 @@ The five grade-level formulae give values between \R{read.grade.min} and
 years of university. Their average is \R{read.grade.mean} and their median
 \R{read.grade.median}. The reference page relates a grade level to a
 readership, and on its scale the average lies in the band of
-\R{read.grade.band}. The Flesch Reading Ease of \R{read.fre} lies in the band
-from 50 to 60 that is conventionally labeled fairly difficult. LIX and RIX
+\R{read.grade.band}. The Flesch Reading Ease of \R{read.fre} lies in
+\R{read.fre.band}. LIX and RIX, which count long words and not syllables,
 place the text below their thresholds for difficult and college-level prose.
 This is a reasonable level for a technical report on processor \uarch{}.
 
@@ -7419,16 +7473,16 @@ whole of transient-execution attacks and their defenses
 %% slightly tighter rows, so that the last row does not start a page of its own
 \renewcommand{\arraystretch}{1.06}
 \begin{longtable}{@{}>{\raggedright\arraybackslash}p{2.0cm}>{\raggedright\arraybackslash}p{3.4cm}p{8.1cm}@{}}
-\caption{Sub-section-level mapping between the prescribed textbook and this term
+\caption[Section-level mapping to the prescribed textbook]{Sub-section-level mapping between the prescribed textbook and this term
 paper. The middle column quotes the textbook's headings. Where one row covers
 several sub-sections, their headings are separated by semicolons.\label{tab:tocdetail}}\\
 \toprule
-\textbf{Sub-section} & \textbf{Textbook heading} & \textbf{Role in this paper} \\
+\textbf{Section} & \textbf{Textbook heading} & \textbf{Role in this paper} \\
 \midrule
 \endfirsthead
 \multicolumn{3}{@{}l}{\footnotesize\itshape \Cref{tab:tocdetail} continued from previous page}\\
 \toprule
-\textbf{Sub-section} & \textbf{Textbook heading} & \textbf{Role in this paper} \\
+\textbf{Section} & \textbf{Textbook heading} & \textbf{Role in this paper} \\
 \midrule
 \endhead
 \midrule
@@ -7555,7 +7609,8 @@ a binary channel. This appendix develops the model far enough to answer three
 practical questions: how reliable a single timing observation is, how many
 repetitions a given reliability needs, and what timer coarsening and noise do
 to both. It contains only arithmetic, and no measurement of a real system is
-involved.
+involved. A last section explains two ideas that \Cref{sec:leakmodel} only
+names, constant-time programming and the hardware-software contract.
 
 \section{From latencies to a binary channel}
 
@@ -7688,6 +7743,25 @@ A defense of the first kind can be checked by counting, since the channel is
 closed if no access of one domain ever changes what the other can observe. The
 interference counts of \Cref{tab:interference} and the invariants of
 \Cref{tab:invariants} test this for the model.
+
+\section{Constant-time programming and the hardware-software contract}
+\label{sec:ctcontract}
+
+\Cref{sec:leakmodel} named two ideas that follow from the leakage model.
+\emph{Constant-time programming}\index{constant-time code} means writing the
+victim so that its branch outcomes, its memory addresses and the operands of its
+variable-latency instructions, such as division, do not depend on $s$. For
+committed instructions this removes the dependence of the microarchitectural
+state $\mu$ of \Cref{ch:isa} on the secret, but it does nothing about transient
+instructions.
+
+A \emph{hardware-software
+contract}~\citep{guarnieri2021hardware}\index{hardware-software contract} covers
+the hardware side. It states which observations the hardware may expose, for
+committed and for transient execution\index{transient execution}, so that
+software written in constant-time style really is non-interferent. The defenses
+of \Cref{ch:defenses} can be read as hardware that meets stronger or weaker
+contracts of this kind.
 
 
 \chapter{Array Access Time: Where the Latency Gap Comes From}
@@ -7940,7 +8014,7 @@ two cycles, and the two discarded instructions got no further than decode. The
 window exists but is too short to be used, because on this machine a wrong-path
 load never reaches the memory stage and so cannot touch the data cache.
 
-\section{The speculation window of a dynamically scheduled core}
+\section{The speculation window of an out-of-order core}
 
 In an out-of-order core\index{out-of-order execution} the distance between the stage that fetches and the\index{speculation window!bound}
 point where a branch is resolved is not fixed. Let a mispredicted branch be
@@ -8176,7 +8250,7 @@ cost. Every percent of loads that moves from the second level to the
 last costs $0.01 \times 31 = 0.31$ cycles per load, and every percent that
 moves from the last level to memory costs 1.75.
 
-This arithmetic is the complete cost model of partitioning. A partition slows
+This arithmetic is the first-order cost model of partitioning. A partition slows
 nothing down directly, but it changes the miss rates, and the hierarchy multiplies
 each change by the distance to the next level. The distance to memory is more
 than five times the distance to the last level, so losing capacity at the last
@@ -8487,7 +8561,7 @@ workloads. Remapping sixteen times as often raises the worst case to
 have to be fetched again. The cost rises steeply with the remapping rate, which
 limits how short the lifetime of a key can be made.
 
-\section{A side effect: random placement and conflict misses}
+\section{Random placement and conflict misses}
 
 The model shows one effect that is easy to overlook. A random mapping
 distributes lines over sets like balls thrown into bins. For a working set that
@@ -8609,8 +8683,9 @@ a time, each group taking one second-level latency. \\
 
 \emph{NoSpecLoad} is the baseline that the papers on invisible speculation\index{invisible speculation}
 and on taint tracking compare against under names such as ``fence after every
-branch'' or ``delay all speculative loads''. It bounds the cost of the class
-from above.
+branch'' or ``delay all speculative loads''. In the model it is the most expensive of the seven mechanisms, but it is not
+an upper bound for the published designs of the class, some of which report
+higher costs (\Cref{tab:reported}).
 
 \emph{DoM} follows delay-on-miss\index{delay-on-miss}~\citep{sakalis2019delay}. The published
 design adds value prediction for the delayed loads, which recovers part of the
@@ -9053,8 +9128,8 @@ Cross-domain evictions in l2 and llc, page coloring & 0 & 0 & yes \\
 First-level, tlb and predictor residue after a flush & 0 & 0 & yes \\
 Predictions made from the other domain's entries, flushed predictors & 0 & 0 & yes \\
 Cross-domain evictions with no isolation (first level) & 54\,406 & > 0 & yes \\
-Repeatability of cycle count, matmul & 605\,057 & 605057 & yes \\
-Repeatability of cycle count, bstree & 9\,476\,276 & 9476276 & yes \\
+Repeatability of cycle count, matmul & 605\,057 & 605\,057 & yes \\
+Repeatability of cycle count, bstree & 9\,476\,276 & 9\,476\,276 & yes \\
 \bottomrule
 \end{tabularx}
 %% END GENERATED tab_invariants
@@ -9136,8 +9211,7 @@ little.
 
 \begin{table}[ht]
 \centering
-\caption[Slowdown of each speculation defense, Futuristic model]{Slowdown in per
-cent of each modeled speculation defense under the Futuristic model, against
+\caption[Slowdown of each speculation defense, Futuristic model]{Slowdown in percent of each modeled speculation defense under the Futuristic model, against
 the undefended model.}
 \label{tab:defcostfut}
 \footnotesize
@@ -9210,8 +9284,7 @@ the default rate of 1600.
 
 \begin{table}[ht]
 \centering
-\caption[Cost of a randomized last-level index]{Per-kernel slowdown, in per
-cent, caused by randomizing the LLC index, with the LLC access count of the
+\caption[Cost of a randomized last-level index]{Per-kernel slowdown, in percent, caused by randomizing the LLC index, with the LLC access count of the
 baseline run for reference.}
 \label{tab:random}
 \footnotesize
@@ -9246,12 +9319,19 @@ and the transient loads whose address derived from another transient load.
 
 {\footnotesize\renewcommand{\arraystretch}{1.0}%
 \setlength{\LTcapwidth}{\linewidth}
+%% The caption sits in the first head of the long table, as in Appendix D, so that
+%% the table counter advances once per table and the caption is on the first page.
+\def\LTcaption{\caption[Transient execution against reorder-buffer size]{Transient
+execution over the whole run of each kernel, against the number of
+reorder-buffer entries, with no defense.\label{tab:windowfull}}}
 %% BEGIN GENERATED tab_window_full
 \begin{longtable}{@{}lrrrrrrr@{}}
+\LTcaption\\
 \toprule
 \textbf{Kernel} & \textbf{ROB} & \textbf{IPC} & \textbf{Dispatched} & \textbf{Executed} & \textbf{Loads} & \textbf{Fills} & \textbf{Dep.\ loads} \\
 \midrule
 \endfirsthead
+\multicolumn{8}{@{}l}{\footnotesize\itshape \tablename~\thetable{} continued from previous page}\\
 \toprule
 \textbf{Kernel} & \textbf{ROB} & \textbf{IPC} & \textbf{Dispatched} & \textbf{Executed} & \textbf{Loads} & \textbf{Fills} & \textbf{Dep.\ loads} \\
 \midrule
@@ -9327,10 +9407,6 @@ and the transient loads whose address derived from another transient load.
  & 256 & 1.562 & 778\,991 & 631\,324 & 41\,687 & 267 & 0 \\
 \end{longtable}
 %% END GENERATED tab_window_full
-\captionof{table}[Transient execution against reorder-buffer size]{Transient
-execution over the whole run of each kernel, against the number of
-reorder-buffer entries, with no defense.}
-\label{tab:windowfull}
 }
 
 \section{Isolation at every time slice}
@@ -9342,12 +9418,18 @@ layouts, and the additional cycles per context switch\index{context switch} at a
 while those for coloring\index{page coloring} and way partitioning\index{cache partitioning} do not.
 
 {\footnotesize\renewcommand{\arraystretch}{1.0}%
+\setlength{\LTcapwidth}{\linewidth}
+\def\LTcaption{\caption[Isolation cost at every time slice]{Slowdown in percent of
+each isolation mechanism against the time slice in instructions, and
+additional cycles per switch at \num{100000} instructions.\label{tab:domainsfull}}}
 %% BEGIN GENERATED tab_domains_full
 \begin{longtable}{@{}llrrrrr@{}}
+\LTcaption\\
 \toprule
 \textbf{Pair} & \textbf{Mechanism} & \textbf{10\,k} & \textbf{30\,k} & \textbf{100\,k} & \textbf{300\,k} & \textbf{Cycles/switch} \\
 \midrule
 \endfirsthead
+\multicolumn{7}{@{}l}{\footnotesize\itshape \tablename~\thetable{} continued from previous page}\\
 \toprule
 \textbf{Pair} & \textbf{Mechanism} & \textbf{10\,k} & \textbf{30\,k} & \textbf{100\,k} & \textbf{300\,k} & \textbf{Cycles/switch} \\
 \midrule
@@ -9387,10 +9469,6 @@ while those for coloring\index{page coloring} and way partitioning\index{cache p
  & RandLLC & 0.24 & 0.24 & 0.24 & 0.25 & 554 \\
 \end{longtable}
 %% END GENERATED tab_domains_full
-\captionof{table}[Isolation cost at every time slice]{Slowdown in percent of
-each isolation mechanism against the time slice in instructions, and
-additional cycles per switch at \num{100000} instructions.}
-\label{tab:domainsfull}
 }
 
 
@@ -9405,6 +9483,7 @@ use only the integer registers, and each returns its checksum in \code{a0}.
 \crefrange{lst:matmul}{lst:strsearch} are the kernels.
 
 %% BEGIN GENERATED code:study/workloads/crt.s
+\def\ltTotal{31}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Start-up code shared by all kernels (\code{crt.s}).}, label={lst:crt}]
 # crt.s - startup code shared by every kernel.
 # Sets up the stack, calls main, prints the 64-bit checksum returned in a0 as
@@ -9438,9 +9517,11 @@ crt_dec:
 crt_hang:
     j     crt_hang
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/crt.s
 
 %% BEGIN GENERATED code:study/workloads/matmul.s
+\def\ltTotal{77}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{matmul}: dense matrix product.}, label={lst:matmul}]
 # matmul - dense matrix product C = A * B of two 64 x 64 matrices of 32-bit
 # integers. Regular loops, unit-stride and row-stride accesses, a working set
@@ -9520,9 +9601,11 @@ mat_a: .zero 16384
 mat_b: .zero 16384
 mat_c: .zero 16384
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/matmul.s
 
 %% BEGIN GENERATED code:study/workloads/heapsort.s
+\def\ltTotal{85}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{heapsort}: in-place heap sort.}, label={lst:heapsort}]
 # heapsort - in-place heap sort of 8192 pseudo-random 64-bit keys (64 KiB).
 # Data-dependent branches and accesses that jump around the array.
@@ -9610,9 +9693,11 @@ sift_done:
 .align 6
 arr: .zero 65536
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/heapsort.s
 
 %% BEGIN GENERATED code:study/workloads/listwalk.s
+\def\ltTotal{78}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{listwalk}: traversal of a shuffled linked list.}, label={lst:listwalk}]
 # listwalk - builds a linked list of 16384 nodes, one cache line each (1 MiB),
 # threaded in a random order, and walks it six times. Every load address is
@@ -9693,9 +9778,11 @@ perm:  .zero 65536
 .align 6
 nodes: .zero 1048576
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/listwalk.s
 
 %% BEGIN GENERATED code:study/workloads/bsearch.s
+\def\ltTotal{60}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{bsearch}: look-ups in an ordered table by halving the range.}, label={lst:bsearch}]
 # bsearch - 16000 binary searches in a sorted table of 65536 keys (512 KiB).
 # The compare-and-branch in the loop is essentially unpredictable, and each
@@ -9758,9 +9845,11 @@ fold:                           # checksum: a0 = a0 * 31 + (index + 1 or 0)
 .align 6
 keys: .zero 524288
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/bsearch.s
 
 %% BEGIN GENERATED code:study/workloads/bstree.s
+\def\ltTotal{94}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{bstree}: look-ups in a binary search tree.}, label={lst:bstree}]
 # bstree - builds an unbalanced binary search tree of 8192 random keys in a
 # pool of 32-byte nodes (256 KiB) and performs 30000 lookups. Each step loads
@@ -9857,9 +9946,11 @@ fold:                           # checksum: a0 = a0 * 31 + (value + 1 or 0)
 .align 6
 pool: .zero 262144
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/bstree.s
 
 %% BEGIN GENERATED code:study/workloads/crc32.s
+\def\ltTotal{63}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{crc32}: table-driven cyclic redundancy check.}, label={lst:crc32}]
 # crc32 - table-driven CRC-32 of a 256 KiB buffer. A sequential stream plus a
 # table lookup whose index is derived from the data, the access pattern of
@@ -9925,9 +10016,11 @@ table: .zero 1024
 .align 6
 buf:   .zero 262144
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/crc32.s
 
 %% BEGIN GENERATED code:study/workloads/sieve.s
+\def\ltTotal{38}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{sieve}: sieve of Eratosthenes.}, label={lst:sieve}]
 # sieve - sieve of Eratosthenes below 200000 on a byte array. Store-dominated,
 # with strides that grow from 2 bytes to hundreds of bytes.
@@ -9968,9 +10061,11 @@ cnt_next:
 .align 6
 flags: .zero 200064
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/sieve.s
 
 %% BEGIN GENERATED code:study/workloads/hashtab.s
+\def\ltTotal{82}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{hashtab}: open-addressing hash table.}, label={lst:hashtab}]
 # hashtab - an open-addressing hash table of 16384 sixteen-byte slots (256 KiB):
 # 10000 insertions followed by 80000 lookups, of which about one in eight
@@ -10055,9 +10150,11 @@ look_fold:                      # checksum: a0 = a0 * 31 + (value + 1 or 0)
 .align 6
 tab: .zero 262144
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/hashtab.s
 
 %% BEGIN GENERATED code:study/workloads/stream.s
+\def\ltTotal{61}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{stream}: streaming triad over three arrays.}, label={lst:stream}]
 # stream - three passes of a[i] = b[i] + 3 c[i] + pass over arrays of 49152
 # doublewords (384 KiB each, 1.1 MiB in total). Pure sequential streaming.
@@ -10121,9 +10218,11 @@ arr_b: .zero 393216
 .align 6
 arr_c: .zero 393216
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/stream.s
 
 %% BEGIN GENERATED code:study/workloads/fibcall.s
+\def\ltTotal{32}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{fibcall}: recursive Fibonacci numbers.}, label={lst:fibcall}]
 # fibcall - the doubly recursive Fibonacci function, fib(25). Nearly a quarter
 # of a million calls and returns: exercises the return-address stack and
@@ -10158,11 +10257,13 @@ fib:
 fib_base:
     ret
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/fibcall.s
 
 %% BEGIN GENERATED code:study/workloads/strsearch.s
+\def\ltTotal{59}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{strsearch}: naive substring search.}, label={lst:strsearch}]
-# strsearch - naive search for an 6-symbol pattern in 120000 symbols of random
+# strsearch - naive search for a 6-symbol pattern in 120000 symbols of random
 # text over a four-letter alphabet. Short inner loops that end on a
 # data-dependent mismatch.
 .equ LEN, 120000
@@ -10222,6 +10323,7 @@ pat:  .zero 64
 .align 6
 text: .zero 120064
 \end{lstlisting}
+\def\ltTotal{0}
 %% END GENERATED code:study/workloads/strsearch.s
 
 
@@ -10262,7 +10364,7 @@ runs the validation of \Cref{app:validation} and the experiments of
 that the kernels of \Cref{app:kernels} use. \\
 \tcode{reference.py} & Python & 218 & An independent implementation of every
 kernel, against which the binaries are checked. \\
-\tcode{make\_fragments.py} & Python & 663 & Turns the result files into the
+\tcode{make\_fragments.py} & Python & 667 & Turns the result files into the
 tables, plots and number macros embedded in this report. \\
 \bottomrule
 \end{tabularx}
@@ -10360,7 +10462,7 @@ produced.}
 \tcode{workloads/matmul.s} & \tcode{2e2f2a9174b02da50aa525862faf111d} \\
 \tcode{workloads/sieve.s} & \tcode{0f60b4dc151e9ad5a4eac018e5441c08} \\
 \tcode{workloads/stream.s} & \tcode{0fa09b96f58d5157c732b38be3bf6660} \\
-\tcode{workloads/strsearch.s} & \tcode{45327a878e7a63b1c97d9496284eae07} \\
+\tcode{workloads/strsearch.s} & \tcode{11fd8bb2f38d754a23a6b60946948dea} \\
 \bottomrule
 \end{tabular}
 %% END GENERATED tab_manifest
@@ -10406,8 +10508,9 @@ meets each of them.
 submission; a project report has one author & Single author; see the
 Declaration on page~iv. \\
 \addlinespace
-1 & A single \LaTeX{} file & This file. No \icode|\input| or \icode|\include|, no external
-images; the BibTeX database is embedded with \icode|filecontents*|. \\
+1 & A single \LaTeX{} file, shown to a TA or to lab staff before submission & This file. No
+\icode|\input| or \icode|\include|, no external images; the BibTeX database is embedded
+with \icode|filecontents*|. It was shown to a teaching assistant before submission. \\
 \addlinespace
 2 & All diagrams in a text-to-diagram format, in the proper environment &
 \tcode{tikzpicture}, \tcode{circuitikz}, \tcode{axis} and

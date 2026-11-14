@@ -116,7 +116,8 @@ def validation():
     macro("val.unit.core", sum(1 for x in u if int(x["test"]) <= 15))
     macro("val.unit.new", sum(1 for x in u if int(x["test"]) > 15))
     inv = rows("invariants.csv")
-    body = [[x["property"].capitalize(), num(x["measured"]), x["required"], x["holds"]] for x in inv]
+    body = [[x["property"].capitalize(), num(x["measured"]),
+             num(x["required"]) if x["required"].isdigit() else x["required"], x["holds"]] for x in inv]
     emit("tab_invariants", "\\begin{tabularx}{\\linewidth}{@{}Xrrc@{}}\n\\toprule\n"
          "\\textbf{Property} & \\textbf{Measured} & \\textbf{Required} & \\textbf{Holds} \\\\\n\\midrule\n"
          + "\n".join(" & ".join(b) + " \\\\" for b in body) + "\n\\bottomrule\n\\end{tabularx}")
@@ -173,7 +174,7 @@ def cache_sweep():
     plot = ["\\begin{tikzpicture}", "\\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.5cm},",
             "  width=0.50\\linewidth, height=6.0cm, ymode=log, ymin=0.05, ymax=100,",
             "  tick label style={font=\\scriptsize}, label style={font=\\small},",
-            "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\tiny, draw=black!25}]"]
+            "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\scriptsize, draw=black!25}]"]
     for param, xlabel, xmode in (("l1_size_kib", "first-level cache size (KiB), 8 ways", "xmode=log, log basis x=2, xtick={8,16,32,64,128}, xticklabels={8,16,32,64,128}"),
                                  ("l1_ways", "associativity at 32\\,KiB", "xmode=log, log basis x=2, xtick={1,2,4,8,16}, xticklabels={1,2,4,8,16}")):
         plot.append("\\nextgroupplot[%s, xlabel={%s}%s]" % (
@@ -191,7 +192,7 @@ def cache_sweep():
     plot = ["\\begin{tikzpicture}", "\\begin{axis}[width=0.74\\linewidth, height=6.0cm, xmode=log, log basis x=2,",
             "  xtick={256,512,1024,2048,4096}, xticklabels={0.25,0.5,1,2,4},",
             "  xlabel={last-level cache size (MiB), 16 ways}, ylabel={execution time relative to 2\\,MiB},",
-            "  tick label style={font=\\scriptsize}, label style={font=\\small}, ymin=0.9,",
+            "  tick label style={font=\\scriptsize}, label style={font=\\small}, ymin=0.8,",
             "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\scriptsize, draw=black!25},",
             "  legend pos=north east]"]
     for k, m in zip(shown, marks):
@@ -242,7 +243,7 @@ def predictor_window():
             "  xtick={16,32,64,128,256}, xticklabels={16,32,64,128,256},",
             "  xlabel={reorder-buffer entries}, tick label style={font=\\scriptsize},",
             "  label style={font=\\small}, ymajorgrids, grid style={draw=black!12},",
-            "  legend style={font=\\tiny, draw=black!25}, ymin=0]"]
+            "  legend style={font=\\scriptsize, draw=black!25}, ymin=0]"]
     for field, ylabel, legend in (("executed_per_squash", "transient instructions executed per squash", False),
                                   ("loads_per_squash", "transient loads executed per squash", True)):
         plot.append("\\nextgroupplot[ylabel={%s}%s]" % (ylabel, ", legend pos=north west" if legend else ""))
@@ -284,7 +285,8 @@ def predictor_window():
 def longtable(spec, header, body, group=0):
     ncol = len(header)
     head = " & ".join(header) + " \\\\"
-    lines = ["\\begin{longtable}{%s}" % spec, "\\toprule", head, "\\midrule", "\\endfirsthead",
+    lines = ["\\begin{longtable}{%s}" % spec, "\\LTcaption\\\\", "\\toprule", head, "\\midrule", "\\endfirsthead",
+             "\\multicolumn{%d}{@{}l}{\\footnotesize\\itshape \\tablename~\\thetable{} continued from previous page}\\\\" % ncol,
              "\\toprule", head, "\\midrule", "\\endhead",
              "\\midrule \\multicolumn{%d}{r@{}}{\\footnotesize\\itshape continued on next page}\\\\" % ncol,
              "\\endfoot", "\\bottomrule", "\\endlastfoot"]
@@ -324,7 +326,7 @@ def defenses():
             "  symbolic y coords={%s}, ytick=data," % ",".join(DEFNAME[d] for d in order),
             "  yticklabel style={font=\\scriptsize}, xticklabel style={font=\\scriptsize},",
             "  xlabel={geometric-mean slowdown over the eleven kernels (\\%)}, label style={font=\\small},",
-            "  nodes near coords, nodes near coords style={font=\\tiny},",
+            "  nodes near coords, nodes near coords style={font=\\tiny, text=black!75},",
             "  every node near coord/.append style={/pgf/number format/fixed, /pgf/number format/precision=1},",
             "  legend style={font=\\scriptsize, draw=black!25, at={(0.97,0.05)}, anchor=south east},",
             "  xmajorgrids, grid style={draw=black!12}]"]
@@ -417,7 +419,7 @@ def sensitivity():
     plot = ["\\begin{tikzpicture}", "\\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.5cm},",
             "  width=0.50\\linewidth, height=5.8cm, tick label style={font=\\scriptsize},",
             "  label style={font=\\small}, ymajorgrids, grid style={draw=black!12}, ymin=0,",
-            "  legend style={font=\\tiny, draw=black!25}]"]
+            "  legend style={font=\\scriptsize, draw=black!25}]"]
     shown = ["nospec", "dom", "undo", "nda", "stt"]
     marks = ["*", "square*", "triangle*", "diamond*", "o"]
     for param, xlabel, values, extra in (
@@ -467,7 +469,7 @@ def isolation():
     plot = ["\\begin{tikzpicture}", "\\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.7cm},",
             "  width=0.48\\linewidth, height=6.0cm, xmode=log, tick label style={font=\\scriptsize},",
             "  xlabel={time slice (instructions)}, label style={font=\\small},",
-            "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\tiny, draw=black!25}]"]
+            "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\scriptsize, draw=black!25}]"]
     plot.append("\\nextgroupplot[ymode=log, ylabel={slowdown of flushing on-core state (\\%)}]")
     for p, m in zip(pairs, marks):
         pts = " ".join("(%d,%.4f)" % (q, statistics.mean(stat(sel(p, q, ISO[0]), "slowdown_pct"))) for q in quanta)
@@ -561,17 +563,19 @@ def randomized():
 
 def composition():
     r = rows("composition.csv")
+    sg = lambda v: "0.0" if round(v, 1) == 0 else "%+.1f" % v     # no signed zeros in the table
     body, inter = [], []
     for x in r:
         lo, hi = float(x["excess_min_pct"]), float(x["excess_max_pct"])
         body.append(["\\tcode{%s}" % x["pair"].replace("+", " + "), ISONAME[x["isolation"]],
                      DEFNAME[x["speculation_defense"]], "%.1f" % float(x["s_a_pct"]),
                      "%.1f" % float(x["s_b_pct"]), "%.1f" % float(x["s_ab_pct"]),
-                     "%.1f" % float(x["product_pct"]), "%+.1f" % float(x["excess_pct"]),
-                     "$%+.1f$ to $%+.1f$" % (lo, hi)])
+                     "%.1f" % float(x["product_pct"]), sg(float(x["excess_pct"])),
+                     "$%s$ to $%s$" % (sg(lo), sg(hi))])
         inter.append(float(x["excess_pct"]))
     emit("tab_composition", tabular("@{}lllrrrrrr@{}",
-         ["\\textbf{Pair}", "\\textbf{A}", "\\textbf{B}", "$S_A$", "$S_B$", "$S_{AB}$",
+         ["\\textbf{Pair}", "\\textbf{A}", "\\textbf{B}", "$\\boldsymbol{S_A}$", "$\\boldsymbol{S_B}$",
+          "$\\boldsymbol{S_{AB}}$",
           "\\textbf{Product}", "\\textbf{Excess}", "\\textbf{over layouts}"], body,
          rules=(5, 10, 15, 20)))
     over = [x for x in r if abs(float(x["excess_pct"])) > 1.0]

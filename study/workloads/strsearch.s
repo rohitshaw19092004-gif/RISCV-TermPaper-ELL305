@@ -1,4 +1,4 @@
-# strsearch - naive search for an 6-symbol pattern in 120000 symbols of random
+# strsearch - naive search for a 6-symbol pattern in 120000 symbols of random
 # text over a four-letter alphabet. Short inner loops that end on a
 # data-dependent mismatch.
 .equ LEN, 120000
