@@ -12,10 +12,11 @@ Term paper for **ELL 305, Computer Architecture**, taught by Prof. Subrat Kar.
 | Instructor | Prof. Subrat Kar |
 | Submission | `RISCV_Microarch_Security_TermPaper_Final.tex` and the PDF compiled from it |
 
-The final paper is one LaTeX file of 158 pages: twelve chapters that follow the
+The final paper is one LaTeX file of 164 pages: twelve chapters that follow the
 prescribed textbook from the ISA to multicore sharing, and twenty appendices
 that hold the plagiarism report, the reading indices, the extended
-explanations, and the model study. Appendix R lists the eleven kernels in full;
+explanations, and the model study. Appendix R prints the start-up code and four of the eleven kernels (all of
+them are in `study/workloads/`);
 Appendix S describes the simulator and its tools, which live in `study/` with
 the SHA-256 digests given in Appendix T. The first
 submission (`..._v0.1.tex`/`.pdf`) is kept for reference.

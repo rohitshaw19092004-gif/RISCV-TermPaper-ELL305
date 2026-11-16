@@ -1041,8 +1041,8 @@
 \newglossaryentry{cache}{name={cache},description={A small, fast store of recently used memory blocks. A hit costs a few cycles and a miss goes on to a slower level; cache timing attacks measure exactly that difference.}}
 \newglossaryentry{cacheline}{name={cache line},description={The fixed-size block (64 bytes in the configurations used here) that a cache allocates, evicts and transfers as a unit. Observations of cache occupancy resolve addresses to this granularity.}}
 \newglossaryentry{tlb}{name={translation-lookaside buffer (TLB)},description={An associative array caching recent virtual-to-physical page translations. Its occupancy reveals which pages were touched; entries tagged with an address-space identifier need not be flushed at a context switch.}}
-\newglossaryentry{rob}{name={reorder buffer (ROB)},description={The queue that lets instructions retire in the order the program gives them, which keeps architectural state precise. Its size caps the number of instructions in flight, and so the amount of work a core can do before it notices a misprediction.}}
-\newglossaryentry{lsq}{name={load-store queue (LSQ)},description={The structure holding in-flight memory operations and performing the address comparisons behind store-to-load forwarding.}}
+\newglossaryentry{rob}{name={reorder buffer (ROB)},description={The queue that makes a completed instruction wait until every older one has retired, which keeps architectural state precise. Its size caps the number of instructions in flight, and so the amount of work a core can do before it notices a misprediction.}}
+\newglossaryentry{lsq}{name={load-store queue (LSQ)},description={Where loads and stores wait between dispatch and retirement. Its address comparisons are what store-to-load forwarding is built on.}}
 \newglossaryentry{mshr}{name={miss-status holding register (MSHR)},description={A register tracking an outstanding cache miss so that later misses to the same line merge with it instead of issuing a second request.}}
 \newglossaryentry{branchpredictor}{name={branch predictor},description={The fetch-stage structure that guesses the direction of a conditional branch, typically indexed by a hash of the program counter and recent branch history. Whether its entries are shared between contexts depends on whether the implementation tags, partitions or flushes them.}}
 \newglossaryentry{btb}{name={branch target buffer (BTB)},description={An array that remembers where taken branches and jumps went, so that fetch can be steered to the destination before the instruction has been decoded.}}
@@ -1065,7 +1065,7 @@
 \newglossaryentry{visibilitypoint}{name={visibility point},description={The point after which no squash can undo an instruction under a stated attack model: once every older control transfer has resolved (Spectre model), or once every older instruction has completed (Futuristic model).}}
 \newglossaryentry{preciseexception}{name={precise exception},description={The guarantee that, when a trap is taken, every earlier instruction has completed and no later one has changed architectural state.}}
 \newglossaryentry{isa}{name={instruction set architecture (ISA)},description={The contract fixing the values an implementation must produce. Apart from narrow extensions such as Zkt it makes no promise about how long an operation takes.}}
-\newglossaryentry{rv64gc}{name={RV64GC},description={Shorthand for RV64IMAFDC with Zicsr and Zifencei: the 64-bit RISC-V base integer ISA with the multiply, atomic, floating-point and compressed extensions, access to the CSRs and the instruction-fetch fence.}}
+\newglossaryentry{rv64gc}{name={RV64GC},description={Shorthand for RV64IMAFDC with Zicsr and Zifencei, that is, RV64I together with multiplication and division, atomics, floating point in both widths, compressed encodings, CSR access and the instruction-fetch fence.}}
 \newglossaryentry{pmp}{name={physical memory protection (PMP)},description={A machine-mode facility of RISC-V that limits which physical address ranges the lower privilege levels may read, write or execute.}}
 \newglossaryentry{zkt}{name={Zkt},description={The RISC-V extension stating that a listed set of instructions executes in time independent of their data operands. Loads, stores and conditional branches are not in the list.}}
 \newglossaryentry{zicfilp}{name={Zicfilp},description={The RISC-V landing-pad extension for forward-edge control-flow integrity: an indirect jump must land on a landing-pad instruction. The guarantee is architectural; whether the check also restricts speculative targets depends on the implementation.}}
@@ -1083,7 +1083,7 @@
 \newglossaryentry{evicttime}{name={Evict+Time},description={A measurement in which the observer clears one set and then times how long the victim takes to run.}}
 \newglossaryentry{flushflush}{name={Flush+Flush},description={A form of Flush+Reload in which the observer times its flush instead of a reload, because flushing a line that is cached takes longer.}}
 \newglossaryentry{evictionset}{name={eviction set},description={Enough addresses mapping to one cache set to fill all of its ways.}}
-\newglossaryentry{spectre}{name={Spectre},description={The family of transient-execution attacks that rely on a misprediction to make a victim execute, transiently, instructions that its program logic would not have executed.}}
+\newglossaryentry{spectre}{name={Spectre},description={Attacks in which a deliberately caused misprediction makes the victim run, transiently, instructions that its program logic would not have reached.}}
 \newglossaryentry{meltdown}{name={Meltdown},description={A transient-execution attack in which the data of a faulting load reaches dependent instructions before the fault is taken. Whether a core behaves this way is an implementation property.}}
 \newglossaryentry{mds}{name={microarchitectural data sampling (MDS)},description={Attacks that sample stale values from internal buffers of the core, such as those used for line fills and for stores, or from its load ports.}}
 \newglossaryentry{gadget}{name={gadget},description={An instruction sequence in the victim that performs a transient access followed by an operation whose side effect depends on the value accessed.}}
@@ -1091,7 +1091,7 @@
 \newglossaryentry{receiver}{name={receiver},description={The structure that an observer measures to recover what a transmitter encoded.}}
 \newglossaryentry{mistraining}{name={mistraining},description={Exercising a prediction structure so that a later prediction made for another piece of code is wrong in a chosen way.}}
 \newglossaryentry{partitioning}{name={partitioning},description={A defense class dividing a shared resource by way or by set so that no domain can allocate into another's share.}}
-\newglossaryentry{pagecoloring}{name={page coloring},description={Set partitioning performed by the operating system: physical pages are allocated so that different domains map to disjoint cache sets. The number of available colors is the size of one cache way divided by the page size.}}
+\newglossaryentry{pagecoloring}{name={page coloring},description={Set partitioning performed by the operating system: physical pages are allocated so that different domains map to disjoint cache sets. A cache offers as many colors as pages fit into one of its ways.}}
 \newglossaryentry{randomization}{name={randomization},description={A defense class that keeps sharing but makes the mapping from address to cache set a keyed function that is changed periodically.}}
 \newglossaryentry{invisiblespeculation}{name={invisible speculation},description={A defense class that lets loads execute speculatively but keeps their effect out of the cache hierarchy until they pass their visibility point.}}
 \newglossaryentry{tainttracking}{name={taint tracking},description={A defense class that marks the results of speculative accesses and delays any instruction that would transmit a marked value until the access can no longer be squashed.}}
@@ -1107,7 +1107,7 @@
 \newcommand{\papertitle}{Microarchitectural Security in Modern RISC-V Processors: Cache and Speculative-Execution Attacks, Defenses, and Performance Trade-offs}
 \newcommand{\authorname}{Rohit Shaw}
 \newcommand{\entrynumber}{2022MT61988}
-\newcommand{\coursecode}{ELL 305}
+\newcommand{\coursecode}{ELL~305}
 \newcommand{\coursetitle}{Computer Architecture}
 \newcommand{\instructorname}{Prof.\ Subrat Kar}
 \newcommand{\monthyear}{\ifcase\month\or January\or February\or March\or
@@ -1123,18 +1123,29 @@
 %% Fill these in from the Turnitin report generated for the submitted PDF,
 %% then recompile. Appendix A prints them; nothing else in the file changes.
 %%=====================================================================
-\newcommand{\TurnitinDate}{}            % e.g. 20 November 2026
-\newcommand{\TurnitinSubmissionID}{}    % e.g. 2491234567
-\newcommand{\TurnitinSimilarity}{}      % overall similarity index, e.g. 9\,\%
-\newcommand{\TurnitinInternet}{}        % internet sources
-\newcommand{\TurnitinPublications}{}    % publications
-\newcommand{\TurnitinStudentPapers}{}   % student papers
-\newcommand{\TurnitinLargestSource}{}   % largest single source and its share
-\newcommand{\TurnitinSettings}{}        % filters shown on the report, e.g.
+\newcommand{\TurnitinDate}{16 November 2026 (submitted 4:21 PM, GMT+5:30)}            % e.g. 20 November 2026
+\newcommand{\TurnitinSubmissionID}{trn:oid:::1:3713159195 (digital receipt: 3081072656)}    % e.g. 2491234567
+\newcommand{\TurnitinSimilarity}{1\,\%}      % overall similarity index, e.g. 9\,\%
+\newcommand{\TurnitinInternet}{1\,\%}        % internet sources
+\newcommand{\TurnitinPublications}{0\,\%}    % publications
+\newcommand{\TurnitinStudentPapers}{0\,\%}   % student papers
+\newcommand{\TurnitinLargestSource}{arxiv.org (internet), $<$1\,\%; each of the 42 sources listed is below 1\,\%}   % largest single source and its share
+\newcommand{\TurnitinSettings}{Bibliography and quoted text excluded. Match groups: 48 not cited or quoted (1\,\%), 6 missing quotations (0\,\%), 0 missing citation, 0 cited and quoted}        % filters shown on the report, e.g.
                                         % quotes included; bibliography excluded
 %% Optional: the largest sources in the report's list, one table row each,
 %% as  rank & source & type & share \\   Left empty, the list is not printed.
-\newcommand{\TurnitinSources}{}
+\newcommand{\TurnitinSources}{%
+1 & arxiv.org & Internet & $<$1\,\% \\
+2 & lume.ufrgs.br & Internet & $<$1\,\% \\
+3 & Universitaet Dortmund, Hochschulrechenzentrum & Student papers & $<$1\,\% \\
+4 & V. R. Rodrigues \etal & Publication & $<$1\,\% \\
+5 & University of Southampton & Student papers & $<$1\,\% \\
+6 & H. Wang \etal & Publication & $<$1\,\% \\
+7 & export.arxiv.org & Internet & $<$1\,\% \\
+8 & www.diva-portal.org & Internet & $<$1\,\% \\
+9 & ntnuopen.ntnu.no & Internet & $<$1\,\% \\
+10 & Technological University Dublin & Student papers & $<$1\,\% \\
+}
 
 \hypersetup{
   pdftitle  = {\papertitle},
@@ -1275,11 +1286,15 @@
 \expandafter\def\csname R@chan.n6.3\endcsname{17}
 \expandafter\def\csname R@chan.n6.4\endcsname{9}
 \expandafter\def\csname R@chan.n6.6\endcsname{5}
+\expandafter\def\csname R@comp.big\endcsname{13}
+\expandafter\def\csname R@comp.big.prod1\endcsname{7}
+\expandafter\def\csname R@comp.big.sum1\endcsname{10}
 \expandafter\def\csname R@comp.max\endcsname{+3.3}
 \expandafter\def\csname R@comp.maxabs\endcsname{5.5}
 \expandafter\def\csname R@comp.min\endcsname{-5.5}
 \expandafter\def\csname R@comp.n\endcsname{25}
 \expandafter\def\csname R@comp.over1\endcsname{8}
+\expandafter\def\csname R@comp.small\endcsname{12}
 \expandafter\def\csname R@comp.stable\endcsname{8}
 \expandafter\def\csname R@comp.within1\endcsname{17}
 \expandafter\def\csname R@comp.withinsum1\endcsname{20}
@@ -2052,18 +2067,18 @@
 \expandafter\def\csname R@wp.fills.strsearch\endcsname{267}
 %% END GENERATED macros
 %% BEGIN GENERATED read_macros
-\expandafter\def\csname R@read.fre\endcsname{49.2}
+\expandafter\def\csname R@read.fre\endcsname{49.5}
 \expandafter\def\csname R@read.fre.band\endcsname{the band from 30 to 50 that is conventionally labeled difficult}
 \expandafter\def\csname R@read.grade.band\endcsname{undergraduate readers (grades 12 to 16)}
-\expandafter\def\csname R@read.grade.max\endcsname{14.7}
-\expandafter\def\csname R@read.grade.mean\endcsname{12.6}
+\expandafter\def\csname R@read.grade.max\endcsname{14.6}
+\expandafter\def\csname R@read.grade.mean\endcsname{12.5}
 \expandafter\def\csname R@read.grade.median\endcsname{11.7}
 \expandafter\def\csname R@read.grade.min\endcsname{11.3}
-\expandafter\def\csname R@read.poly.pct\endcsname{16.2}
-\expandafter\def\csname R@read.sentences\endcsname{736}
-\expandafter\def\csname R@read.unit.max\endcsname{280}
-\expandafter\def\csname R@read.words\endcsname{15\,087}
-\expandafter\def\csname R@read.wps\endcsname{20.5}
+\expandafter\def\csname R@read.poly.pct\endcsname{16.1}
+\expandafter\def\csname R@read.sentences\endcsname{740}
+\expandafter\def\csname R@read.unit.max\endcsname{295}
+\expandafter\def\csname R@read.words\endcsname{15\,212}
+\expandafter\def\csname R@read.wps\endcsname{20.6}
 %% END GENERATED read_macros
 
 %%=====================================================================
@@ -2171,7 +2186,7 @@
 %% Long listings in the appendices: the programs of the model study.
 \lstdefinestyle{longcode}{
   style        = codebox,
-  basicstyle   = \ttfamily\fontsize{8}{9.6}\selectfont,
+  basicstyle   = \ttfamily\fontsize{10}{12}\selectfont,
   columns      = fullflexible,
   keepspaces   = true,
   breaklines   = true,
@@ -2386,8 +2401,8 @@ Institute of Technology Delhi}. The report was prepared by \authorname{}
 Department of Electrical Engineering.
 
 \medskip
-Reproduction of this report, whole or in part and in any form, requires the
-written consent of the Indian Institute of Technology Delhi. Short extracts may
+No part of this report may be reproduced, in whatever form, unless the Indian
+Institute of Technology Delhi has agreed to it in writing. Short extracts may
 be quoted for study, research or review if the source is acknowledged.
 
 \medskip
@@ -2443,6 +2458,11 @@ prepare this report, and the \textbf{Indian Institute of Technology Delhi} for
 its library and electronic journal subscriptions, through which the sources
 cited in this paper were obtained, and for the wider resources it makes
 available to its students.
+
+\medskip
+An AI assistant was used as a tool in preparing this report, including for the
+design, layout and structure of the document. I remain responsible for all of
+its content.
 
 \medskip
 Any errors that remain are my own.
@@ -2567,7 +2587,7 @@ overhead; trace-driven simulation.
 
 \subsection{The question this paper asks of each course topic}
 
-ELL 305 covers how a processor is specified, built and made fast.\index{ELL 305!relevance of this paper}
+ELL~305 covers how a processor is specified, built and made fast.\index{ELL 305!relevance of this paper}
 The syllabus runs from instruction sets and assembly programming, through the
 design of a simple processor, to pipelines\index{pipeline}, out-of-order cores\index{out-of-order execution}, caches, virtual
 memory and the coherence of caches shared by several processors. This paper
@@ -2597,7 +2617,7 @@ is the kind of artifact the course builds towards. The model study of
 \Cref{ch:study} consists of eleven programs\index{kernels of the model study} written in RISC-V assembly, an
 instruction-set simulator that implements the datapath of textbook Chapter~9,
 and timing models of the pipeline, the caches and the predictors of textbook
-Chapters~10 and~11. The kernels are listed in full in \Cref{app:kernels}, and
+Chapters~10 and~11. \Cref{app:kernels} describes the kernels and prints four of them, and
 \Cref{app:source} describes the simulator and its tools.
 
 The course teaches instruction sets with the textbook's SimpleRisc machine.
@@ -2608,7 +2628,7 @@ instruction set that has open implementations which can be inspected
 \begin{table}[t]
 \centering
 \caption[Relevance of the paper to the topics of ELL 305]{How the topics of
-ELL 305 are used in this paper. The second column gives chapters and sections
+ELL~305 are used in this paper. The second column gives chapters and sections
 of the prescribed textbook~\citep{sarangi2025basic}.}
 \label{tab:relevance}
 \footnotesize
@@ -2791,10 +2811,10 @@ common case,\index{side channel!timing}\glsadd{sidechannel} so the machine runs 
 some events than after others, and a program can measure the difference. When
 the events depend on secret data, the measurement can reveal something about
 the secret. The cache-timing attacks on AES work this
-way~\citep{osvik2006cache,bernstein2005aes}, as do attacks mounted from one core
-on another through the shared last-level cache\index{last-level cache}~\citep{liu2015llc} and the TLB
-attack of Gras
-\etal~\citep{gras2018tlbleed}. The transient-execution attacks that became
+way~\citep{osvik2006cache,bernstein2005aes}, as do the cross-core attacks that go through
+a last-level cache\index{last-level cache} common to both cores~\citep{liu2015llc} and the attack
+of Gras \etal{} on the
+TLB~\citep{gras2018tlbleed}. The transient-execution attacks that became
 public in 2018 use the same effect.\index{transient execution} In those attacks
 the processor is made to compute on data that the program would never have
 used, and a trace of the result is left in a
@@ -2860,8 +2880,8 @@ Arm. Studying the same attacks on RISC-V\index{RISC-V!rationale for studying}
 allows firmer statements than a closed platform does.
 
 To begin with, the specification is open and layered. RISC-V separates a
-small base integer ISA from optional extensions~\citep{riscv-unpriv}, and
-the unprivileged ISA from the privileged
+small integer base from its extensions~\citep{riscv-unpriv}, and
+unprivileged instructions from the privileged
 architecture~\citep{riscv-priv}, so a property of the
 architecture can be told apart from a property of one implementation. The promise
 of the \tcode{Zkt} extension, that the instructions it lists execute in
@@ -2980,7 +3000,7 @@ The model study provides what is hard to obtain from the literature, the cost of
 defense classes on a single baseline with everything else held constant.\index{model study!purpose}
 It uses a trace-driven timing model in the spirit of the first-order
 superscalar models~\citep{karkhanis2004first,eyerman2009mechanistic}. The model
-is specified in \Cref{app:model}, validated in \Cref{app:validation} and
+is specified in \Cref{app:model}, verified in \Cref{app:validation} and
 described in \Cref{ch:study}. Its results are trends on a stated model, not
 measurements of a RISC-V chip, and are presented only as such.
 
@@ -3005,8 +3025,8 @@ measurements of a RISC-V chip, and are presented only as such.
         aggressiveness of the baseline. The cost of partitioning depends
         mainly on how far the working sets are from the capacity that remains,
         and the cost of flushing on how often the domains switch. The costs of
-        an isolation mechanism and a speculation defense combine roughly as
-        independent factors (\Cref{ch:tradeoffs,ch:study}).
+        an isolation mechanism and a speculation defense roughly add or multiply, and
+        the data cannot tell which (\Cref{ch:tradeoffs,ch:study}).
 \end{enumerate}
 
 \section{Organization, and the role of the appendices}
@@ -3028,7 +3048,7 @@ that needs more room has its own appendix, and the chapter points to it.
 indices. \Cref{app:metrics,app:tocmap} hold the cost metrics and the detailed
 textbook mapping. \Cref{app:leakage} to \Cref{app:specdef} are the extended
 explanations. \Cref{app:model} to \Cref{app:source} document the model study, its
-validation, its complete results and its programs. \Cref{app:toolchain}
+verification, its complete results and its programs. \Cref{app:toolchain}
 describes the build and checks the submission against the guidelines.
 
 
@@ -3061,15 +3081,15 @@ replacement policy\index{replacement policy}, and in practice they do.
 
 To state the contract, restrict attention to a single hart running a
 deterministic program that takes no interrupts and does not read the
-\code{cycle} or \code{time} counters. Let $A$ be the architectural state,\index{architectural state}\glsadd{architecturalstate}
-consisting of the integer registers, the PC, the CSRs readable at the current
-privilege level, and memory. Let $\mu$ be the
+\code{cycle} or \code{time} counters. Let $A$ stand for the state that the ISA defines:\index{architectural state}\glsadd{architecturalstate}
+the integer registers, the PC, memory, and those CSRs that the current
+privilege level may read. Let $\mu$ be the
 \uarchadj{} state: cache contents and replacement metadata, TLB\index{translation-lookaside buffer (TLB)} entries, branch\index{microarchitectural state}\glsadd{microarchitecturalstate}
 history and target tables, the reorder buffer\index{reorder buffer (ROB)}, the load-store queue\index{load-store queue (LSQ)}, miss-status
 holding registers, fill and store buffers, prefetcher\index{prefetcher} tables. An implementation
 is \emph{functionally correct} if, for every such program $P$ and initial state
-$A_0$, the sequence of architectural states at instruction boundaries is the
-one the ISA specifies:
+$A_0$, the values that $A$ takes after each instruction are
+those that the ISA prescribes:
 \begin{equation}
   \mathrm{exec}(P, A_0) \;=\; A_0, A_1, A_2, \ldots
   \label{eq:contract}
@@ -3102,12 +3122,12 @@ outlines what such a contract looks like.
 
 \subsection{Base ISAs and extensions}
 
-RISC-V is organized as a minimal integer ISA, RV32I or RV64I,\index{RISC-V!base integer ISA} to which optional standard
-extensions are added~\citep{riscv-unpriv}.
-The original extensions are named by single letters: M for integer multiply
-and divide, A for atomic memory operations, F and D for single- and
-double-precision floating point, C for 16-bit compressed encodings, V for
-vectors and B for bit manipulation. Later ones have longer names that begin
+A RISC-V processor implements one integer base, RV32I or RV64I,\index{RISC-V!base integer ISA} and whichever
+standard extensions its designer chooses~\citep{riscv-unpriv}.
+The first extensions carry single letters: M adds multiplication
+and division, A the atomic read-modify-write operations, F and D floating
+point in 32 and 64 bits, C a 16-bit encoding of common instructions, V
+vectors and B bit manipulation. Later ones have longer names that begin
 with Z, such as the \tcode{Zk} family for cryptography.\index{RISC-V!standard extensions} The shorthand \tcode{RV64GC}\glsadd{rv64gc}
 denotes RV64IMAFDC with \tcode{Zicsr} and \tcode{Zifencei}. The kernels of
 \Cref{ch:study} use only RV64IM.
@@ -3142,8 +3162,8 @@ Any statement about TLB residency, page-walk caching or the duration of a walk. 
 \tcode{Zkt} &
 Latency independent of data operands for a listed set of
 instructions~\citep{riscv-crypto}. &
-Coverage of loads, stores and conditional branches, which are not in the list,
-so address-dependent timing is outside it. \\
+Memory accesses and conditional branches. The list contains no load, no store
+and no branch, so address-dependent timing is outside it. \\
 \addlinespace
 \tcode{Zicfilp}, \tcode{Zicfiss} &
 Landing pads and a shadow stack for control-flow integrity~\citep{riscv-cfi}. &
@@ -3183,9 +3203,10 @@ several times in this paper.
 \subsection{Registers, branches, loads and stores}
 \label{sec:ctrlmem}
 
-RV64I has 32 integer registers, \code{x0} to \code{x31}, of which \code{x0} is
-hardwired to zero, and a program counter. The registers are architectural
-state, which the operating system saves and restores at a context switch, so
+RV64I has a program counter and 32 integer registers, \code{x0} to \code{x31},
+the first of which always reads as zero. The registers are architectural
+state. An operating system stores them when it suspends a context and reloads
+them when it resumes it, so
 one context cannot read what another left there. The branch history is treated
 differently,\index{context switch!state not covered by the ISA} since no instruction
 saves or restores it and nothing in the ISA makes a context switch clear
@@ -3205,8 +3226,8 @@ is found. \Cref{lst:leak} shows the smallest example of this.
 
 \Needspace{11\baselineskip}
 \begin{lstlisting}[language=riscv, caption={[The canonical leak, in RISC-V]The
-canonical leak, in RISC-V. The address of the second load depends on a secret
-byte, so the load brings one secret-dependent line into the cache. Timing a
+canonical leak, in RISC-V. The second load takes its address from a secret
+byte and so brings one secret-dependent line into the cache. Timing a
 later access to each line of the probe array reveals which one. Nothing here
 violates the ISA.},
 label={lst:leak}]
@@ -3219,8 +3240,8 @@ label={lst:leak}]
 \end{lstlisting}
 
 Architecturally the sequence only computes a value in \code{t2}. In terms of
-$\mu$ it also fills one cache line of the table, and the value of the first
-byte decides which line that is. If the sequence is squashed\index{squash}
+$\mu$ it also brings one line of the table into the cache, and which line
+that is depends on the byte loaded first. If the sequence is squashed\index{squash}
 later, it has no architectural effect at all, while what happens to the cached line
 is left to the implementation.
 
@@ -3303,8 +3324,8 @@ physical memory protection\index{physical memory protection (PMP)}\glsadd{pmp}
 and paging.\index{paging!Sv39 and Sv48}\glsadd{sv39} \Cref{app:priv} goes through each of them with a worked
 example.
 
-Software executes at one of three privilege levels: M (machine), S
-(supervisor) or U (user). A trap saves the PC in \code{mepc} or \code{sepc}, records the cause and transfers
+Code runs in machine mode (M), supervisor mode (S) or user mode (U), in
+decreasing order of privilege. A trap saves the PC in \code{mepc} or \code{sepc}, records the cause and transfers
 control to the handler, and it is precise. Switching mode changes which
 architectural state can be accessed, but not what is in the caches
 or the predictors.
@@ -3335,8 +3356,8 @@ measures.
 
 \begin{table}[t]
 \centering
-\caption[Partition of processor state]{How the state of a typical
-RISC-V core with out-of-order execution divides. The last column gives how
+\caption[Partition of processor state]{Architectural and
+microarchitectural state in a RISC-V core that executes out of order. The last column gives how
 finely an observation of each structure resolves the activity of another
 context.}
 \label{tab:statepartition}\index{out-of-order execution}
@@ -3403,7 +3424,8 @@ core is multithreaded. \\
 \addlinespace
 S3 & Other core, same package &
 An ordinary unprivileged process, running concurrently &
-The last-level cache, the interconnect, the memory controller and DRAM. The
+Whatever the cores share below their private caches: last-level cache,
+interconnect, memory controller, DRAM. The
 setting of cloud co-tenancy~\citep{liu2015llc}. \\
 \addlinespace
 S4 & Remote &
@@ -3676,9 +3698,9 @@ TLBs, miss-status holding registers and store queues are built this way because
 they need associative lookup. Whether a match occurs depends on addresses, and what
 happens after a match (forwarding a value, merging a miss, taking a slower
 path) can take a different amount of time from what happens without one.
-The best-known case is store-to-load forwarding.\index{store-to-load forwarding}\glsadd{lsq}
-A load gets its data from the queue if it matches an older store there,
-and from the cache otherwise. A core that guesses the
+The best-known case is forwarding from a store to a later load.\index{store-to-load forwarding}\glsadd{lsq}
+If an older store to the same address is still in the queue, the load takes
+its value from there, and if not, it reads the cache. A core that guesses the
 outcome before the store address is known can guess wrongly.
 
 One more structure whose latency depends on earlier accesses lies outside the
@@ -3927,6 +3949,15 @@ techniques of \SecRef{10.11}, predictors (\SecRef{10.11.1}) and out-of-order
 issue (\SecRef{10.11.4})~\citep{sarangi2025basic}.
 \end{tocmapbox}
 
+\begin{takeaway}[title={The model behind the numbers}]
+From this chapter on, tables and plots marked as results of the model come from a
+simulator that is described only in \Cref{ch:study}. It is a trace-driven,
+first-order timing model: an RV64IM core that executes out of order, with a
+cache hierarchy of three levels, a TLB and branch predictors. \Cref{tab:config} gives its parameters, \Cref{app:model}
+its rules and \Cref{sec:limits} its limits. Its numbers support comparisons and
+trends and are not measurements of a chip.
+\end{takeaway}
+
 This chapter introduces speculation and squashing in a pipelined machine.
 \emph{Speculation} means that the machine executes instructions before it
 knows they are needed, and \emph{squashing} that it erases their
@@ -4116,10 +4147,10 @@ machine.
 
 \begin{figure}[t]
 \centering
-\begin{tikzpicture}[scale=0.78, every node/.style={font=\scriptsize}]
+\begin{tikzpicture}[scale=1.0, every node/.style={font=\scriptsize}]
   % column headers
-  \foreach \c in {1,...,9} {\node[text=muted, font=\tiny] at (\c*1.12, 0.75) {\c};}
-  \node[anchor=east, text=muted, font=\tiny] at (0.35,0.75) {cycle};
+  \foreach \c in {1,...,9} {\node[text=muted, font=\scriptsize] at (\c*1.12, -0.1) {\c};}
+  \node[anchor=east, text=muted, font=\scriptsize] at (0.35,-0.1) {cycle};
   % rows: row / label / first cycle / stages actually completed / 1 = wrong path
   \foreach \r/\name/\start/\nst/\bad in {%
       1/{\tcode{beq a0,a1,L}}/1/5/0,
@@ -4127,35 +4158,35 @@ machine.
       3/{\tcode{slli t0,t0,6} (wrong path)}/3/1/1,
       4/{\tcode{add a2,a3,a4} (correct path)}/4/5/0}
   {
-    \node[anchor=east, font=\tiny] at (0.35,-\r*0.78) {\name};
+    \node[anchor=east, font=\scriptsize] at (0.35,-\r*0.78) {\name};
     \foreach \s [count=\i from 0] in {IF,ID,EX,ME,WB}
     {
       \ifnum\i<\nst\relax
         \pgfmathsetmacro{\cx}{(\start+\i)*1.12}
         \ifnum\bad=1\relax
           \node[draw=attack, fill=attackfill, minimum width=1.0cm, minimum height=0.5cm,
-                inner sep=0pt, font=\tiny] at (\cx,-\r*0.78) {\s};
+                inner sep=0pt, font=\scriptsize] at (\cx,-\r*0.78) {\s};
         \else
           \node[draw=accent!70, fill=lightfill, minimum width=1.0cm, minimum height=0.5cm,
-                inner sep=0pt, font=\tiny] at (\cx,-\r*0.78) {\s};
+                inner sep=0pt, font=\scriptsize] at (\cx,-\r*0.78) {\s};
         \fi
       \fi
     }
     % "killed here" marker for the wrong-path rows
     \ifnum\bad=1\relax
       \pgfmathsetmacro{\kx}{(\start+\nst)*1.12}
-      \node[text=attack, font=\tiny\bfseries, anchor=west] at (\kx-0.45,-\r*0.78)
+      \node[text=attack, font=\scriptsize\bfseries, anchor=west] at (\kx-0.45,-\r*0.78)
             {$\times$ killed};
     \fi
   }
   % squash marker: end of cycle 3
   \draw[attack, thick, dashed] (3.92,-0.35) -- (3.92,-3.55);
-  \node[anchor=west, text=attack, font=\tiny\bfseries] at (0.6,-3.95)
+  \node[anchor=west, text=attack, font=\scriptsize\bfseries] at (0.6,-3.95)
        {branch resolves in EX (cycle~3) $\Rightarrow$ wrong path squashed};
   % transient window brace: the two wrong-path fetches, cycles 2--3
   \draw[decorate, decoration={brace, amplitude=4pt, mirror}, attack]
        (1.6,-4.45) -- (4.0,-4.45)
-       node[midway, below=6pt, text=attack, align=center, font=\tiny]
+       node[midway, below=6pt, text=attack, align=center, font=\scriptsize]
        {\textbf{transient window}: two cycles wide on this machine};
 \end{tikzpicture}
 \caption[Squashed instructions leave state behind]{Pipeline diagram of a
@@ -4175,7 +4206,7 @@ window comes from.}
 A squash removes every architectural effect of the wrong path\glsadd{squash}\glsadd{wrongpath}, whereas what it does to
 \uarchadj{} state is a design decision. Conventional cores repair only what
 prediction accuracy needs, typically the speculative branch history and the
-top of the return stack, and leave the caches and the TLB as the wrong path
+position in the return stack, and leave caches and TLB as the wrong path
 left them. A core could also restore the cache and TLB state at every squash,
 which would remove the persistent trace but not the
 contention that transient instructions cause while they are running
@@ -4184,10 +4215,10 @@ hide-or-undo class of \Cref{ch:defenses} tries to get the same effect more
 cheaply, and the other classes isolate, obscure, restrict or contain instead.
 \end{takeaway}
 
-\section{Out-of-order execution and the size of the window}
+\section{Running ahead: the execution window}
 \label{sec:ooo}
 
-Out-of-order execution is introduced in textbook \SecRef{10.11.4}.\index{out-of-order execution}
+Textbook \SecRef{10.11.4} introduces execution out of program order.\index{out-of-order execution}
 After renaming, instructions wait in issue queues and start whenever their
 inputs become available~\citep{tomasulo1967efficient}, and a reorder buffer then
 retires them in the original order.\index{reorder buffer (ROB)}\glsadd{rob} \Cref{fig:ooo}
@@ -4255,19 +4286,19 @@ entries.
 %% BEGIN GENERATED fig_window
 \begin{tikzpicture}
 \begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.6cm},
-  width=0.50\linewidth, height=6.0cm, xmode=log, log basis x=2,
+  width=0.48\linewidth, height=6.0cm, xmode=log, log basis x=2,
   xtick={16,32,64,128,256}, xticklabels={16,32,64,128,256},
   xlabel={reorder-buffer entries}, tick label style={font=\scriptsize},
   label style={font=\small}, ymajorgrids, grid style={draw=black!12},
-  legend style={font=\scriptsize, draw=black!25}, ymin=0]
-\nextgroupplot[ylabel={transient instructions executed per squash}]
+  legend style={font=\scriptsize, draw=black!25}, ymin=0, ylabel style={align=center}]
+\nextgroupplot[ylabel={transient instructions\\executed per squash}]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(16,13.417) (32,22.994) (64,42.301) (128,63.292) (256,75.256)};
 \addplot+[mark=square*, mark size=1.5pt, thick] coordinates {(16,11.912) (32,18.784) (64,28.192) (128,35.551) (256,38.830)};
 \addplot+[mark=triangle*, mark size=1.5pt, thick] coordinates {(16,12.461) (32,17.759) (64,22.391) (128,25.909) (256,28.219)};
 \addplot+[mark=diamond*, mark size=1.5pt, thick] coordinates {(16,11.194) (32,15.576) (64,17.583) (128,17.676) (256,17.693)};
 \addplot+[mark=o, mark size=1.5pt, thick] coordinates {(16,12.329) (32,13.042) (64,13.126) (128,13.126) (256,13.126)};
 \addplot+[mark=x, mark size=1.5pt, thick] coordinates {(16,12.091) (32,16.614) (64,17.811) (128,19.149) (256,19.470)};
-\nextgroupplot[ylabel={transient loads executed per squash}, legend pos=north west]
+\nextgroupplot[ylabel={transient loads\\executed per squash}, legend pos=north west]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(16,0.913) (32,2.277) (64,3.993) (128,6.210) (256,7.176)};
 \addlegendentry{\tcode{bsearch}}
 \addplot+[mark=square*, mark size=1.5pt, thick] coordinates {(16,0.890) (32,1.619) (64,2.576) (128,3.249) (256,3.573)};
@@ -4474,8 +4505,8 @@ miss latency is drawn compressed, and the true gap is far wider, as
 
 Textbook \SecRef{11.2} builds up the set-associative cache. A lookup divides the
 address into three parts (\Cref{fig:addrsplit}).\index{cache!address split}\glsadd{blockoffset}\glsadd{index}\glsadd{set}\glsadd{tag}\glsadd{way}\glsadd{cacheline} The low
-bits pick a byte inside the line, the middle bits choose the set, and the high
-bits are checked against the tag held in each way of that set. \Cref{app:caches} goes through
+bits pick a byte inside the line, the middle bits name a set, and the rest of
+the address is compared with the tag stored in every way of that set. \Cref{app:caches} goes through
 a lookup, the replacement policies\index{replacement policy} and a numerical example.
 
 \begin{figure}[t]
@@ -4668,7 +4699,7 @@ table is in \Cref{app:results}.}
 \begin{tikzpicture}
 \begin{axis}[width=0.74\linewidth, height=6.0cm, xmode=log, log basis x=2,
   xtick={256,512,1024,2048,4096}, xticklabels={0.25,0.5,1,2,4},
-  xlabel={last-level cache size (MiB), 16 ways}, ylabel={execution time relative to 2\,MiB},
+  xlabel={last-level cache size (MiB), 16 ways}, ylabel={execution time\\relative to 2\,MiB}, ylabel style={align=center},
   tick label style={font=\scriptsize}, label style={font=\small}, ymin=0.8,
   ymajorgrids, grid style={draw=black!12}, legend style={font=\scriptsize, draw=black!25},
   legend pos=north east]
@@ -4711,8 +4742,8 @@ established\glsadd{flushreload}\glsadd{evicttime}\glsadd{flushflush}.
 \begin{tikzpicture}[scale=0.95, every node/.style={font=\scriptsize}]
   % ---------- Flush+Reload ----------
   \node[anchor=west, font=\small\bfseries] at (-0.4,2.1) {Flush+Reload};
-  \node[note, anchor=west] at (3.2,2.1) {requires \emph{shared memory} with the victim
-       (shared library, page dedup)};
+  \node[note, anchor=west] at (3.2,2.1) {works only on memory mapped by both parties
+       (a shared library, deduplicated pages)};
   \draw[->, thick, muted] (0,0.6) -- (13.1,0.6);
   \foreach \x/\lab/\c in {0.5/{\textsf{FLUSH}\\line $X$}/attack,
                           3.8/{victim runs;\\may touch $X$}/accent,
@@ -4784,8 +4815,8 @@ observation. For a
 first-level cache indexed with bits of the page offset, such a set can be
 written down directly, but for a physically indexed last-level cache the observer
 does not know its physical addresses and has to find conflicting lines by
-experiment. The fastest published search needs a number of accesses that grows
-linearly with the pool of candidate addresses~\citep{vila2019theory}. Randomized
+experiment. The fastest published search makes a number of accesses proportional
+to the size of the candidate pool~\citep{vila2019theory}. Randomized
 caches (\Cref{sec:randomization}) are designed to defeat this search.
 
 \Needspace{15\baselineskip}
@@ -4830,7 +4861,7 @@ hardware~\citep{riscv-priv}. \Cref{fig:sv39} shows the path, and
   \draw[sig] (va) -- (tlb);
   \draw[sig] (tlb) -- node[above, font=\tiny] {hit: 1 to 2 cycles} (pa);
   \draw[atksig] (tlb.south) |- (pwc.west);
-  \node[note, anchor=north west, text=attack] at (3.6,-1.15) {miss: walk};
+  \node[note, anchor=east, text=attack] at (3.05,-1.2) {miss: walk};
   \draw[sig] (pwc) -- (pt);
   \draw[sig] (pt.east) -| (pa.south);
   %% below the page-table box: the gap between it and the riser is too narrow
@@ -4891,8 +4922,8 @@ cores (\SecRef{12.4.8})~\citep{sarangi2025basic}.
 \section{What sharing adds}
 
 Until now observer and victim have alternated on a single core. On a multicore
-chip the observer can instead run on a different core concurrently with
-the victim, and the two remain joined by the LLC\index{last-level cache}, the on-chip network, the
+chip the observer can have a core of its own and run while the
+victim runs, and the two remain joined by the LLC\index{last-level cache}, the on-chip network, the
 memory controller and DRAM\index{DRAM}. This is scenario S3 of \Cref{tab:threat}, which matters
 commercially because it is the setting of cloud co-tenancy.
 \Cref{fig:multicore} shows the organization of \SecRef{12.3} to \SecRef{12.4.4}
@@ -5097,8 +5128,8 @@ CATalyst~\citep{liu2016catalyst} builds a defense on it.
 \emph{Page coloring} needs no hardware support. The operating system gives each\index{page coloring}\glsadd{pagecoloring}
 domain physical pages whose frame numbers differ in the bits that take part in
 the cache index, so that the domains occupy disjoint sets~\citep{kessler1992page}.
-The number of colors that a cache offers is the size of one of its ways
-divided by the page size, and this number decides where coloring can be used.
+A cache offers as many colors as there are pages in one of its ways,
+and this number decides where coloring can be used.
 \begin{itemize}
   \item A 32\,KiB eight-way first-level cache\index{first-level cache} has ways of 4\,KiB, which is one
         color, so it cannot be colored at all with 4\,KiB pages.
@@ -5109,9 +5140,9 @@ divided by the page size, and this number decides where coloring can be used.
         principle, but for caches of this size they remove the index bits that
         coloring relies on.
 \end{itemize}
-A complete spatial defense therefore colors the outer caches and handles the
-first-level cache, the TLB and the predictors separately, either by flushing
-them at a switch or by partitioning them.
+A complete spatial defense therefore colors the outer levels and treats what
+coloring cannot reach (first-level cache, TLB, predictors) by other means,
+either flushing them at a switch or partitioning them.
 
 \section{What isolation removes: results from the model}
 \label{sec:interference}
@@ -5403,10 +5434,10 @@ established by the authors. \\
 \addlinespace
 Gerlach \etal, 2023 \citep{gerlach2023security} &
 SiFive U74 and T-Head XuanTie C906; commercial silicon &
-Known cache attacks apply to these in-order cores. The paper adds Cache+Time, a
-cache-line-granular attack without shared memory; Flush+Fault, which exploits the
-separate instruction and data caches; and CycleDrift, which uses unprivileged
-access to retired-instruction information. One case study breaks KASLR. These are
+Known cache attacks apply to these in-order cores. Three new ones are added. Cache+Time
+resolves single cache lines and needs no memory shared with the victim, Flush+Fault
+relies on the instruction and data caches being separate, and CycleDrift reads
+the count of retired instructions, which unprivileged code may access. One case study breaks KASLR. These are
 results about cache and timing channels, and not about transient execution. \\
 \addlinespace
 Gerlach \etal, 2026 \citep{gerlach2026spectre} &
@@ -5640,9 +5671,9 @@ RISC-V has several mechanisms that limit what a leak can reach.\index{physical m
 PMP restricts physical memory per privilege level\index{privilege modes}~\citep{riscv-priv}.
 Sanctum~\citep{costan2016sanctum} showed that strong isolation of enclaves\index{enclave},\index{Sanctum}
 including against cache and page-table\index{page table} channels, needs only small hardware
-additions to a RISC-V core. MI6\index{MI6}~\citep{bourgeat2019mi6} carried this to a
-speculative out-of-order core, and Keystone~\citep{lee2020keystone} is an open\index{Keystone}
-framework for building such environments. \tcode{Zkt}~\citep{riscv-crypto}\index{Zkt extension!data-independent latency}
+additions to a RISC-V core. MI6\index{MI6}~\citep{bourgeat2019mi6} did the same for a
+core that speculates and executes out of order, and Keystone~\citep{lee2020keystone}\index{Keystone}
+lets a designer assemble such an environment from open components. \tcode{Zkt}~\citep{riscv-crypto}\index{Zkt extension!data-independent latency}
 gives constant-time code\index{constant-time code} an architectural basis for the instructions it
 lists. Control-flow integrity by landing pads\glsadd{zicfilp} and shadow
 stacks~\citep{riscv-cfi}\glsadd{zicfiss} is an architectural guarantee.\index{control-flow integrity (CFI)}
@@ -5690,8 +5721,8 @@ execution ports to contend for.
 \centering
 \caption[Coverage of the defense classes]{What each defense class covers.
 ``yes'' means the quantity is removed, ``part'' that it is reduced or covered
-for some structures only, ``no'' that the class does not address it, and ``n/a''
-that the question does not arise. Entries for the first five columns agree
+for some structures only, ``no'' that the class does not address it, and an
+empty cell that the question does not arise. Entries for the first five columns agree
 with the counts of \Cref{tab:interference,tab:footprint}, with two exceptions
 that a count cannot show. Way partitioning leaves state on the core, but only
 in the partition of the domain that wrote it. The randomized index leaves the
@@ -5713,13 +5744,13 @@ Flush on-core state at a switch    & part & yes & yes & no & no & no \\
 Flush plus coloring               & yes & yes & yes & no & no & no \\
 Randomized last-level index        & part & no & no & no & no & no \\
 \midrule
-Invisible speculation              & n/a & n/a & n/a & yes & no & no \\
-Undo on squash                     & n/a & n/a & n/a & yes & no & no \\
-Delay-on-miss                      & n/a & n/a & n/a & yes & part & part \\
-Taint tracking                     & n/a & n/a & n/a & no & yes & yes \\
-No forwarding of speculative data  & n/a & n/a & n/a & no & yes & yes \\
+Invisible speculation              &  &  &  & yes & no & no \\
+Undo on squash                     &  &  &  & yes & no & no \\
+Delay-on-miss                      &  &  &  & yes & part & part \\
+Taint tracking                     &  &  &  & no & yes & yes \\
+No forwarding of speculative data  &  &  &  & no & yes & yes \\
 \midrule
-Software hardening of loads        & n/a & n/a & n/a & no & part & no \\
+Software hardening of loads        &  &  &  & no & part & no \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -6110,7 +6141,32 @@ in which a cost moves with the baseline, but it does not reproduce the
 magnitudes of \Cref{tab:reported} and cannot rank mechanisms whose omitted
 costs differ. Invis-E, for instance, is charged nothing on the committed path
 (\Cref{tab:specrules}), so its cost here is a property of the rule and not an
-estimate for a design.
+estimate for a design. \Cref{tab:modelvspub} sets the modeled costs beside the
+published ones.
+
+\begin{table}[t]
+\centering
+\caption[Modeled and published costs]{Cost in the model (Spectre model, geometric mean
+over the eleven kernels) beside the cost reported by the authors of the closest
+published design (\Cref{tab:reported}). The platforms and workloads differ, so the
+comparison indicates how far apart the two are and is not a calibration. NoSpecLoad has no
+published counterpart in \Cref{tab:reported}.}
+\label{tab:modelvspub}
+\footnotesize
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Modeled mechanism} & \textbf{Closest published design} &
+\textbf{Published} & \textbf{In the model} \\
+\midrule
+Invis-E, Invis-V & InvisiSpec \citep{yan2018invisispec,yan2019invisispec} &
+7.6\pc{} & \R{geo.spectre.invis-e}\pc{}, \R{geo.spectre.invis-v}\pc{} \\
+DoM & Delay-on-miss \citep{sakalis2019delay} & 19\pc{} lower IPC & \R{geo.spectre.dom}\pc{} \\
+Taint & STT \citep{yu2019stt} & 8.5\pc{} & \R{geo.spectre.stt}\pc{} \\
+NoFwd & NDA \citep{weisse2019nda} & 10.7\pc{} to 125\pc{} & \R{geo.spectre.nda}\pc{} \\
+Undo & CleanupSpec \citep{saileshwar2019cleanupspec} & 5.1\pc{} & \R{geo.spectre.undo}\pc{} \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \section{What each defense leaves behind}
 \label{sec:footprint}
@@ -6127,7 +6183,7 @@ work that the defense does.}
 \label{tab:footprint}\index{kernels of the model study}
 \scriptsize
 %% BEGIN GENERATED tab_footprint
-\begin{tabularx}{\linewidth}{@{}Xrrrrrrrr@{}}
+\begin{tabularx}{\linewidth}{@{}>{\raggedright\arraybackslash}Xrrrrrrrr@{}}
 \toprule
 \textbf{Summed over all kernels} & \textbf{none} & \textbf{NoSpecLoad} & \textbf{DoM} & \textbf{Invis-E} & \textbf{Invis-V} & \textbf{Taint} & \textbf{NoFwd} & \textbf{Undo} \\
 \midrule
@@ -6161,8 +6217,8 @@ mechanisms introduce lengthen some windows. \Cref{fig:pareto} plots the two dime
 \begin{tikzpicture}
 \begin{axis}[width=0.80\linewidth, height=6.6cm,
   xlabel={geometric-mean slowdown, Spectre model (\%)},
-  ylabel={transient fills left in the cache (\% of undefended)},
-  xmin=-4, xmax=21, ymin=-14, ymax=120, tick label style={font=\scriptsize},
+  ylabel={transient fills left in the cache\\(\% of undefended)}, ylabel style={align=center},
+  xmin=-4, xmax=21, ymin=-26, ymax=120, ytick={0,20,...,120}, tick label style={font=\scriptsize},
   label style={font=\small}, xmajorgrids, ymajorgrids, grid style={draw=black!12}]
 \addplot[only marks, mark=*, mark size=2.3pt, draw=attack, fill=attack] coordinates {(0.00,100.00)};
 \node[font=\tiny, anchor=north east, xshift=-2pt, yshift=-2pt] at (axis cs:0.00,100.00) {no defense};
@@ -6325,8 +6381,8 @@ layouts, with the smallest and largest value in parentheses.}
 \begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.7cm},
   width=0.48\linewidth, height=6.0cm, xmode=log, tick label style={font=\scriptsize},
   xlabel={time slice (instructions)}, label style={font=\small},
-  ymajorgrids, grid style={draw=black!12}, legend style={font=\scriptsize, draw=black!25}]
-\nextgroupplot[ymode=log, ylabel={slowdown of flushing on-core state (\%)}]
+  ymajorgrids, grid style={draw=black!12}, legend style={font=\scriptsize, draw=black!25}, ylabel style={align=center}]
+\nextgroupplot[ymode=log, ylabel={slowdown from flushing\\on-core state (\%)}]
 \addplot+[mark=*, mark size=1.5pt, thick] coordinates {(10000,9.9738) (30000,4.8258) (100000,2.9214) (300000,2.3014)};
 \addplot+[mark=square*, mark size=1.5pt, thick] coordinates {(10000,3.7702) (30000,1.2482) (100000,0.4600) (300000,0.1576)};
 \addplot+[mark=triangle*, mark size=1.5pt, thick] coordinates {(10000,10.9542) (30000,3.6662) (100000,1.0824) (300000,0.3604)};
@@ -6590,28 +6646,30 @@ gives the range of the excess over those layouts.}
 \begin{finding}
 In \R{comp.within1} of the \R{comp.n} combinations the measured slowdown is
 within one percentage point of the product of the individual slowdowns, and
-the largest deviations are $\R{comp.max}$ and $\R{comp.min}$ points. The two
-costs therefore combine roughly as independent factors would. The sum of the
-percentages fits as well, with \R{comp.withinsum1} combinations within one
-point, so the table cannot tell a product from a sum. The deviations are not
-noise of the page layout, because in \R{comp.stable} of the \R{comp.over1} combinations
-that deviate by more than one point the excess keeps its sign in all five
-layouts. Nor do they have one sign. Where partitioning turns hits into misses,
-delay-on-miss has more loads to delay, which raises the combined cost. Where a
-defense keeps wrong-path fills out of the cache, the smaller partition suffers
-less pollution, which lowers it.
+the largest deviations are $\R{comp.max}$ and $\R{comp.min}$ points. This is
+weaker evidence than it looks. In \R{comp.small} of the combinations one of the two
+slowdowns is below one point, so product and sum nearly coincide. Of the other
+\R{comp.big}, \R{comp.big.prod1} are within one point of the product and
+\R{comp.big.sum1} within one point of the sum, so the table cannot tell the two
+apart. The deviations are not noise of the page layout, because in
+\R{comp.stable} of the \R{comp.over1} combinations that deviate by more than one
+point the excess keeps its sign in all five layouts. Where partitioning turns hits
+into misses, delay-on-miss has more loads to delay, which raises the combined
+cost. Where a defense keeps wrong-path fills out of the cache, the smaller
+partition suffers less pollution, which lowers it.
 \end{finding}
 
 \begin{takeaway}
 No mechanism dominates on cost and coverage together, so a design has to
 combine several. The cost of each one depends on the baseline and on the
-workload, and the costs of combined mechanisms compound roughly independently. For
+workload, and the cost of a combination is close to what its parts cost
+separately, added or multiplied. For
 a proposed defense the average cost is less informative than which programs
 pay for it and what it leaves for the next mechanism to cover.
 \end{takeaway}
 
 
-\chapter{The Model Study: Instrument, Validation and Limits}
+\chapter{The Model Study: Instrument, Verification and Limits}
 \label{ch:study}
 
 \section{Purpose and design}
@@ -6633,12 +6691,10 @@ constant. The design decisions below follow from this purpose.
         timing agreed with values derived by hand from its own rules
         (\Cref{sec:validation}). This verifies the program against the stated
         model but does not calibrate the model against a real core.
-  \item The study can be reproduced. The kernels are listed in full in
-        \Cref{app:kernels}, and \Cref{app:source} describes the simulator and
-        its tools, which are kept with their digests in the repository. Every
-        table and plot of the study is generated from the result files by a
-        script, and every number quoted in the text is inserted by a macro
-        from the same files.
+  \item The study can be reproduced. Four kernels are printed in
+        \Cref{app:kernels} and all are in the repository, \Cref{app:source} describes the simulator and its
+        tools, and every table, plot and quoted number is generated from the
+        result files by a script.
 \end{itemize}
 
 \section{The instrument}
@@ -6759,8 +6815,8 @@ result.
 \begin{table}[t]
 \centering
 \caption[The kernels of the model study]{The kernels of the model study. The
-instruction counts are in \Cref{tab:validation} and the listings are in
-\Cref{app:kernels}.}
+instruction counts are in \Cref{tab:validation}, and \Cref{app:kernels} prints
+four of the kernels.}
 \label{tab:kernels}
 \footnotesize
 \begin{tabularx}{\linewidth}{@{}l>{\raggedright\arraybackslash}p{4.4cm}rX@{}}
@@ -6782,13 +6838,13 @@ instruction counts are in \Cref{tab:validation} and the listings are in
 \end{tabularx}
 \end{table}
 
-\section{Validation}
+\section{Verification}
 \label{sec:validation}
 
 The model was checked in three independent ways, which \Cref{app:validation}
 documents in full.
 
-Functional agreement was checked first. For each kernel the checksum was computed three\index{model study!validation}
+Functional agreement was checked first. For each kernel the checksum was computed three\index{model study!verification}
 times: by an independent implementation of the algorithm in Python, by QEMU
 \R{tool.qemu} executing the binary, and by the simulator. \Cref{tab:validation}
 shows that the three agree for all \R{val.kernels} kernels, over
@@ -6799,7 +6855,7 @@ two others to go unnoticed.
 
 \begin{table}[t]
 \centering
-\caption[Functional validation of the kernels]{Functional validation. The
+\caption[Functional verification of the kernels]{Functional verification. The
 checksum printed by each kernel is identical for the Python reference, for
 QEMU and for the simulator.}
 \label{tab:validation}
@@ -6829,19 +6885,16 @@ The timing was then compared with values derived by hand from the
 rules of \Cref{app:model,app:specdef}. For \R{val.unit} small programs a cost
 was derived before the run, usually that of one additional loop iteration and
 otherwise the commit time of one load or the cost of one context switch. The
-first \R{val.unit.core} exercise the undefended core, from a chain of dependent
-additions to a branch that always mispredicts. The other \R{val.unit.new}
-exercise the page walk, the committed-path rule of every defense, the delayed
+first \R{val.unit.core} exercise the undefended core, and the other \R{val.unit.new}
+the page walk, the committed-path rule of every defense, the delayed
 redirect of the undo scheme and a context switch with a flush. In every case
 the simulator reproduces the derived value exactly (\Cref{tab:unit}).
 
 Finally, \R{val.invariants} invariants of the defense models, properties that
 must hold if a mechanism is coded as specified, were checked on the full
-runs. For example, a mechanism that hides, undoes or delays loads leaves
-no transient fill, NoSpecLoad, Taint and NoFwd execute no dependent transient
-load, a partition admits no cross-domain eviction, a flush leaves no residue,
-and repeated runs give identical cycle counts (\Cref{tab:invariants}). All of
-the properties hold.
+runs. For example, a partition admits no cross-domain eviction, a flush leaves
+no residue, and repeated runs give identical cycle counts
+(\Cref{tab:invariants}). All of the properties hold.
 
 \section{The experiments}
 \label{sec:experiments}
@@ -6859,7 +6912,7 @@ runs, and where the results appear.}
 \footnotesize
 \begin{tabularx}{\linewidth}{@{}p{0.6cm}>{\raggedright\arraybackslash}p{5.1cm}p{0.8cm}rX@{}}
 \toprule
- & \textbf{Experiment} & \textbf{RQ} & \textbf{Runs} & \textbf{Reported in} \\
+\textbf{ID} & \textbf{Experiment} & \textbf{RQ} & \textbf{Runs} & \textbf{Reported in} \\
 \midrule
 E1 & Where loads are served and what they cost & 1, 2 & 11 &
 \Cref{fig:service}, \Cref{tab:baseline} \\
@@ -6885,9 +6938,8 @@ E8 & Randomized index; spread over page-frame layouts & 5 & 231 &
 \label{sec:limits}
 
 The results are properties of a stated model, which is simpler than a\index{model study!limitations}
-processor in several ways that limit how far the results can be
-generalized. The first five simplifications concern the core and the memory
-system, and the last three concern the defenses and the workloads.
+processor in several ways. The first five simplifications concern the core and
+the memory system, and the last three the defenses and the workloads.
 
 \subsection{The core and the memory system}
 
@@ -6895,14 +6947,15 @@ system, and the last three concern the defenses and the workloads.
   \item The model is driven by the instruction trace. It times
         instructions in the order of the program, so it also updates the cache
         in that order rather than in the order in which loads would really
-        issue.
-  \item It has no contention. With no limit on execution ports,
+        issue. The predictor is updated with the true outcome as soon as a branch is
+        processed, so wrong-path branches never pollute it.
+  \item It has no contention. With no limit on execution ports, physical registers,
         issue-queue or load-queue entries, or miss-status registers, the IPC\index{instructions per cycle (IPC)} of
         the baseline is optimistic, and contention channels
         (\Cref{sec:attacksdef}) cannot appear in it at all.
   \item Memory dependences are resolved perfectly. A load never issues ahead
         of an earlier store to the same location, so store-bypass speculation is
-        absent.
+        absent. Stores cost nothing, as if they drained from an unbounded buffer.
   \item There is no prefetcher\index{prefetcher} and no second-level TLB.
   \item There is one core, on which two domains alternate, and concurrent
         observation from another core (scenario S3) is not modeled.
@@ -6912,33 +6965,30 @@ system, and the last three concern the defenses and the workloads.
 
 \begin{enumerate}[leftmargin=1.8em,resume]
   \item The defenses are simplified. Each follows the central idea of a class
-        without reproducing the design of a particular paper, and omits
-        mechanisms that the published designs need for correctness under a
-        real memory model.
+        without reproducing a particular design, and omits mechanisms that
+        published designs need for correctness under a real memory model.
   \item The kernels are small, running for one to four million instructions
         with working sets up to about a megabyte. Absolute slowdowns are
-        specific to them, and \Cref{sec:defcost} notes where they are lower
-        than published figures. Each kernel is measured over its whole run, input
-        generation included, and the sensitivity of the geometric means to the
-        choice of kernels was not measured.
+        specific to them and lower than published ones (\Cref{tab:modelvspub}). Each kernel is measured over its whole run, input
+        generation included, and the effect of the choice of kernels on the
+        geometric means was not measured.
   \item Latencies are parameters, and the clock period is not modeled, so a
         mechanism that would lengthen a critical path shows no cost here.
         Energy and area are not measured.
 \end{enumerate}
 
-Within these limits the study supports comparisons of one mechanism across
-kernels and baselines, the direction and rough size of sensitivities, and the
-structure of what each mechanism leaves behind. Its timing was checked against
-its own rules, not against a real core, so it supports neither a ranking of
-mechanisms whose omitted costs differ nor statements about the absolute cost
-of a published design or a particular chip.
+Within these limits the study supports comparisons across kernels and baselines,
+the direction and rough size of sensitivities, and the structure of what each
+mechanism leaves behind. Its timing was checked against its own rules, not
+against a real core, so it supports neither a ranking of mechanisms whose
+omitted costs differ nor statements about the absolute cost of a published
+design or a chip.
 
 \section{Reproducing the study}
 \label{sec:reproduce}
 
-The directory \code{study} of the repository named on the title page holds the
-programs. The two commands of \Cref{lst:repro} regenerate everything from
-source.
+The two commands of \Cref{lst:repro}, run in the directory \code{study} of the
+repository named on the title page, regenerate everything from source.
 
 \Needspace{5\baselineskip}
 \begin{lstlisting}[language=bash, caption={Regenerating the results of the model study.}, label={lst:repro}]
@@ -7021,9 +7071,11 @@ textbook explains.
 
 Finally, the costs of combined defenses compound roughly
 independently. A system that needs protection between domains and within them
-must combine mechanisms, and then pays close to the product of their slowdown
+must combine mechanisms, and then pays about the product of their slowdown
 factors, with deviations of up to \R{comp.maxabs} percentage points
-(\Cref{tab:composition}).
+(\Cref{tab:composition}). The sum fits almost as well, so the data support only
+the weaker statement that the combined cost is about what the two parts cost
+separately, added or multiplied.
 
 \section{Limitations}
 
@@ -7088,7 +7140,7 @@ not estimated. A field that has not yet been entered says so.
 \toprule
 \textbf{Item} & \textbf{Value in the Turnitin report} \\
 \midrule
-Document submitted & This report, as one PDF compiled from this source file \\
+Document submitted & This report, as one PDF compiled from this source file while this table was still empty (164 pages, 65\,937 words) \\
 Date of the report & \turnitin{\TurnitinDate} \\
 Submission identifier & \turnitin{\TurnitinSubmissionID} \\
 Overall similarity index & \turnitin{\TurnitinSimilarity} \\
@@ -7102,7 +7154,7 @@ Filters applied in the report & \turnitin{\TurnitinSettings} \\
 \end{table}
 
 \IfFilled{\TurnitinSources}{%
-\Cref{tab:turnitinsources} lists the largest sources in the order in which the
+\Cref{tab:turnitinsources} lists the first ten of the 42 sources in the order in which the
 report gives them.
 
 \begin{table}[ht]
@@ -7210,17 +7262,17 @@ indices, over the prose of \Cref{ch:intro} to \Cref{ch:conclusion}.}
 \toprule
 \textbf{Quantity} & \textbf{Value} \\
 \midrule
-Sentences ($S$) & 736 \\
-Words ($W$) & 15\,087 \\
-Syllables ($Y$) & 24\,395 \\
-Words of three syllables or more ($P$) & 2\,446 \\
-Words longer than six letters ($L$) & 3\,783 \\
-Letters ($C$) & 73\,348 \\
-Words per sentence & 20.50 \\
-Syllables per word & 1.617 \\
-Syllables per 100 words (Fry graph) & 161.7 \\
-Sentences per 100 words (Fry graph, Raygor estimate) & 4.88 \\
-Words of six or more letters per 100 words (Raygor estimate) & 33.1 \\
+Sentences ($S$) & 740 \\
+Words ($W$) & 15\,212 \\
+Syllables ($Y$) & 24\,535 \\
+Words of three syllables or more ($P$) & 2\,442 \\
+Words longer than six letters ($L$) & 3\,780 \\
+Letters ($C$) & 73\,785 \\
+Words per sentence & 20.56 \\
+Syllables per word & 1.613 \\
+Syllables per 100 words (Fry graph) & 161.3 \\
+Sentences per 100 words (Fry graph, Raygor estimate) & 4.86 \\
+Words of six or more letters per 100 words (Raygor estimate) & 32.9 \\
 \bottomrule
 \end{tabular}
 %% END GENERATED read_counts
@@ -7268,16 +7320,16 @@ letters.}
 \toprule
 \textbf{Index} & \textbf{Value} & \textbf{Scale} & \textbf{Formula} \\
 \midrule
-FRE (Flesch) & 49.2 & higher is easier & $206.835 - 1.015\,W/S - 84.6\,Y/W$ \\
+FRE (Flesch) & 49.5 & higher is easier & $206.835 - 1.015\,W/S - 84.6\,Y/W$ \\
 FKGL (Kincaid \etal) & 11.5 & school grade & $0.39\,W/S + 11.8\,Y/W - 15.59$ \\
-Fog (Gunning) & 14.7 & years of schooling & $0.4\,(W/S + 100\,P/W)$ \\
+Fog (Gunning) & 14.6 & years of schooling & $0.4\,(W/S + 100\,P/W)$ \\
 SMOG (McLaughlin) & 13.5 & school grade & $1.043\sqrt{30\,P/S} + 3.1291$ \\
 CLI (Coleman, Liau) & 11.3 & school grade & $5.88\,C/W - 29.6\,S/W - 15.8$ \\
 ARI (Smith, Senter) & 11.7 & school grade & $4.71\,C/W + 0.5\,W/S - 21.43$ \\
-LIX (Bj\"{o}rnsson) & 45.6 & 50 to 60: difficult & $W/S + 100\,L/W$ \\
+LIX (Bj\"{o}rnsson) & 45.4 & 50 to 60: difficult & $W/S + 100\,L/W$ \\
 RIX (Anderson) & 5.1 & from 7.2: college & $L/S$ \\
 \midrule
-Average grade & 12.6 & school grade & mean of the five grade levels \\
+Average grade & 12.5 & school grade & mean of the five grade levels \\
 Median grade & 11.7 & school grade & median of the five grade levels \\
 \bottomrule
 \end{tabular}
@@ -7297,20 +7349,20 @@ so that a chapter that is much harder to read than the others would stand out.
 \toprule
 \textbf{Chapter} & \textbf{Words} & \textbf{Sentences} & \textbf{Words per sentence} & \textbf{Reading Ease} & \textbf{Flesch-Kincaid} \\
 \midrule
-1 & 1\,962 & 96 & 20.4 & 40.3 & 12.7 \\
-2 & 1\,592 & 69 & 23.1 & 46.5 & 12.5 \\
-3 & 760 & 38 & 20.0 & 57.1 & 10.3 \\
+1 & 1\,969 & 96 & 20.5 & 40.5 & 12.7 \\
+2 & 1\,603 & 70 & 22.9 & 47.7 & 12.3 \\
+3 & 773 & 38 & 20.3 & 57.8 & 10.2 \\
 4 & 624 & 39 & 16.0 & 50.8 & 10.1 \\
-5 & 1\,030 & 46 & 22.4 & 46.4 & 12.3 \\
-6 & 1\,180 & 52 & 22.7 & 51.5 & 11.7 \\
-7 & 1\,047 & 48 & 21.8 & 47.4 & 12.1 \\
+5 & 1\,103 & 49 & 22.5 & 46.7 & 12.3 \\
+6 & 1\,181 & 52 & 22.7 & 51.3 & 11.8 \\
+7 & 1\,043 & 48 & 21.7 & 47.9 & 12.0 \\
 8 & 809 & 39 & 20.7 & 45.7 & 12.0 \\
-9 & 1\,576 & 76 & 20.7 & 46.8 & 11.9 \\
-10 & 2\,376 & 125 & 19.0 & 57.3 & 10.0 \\
-11 & 1\,232 & 61 & 20.2 & 48.9 & 11.5 \\
-12 & 899 & 47 & 19.1 & 52.4 & 10.7 \\
+9 & 1\,584 & 76 & 20.8 & 46.8 & 11.9 \\
+10 & 2\,408 & 125 & 19.3 & 57.5 & 10.0 \\
+11 & 1\,188 & 60 & 19.8 & 49.4 & 11.3 \\
+12 & 927 & 48 & 19.3 & 52.1 & 10.8 \\
 \midrule
-All & 15\,087 & 736 & 20.5 & 49.2 & 11.5 \\
+All & 15\,212 & 740 & 20.6 & 49.5 & 11.5 \\
 \bottomrule
 \end{tabular}
 %% END GENERATED read_chapters
@@ -7639,7 +7691,7 @@ single ratio $d$, the separation of the two latencies in units of the noise.
 %% BEGIN GENERATED fig_capacity
 \begin{tikzpicture}
 \begin{axis}[width=0.66\linewidth, height=5.2cm, xmin=0, xmax=8, ymin=0, ymax=1.05,
-  xlabel={separation $d = \Delta/\sigma$}, ylabel={capacity (bits per observation)},
+  xlabel={separation $d = \Delta/\sigma$}, ylabel={capacity\\(bits per observation)}, ylabel style={align=center},
   tick label style={font=\scriptsize}, label style={font=\small},
   xmajorgrids, ymajorgrids, grid style={draw=black!12}]
 \addplot[thick, accent] coordinates {(0.00,0.0000) (0.20,0.0046) (0.40,0.0182) (0.60,0.0405) (0.80,0.0709) (1.00,0.1085) (1.20,0.1525) (1.40,0.2017) (1.60,0.2550) (1.80,0.3111) (2.00,0.3689) (2.20,0.4272) (2.40,0.4850) (2.60,0.5412) (2.80,0.5952) (3.00,0.6461) (3.20,0.6936) (3.40,0.7372) (3.60,0.7767) (3.80,0.8121) (4.00,0.8434) (4.20,0.8707) (4.40,0.8943) (4.60,0.9144) (4.80,0.9314) (5.00,0.9455) (5.20,0.9572) (5.40,0.9667) (5.60,0.9743) (5.80,0.9804) (6.00,0.9852) (6.20,0.9889) (6.40,0.9918) (6.60,0.9940) (6.80,0.9956) (7.00,0.9969) (7.20,0.9978) (7.40,0.9984) (7.60,0.9989) (7.80,0.9992) (8.00,0.9995)};
@@ -7749,8 +7801,9 @@ interference counts of \Cref{tab:interference} and the invariants of
 
 \Cref{sec:leakmodel} named two ideas that follow from the leakage model.
 \emph{Constant-time programming}\index{constant-time code} means writing the
-victim so that its branch outcomes, its memory addresses and the operands of its
-variable-latency instructions, such as division, do not depend on $s$. For
+victim so that $s$ influences neither the outcome of a branch, nor an address
+that is loaded or stored, nor an operand of an instruction whose latency
+varies, such as division. For
 committed instructions this removes the dependence of the microarchitectural
 state $\mu$ of \Cref{ch:isa} on the secret, but it does nothing about transient
 instructions.
@@ -7848,8 +7901,8 @@ of a lookup grow with the number of entries. For this reason TLBs\index{translat
 of \Cref{tab:arrayzoo} have tens of entries and not thousands.
 
 A DRAM cell is one capacitor behind one transistor. A read drains it, so the
-whole row is copied into the row buffer and restored from there. A later access to the
-same row is served from the buffer without the activation, while an access to
+contents of an entire row go to the row buffer and are written back from it. While
+that row stays open, further accesses to it are served from the buffer without the activation, while an access to
 another row of the same bank must first close the open row. The difference is
 again set by the organization of the array, and it is visible to any program
 that shares the memory~\citep{pessl2016drama}.\index{DRAM!row buffer}
@@ -7921,8 +7974,8 @@ exposed, and both conform to the specification (\Cref{tab:variants}).
 
 Under Sv39\index{paging!Sv39 and Sv48} a 39-bit virtual address is translated by walking a tree of three\index{paging!Sv39 walk}
 levels. Its bits form three virtual page numbers (VPNs) of 9 bits each and a
-page offset of 12 bits. The \code{satp} register supplies the translation mode,
-a 16-bit ASID and the frame number (PPN) of the root table. \Cref{tab:sv39walk} follows the virtual address
+page offset of 12 bits. From the \code{satp} register come the translation mode,
+an ASID of 16 bits and the PPN, which is the number of the frame holding the root table. \Cref{tab:sv39walk} follows the virtual address
 \code{0x8020\_1ABC}.
 
 \begin{table}[ht]
@@ -8002,8 +8055,8 @@ bubble.}
 \end{table}
 
 Each such pair costs one cycle that is visible in the execution
-time. If the load misses the cache, the whole pipeline waits for the data, and
-the wait is the miss latency. The time that a program takes depends
+time. When the load is a cache miss, every stage stalls until the data arrive,
+and the stall lasts as long as the miss. The time that a program takes depends
 on the addresses it loads from even before any speculation is involved.
 
 \section{A mispredicted branch}
@@ -8014,9 +8067,9 @@ two cycles, and the two discarded instructions got no further than decode. The
 window exists but is too short to be used, because on this machine a wrong-path
 load never reaches the memory stage and so cannot touch the data cache.
 
-\section{The speculation window of an out-of-order core}
+\section{Bounding the speculation window}
 
-In an out-of-order core\index{out-of-order execution} the distance between the stage that fetches and the\index{speculation window!bound}
+Once execution is out of order,\index{out-of-order execution} the distance between the stage that fetches and the\index{speculation window!bound}
 point where a branch is resolved is not fixed. Let a mispredicted branch be
 dispatched into the reorder buffer\index{reorder buffer (ROB)} at time $t_d$ and resolved at $t_r$. From
 $t_d$ until $t_r$ the front end keeps delivering instructions along the
@@ -8047,11 +8100,11 @@ deliver 180 or 880 instructions in that time, so the reorder buffer becomes the
 limit, and $R = 128$ instructions enter the window.
 
 These two cases explain the two regimes of \Cref{fig:window}. In \code{bsearch}
-every branch compares a freshly loaded key, and the number of transient
-instructions grows with the reorder buffer up to the point where the kernel's
-own loop structure limits it. For \code{strsearch} and \code{heapsort}, whose mispredicted branches wait
-mostly for first-level hits, the curves flatten early, because the time to
-resolve the branch and not the buffer is the constraint.
+every branch compares a freshly loaded key, so a larger reorder buffer admits
+more transient instructions until the kernel's
+own loop structure sets the limit. For \code{strsearch} and \code{heapsort}, whose mispredicted branches wait
+mostly for first-level hits, the curves flatten early, because there the branch
+resolves before the buffer can fill.
 
 \section{The always-mispredicted branch in the model}
 
@@ -8088,8 +8141,8 @@ then mispredicted once per execution instead of twice.
 \section{Indexing with history}
 
 A \emph{bimodal} predictor, which picks a counter using only the low bits of
-the PC, gives each branch a single counter and cannot learn patterns. \emph{gshare} instead XORs the PC with a global history\index{branch prediction!gshare}
-register, a shift register of the latest branch outcomes, and uses the result
+the PC, gives each branch a single counter and cannot learn patterns. \emph{gshare} instead keeps the outcomes of the most recent branches in a shift register,\index{branch prediction!gshare}
+XORs this global history with the PC, and uses the result
 as the index~\citep{mcfarling1993combining}. A branch then has a
 different counter for each recent history, so an alternating branch, or one
 correlated with an earlier branch, becomes predictable. \Cref{tab:predictor}
@@ -8362,8 +8415,8 @@ private caches of different cores even when the data arrays are not
 inclusive~\citep{yan2019attack}.
 
 In the open RISC-V ecosystem the cores generated by Rocket\index{Rocket core}
-Chip~\citep{asanovic2016rocket} communicate with the rest of the system over
-the TileLink interconnect, whose cached variant implements this kind of
+Chip~\citep{asanovic2016rocket} are attached to memory and peripherals by
+TileLink, an interconnect whose cached variant implements this kind of
 permission transfer between a cache and its parent. A cache acquires read or
 write permission on a block, and the parent probes other holders to revoke
 theirs. The states and costs of \Cref{tab:mesi} apply to those
@@ -8840,9 +8893,9 @@ fetch.
 \section{The wrong path}
 
 When the prediction for a branch or an indirect jump turns out wrong, the\index{model study!wrong-path execution}
-simulator first executes the wrong path explicitly and then continues on the
-correct one. It
-copies the architectural registers and the register-ready times into scratch
+simulator runs the mispredicted path instruction by instruction before it
+resumes the right one. It
+saves the architectural registers and the register-ready times in scratch
 arrays, starts at the predicted target, and executes instructions
 functionally, with stores going to a private buffer that later wrong-path loads
 consult. Each wrong-path instruction is dispatched in the slot it would have
@@ -8886,7 +8939,7 @@ residue counts. The driver, \code{run\_study.py} (\Cref{app:source}), collects t
 files from which every table and plot of the study is generated.
 
 
-\chapter{Validation of the Model}
+\chapter{Verification of the Model}
 \label{app:validation}
 
 \Cref{sec:validation} summarized three checks. This appendix gives the method
@@ -8895,7 +8948,7 @@ page-frame layout.
 
 \section{Functional agreement}
 
-Each kernel returns a 64-bit checksum from \code{main}. The start-up code of\index{model study!functional validation}
+Each kernel returns a 64-bit checksum from \code{main}. The start-up code of\index{model study!functional verification}
 \Cref{lst:crt} prints it as sixteen hexadecimal digits on the serial port and
 switches the machine off. The checksum is obtained in three ways.
 
@@ -8925,7 +8978,7 @@ well as on their sum, so that an error is unlikely to cancel.
 
 \section{Timing against hand derivation}
 
-The timing rules are checked against costs that are derived by hand from the\index{model study!timing validation}
+The timing rules are checked against costs that are derived by hand from the\index{model study!timing verification}
 rules of \Cref{app:model,app:specdef} before a test is run. Most tests are
 differential, in that a small loop is run for $n$ and for $2n$ iterations and the
 difference in cycle count divided by $n$ is the steady-state cost of one
@@ -9066,8 +9119,8 @@ divide and is always mispredicted. Fetch restarts one cycle after the branch
 resolves and the three instructions of the loop are dispatched four cycles
 later. The divide issues in the next cycle and takes twenty, and the decrement
 and the branch take one each: $1 + 4 + 23 = 28$ cycles. The wrong path begins
-with a load of a line that is in the second-level cache and not in the first,
-and that load completes long before the branch resolves. Undo rolls its fill
+with a load whose line the first level lacks and the second level holds,
+and it completes long before the branch resolves. Undo rolls its fill
 back before fetch restarts, which takes one second-level latency for every
 four fills: $28 + 14 = 42$ cycles with one such load and $28 + 2 \times 14 = 56$
 with five.
@@ -9471,16 +9524,651 @@ additional cycles per switch at \num{100000} instructions.\label{tab:domainsfull
 %% END GENERATED tab_domains_full
 }
 
+\section{Transient footprint of every kernel}
+
+\Cref{tab:footprint} gives the transient activity under each mechanism as a sum
+over the kernels. \Cref{tab:footprintfull} gives the same seven counts for each
+kernel under the Spectre model, and \Cref{tab:footprintfut} gives them under the
+Futuristic model. The columns are, in order, the transient loads executed, the
+first-level fills they left behind, the dependent transient loads executed, the
+fills those left behind, the fills hidden or rolled back, the committed loads
+delayed and the second accesses made by the invisible schemes.
+
+{\footnotesize\setlength{\tabcolsep}{3.6pt}%
+\setlength{\LTcapwidth}{\linewidth}
+\def\LTcaption{\caption[Transient footprint of every kernel, Spectre model]{Transient
+activity of every kernel under each modeled defense, Spectre model. The columns
+correspond to the rows of \Cref{tab:footprint}.\label{tab:footprintfull}}}
+%% BEGIN GENERATED tab_footprint_full_spectre
+\begin{longtable}{@{}llrrrrrrr@{}}
+\LTcaption\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Loads} & \textbf{Fills} & \textbf{Dep.\ loads} & \textbf{Dep.\ fills} & \textbf{Hidden} & \textbf{Delayed} & \textbf{Second} \\
+\midrule
+\endfirsthead
+\multicolumn{9}{@{}l}{\footnotesize\itshape \tablename~\thetable{} continued from previous page}\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Loads} & \textbf{Fills} & \textbf{Dep.\ loads} & \textbf{Dep.\ fills} & \textbf{Hidden} & \textbf{Delayed} & \textbf{Second} \\
+\midrule
+\endhead
+\midrule \multicolumn{9}{r@{}}{\footnotesize\itshape continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\tcode{matmul} & none & 8\,193 & 56 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 520\,134 & 0 \\
+ & DoM & 2\,559 & 0 & 0 & 0 & 0 & 383 & 0 \\
+ & Invis-E & 8\,193 & 0 & 0 & 0 & 5\,634 & 0 & 520\,134 \\
+ & Invis-V & 8\,193 & 0 & 0 & 0 & 5\,634 & 0 & 520\,134 \\
+ & Taint & 8\,193 & 56 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 8\,193 & 56 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 8\,193 & 0 & 0 & 0 & 5\,634 & 0 & 0 \\
+\addlinespace
+\tcode{heapsort} & none & 123\,324 & 13\,753 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 185\,836 & 0 \\
+ & DoM & 91\,986 & 0 & 0 & 0 & 0 & 5\,472 & 0 \\
+ & Invis-E & 121\,318 & 0 & 0 & 0 & 29\,497 & 0 & 123\,749 \\
+ & Invis-V & 121\,289 & 0 & 0 & 0 & 29\,476 & 0 & 122\,000 \\
+ & Taint & 124\,802 & 14\,032 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 126\,105 & 14\,454 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 121\,318 & 0 & 0 & 0 & 29\,497 & 0 & 0 \\
+\addlinespace
+\tcode{listwalk} & none & 71 & 4 & 32 & 2 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 212\,131 & 0 \\
+ & DoM & 64 & 0 & 28 & 0 & 0 & 99\,270 & 0 \\
+ & Invis-E & 71 & 0 & 32 & 0 & 7 & 0 & 212\,130 \\
+ & Invis-V & 71 & 0 & 32 & 0 & 7 & 0 & 212\,130 \\
+ & Taint & 39 & 2 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 39 & 2 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 71 & 0 & 32 & 0 & 7 & 0 & 0 \\
+\addlinespace
+\tcode{bsearch} & none & 869\,529 & 422\,092 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 117\,770 & 0 \\
+ & DoM & 415\,636 & 0 & 0 & 0 & 0 & 84\,290 & 0 \\
+ & Invis-E & 819\,587 & 0 & 0 & 0 & 488\,460 & 0 & 127\,287 \\
+ & Invis-V & 819\,554 & 0 & 0 & 0 & 488\,431 & 0 & 127\,249 \\
+ & Taint & 944\,457 & 424\,923 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 951\,944 & 426\,603 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 819\,587 & 0 & 0 & 0 & 488\,460 & 0 & 0 \\
+\addlinespace
+\tcode{bstree} & none & 1\,032\,016 & 131 & 7\,189 & 131 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 857\,640 & 0 \\
+ & DoM & 1\,046\,177 & 0 & 6\,430 & 0 & 0 & 157\,229 & 0 \\
+ & Invis-E & 1\,031\,886 & 0 & 7\,069 & 0 & 619 & 0 & 858\,532 \\
+ & Invis-V & 1\,031\,886 & 0 & 7\,069 & 0 & 619 & 0 & 858\,532 \\
+ & Taint & 1\,074\,753 & 0 & 0 & 0 & 0 & 393\,453 & 0 \\
+ & NoFwd & 1\,075\,061 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 1\,031\,886 & 0 & 7\,069 & 0 & 619 & 0 & 0 \\
+\addlinespace
+\tcode{crc32} & none & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 8 & 0 \\
+ & DoM & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & Invis-E & 1 & 0 & 0 & 0 & 1 & 0 & 8 \\
+ & Invis-V & 1 & 0 & 0 & 0 & 1 & 0 & 8 \\
+ & Taint & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+\addlinespace
+\tcode{sieve} & none & 68\,678 & 1\,109 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 181\,389 & 0 \\
+ & DoM & 71\,610 & 0 & 0 & 0 & 0 & 2\,590 & 0 \\
+ & Invis-E & 70\,834 & 0 & 0 & 0 & 2\,386 & 0 & 181\,387 \\
+ & Invis-V & 70\,834 & 0 & 0 & 0 & 2\,386 & 0 & 181\,387 \\
+ & Taint & 68\,678 & 1\,109 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 73\,342 & 1\,109 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 70\,834 & 0 & 0 & 0 & 2\,386 & 0 & 0 \\
+\addlinespace
+\tcode{hashtab} & none & 383\,615 & 90\,287 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 198\,689 & 0 \\
+ & DoM & 132\,175 & 0 & 0 & 0 & 0 & 54\,337 & 0 \\
+ & Invis-E & 428\,597 & 0 & 0 & 0 & 305\,883 & 0 & 204\,167 \\
+ & Invis-V & 428\,231 & 0 & 0 & 0 & 305\,544 & 0 & 203\,968 \\
+ & Taint & 414\,174 & 97\,761 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 420\,790 & 101\,161 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 428\,631 & 0 & 0 & 0 & 305\,913 & 0 & 0 \\
+\addlinespace
+\tcode{stream} & none & 8 & 8 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 58\,033 & 0 \\
+ & DoM & 0 & 0 & 0 & 0 & 0 & 6\,142 & 0 \\
+ & Invis-E & 8 & 0 & 0 & 0 & 8 & 0 & 58\,033 \\
+ & Invis-V & 8 & 0 & 0 & 0 & 8 & 0 & 58\,033 \\
+ & Taint & 8 & 8 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 8 & 8 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 8 & 0 & 0 & 0 & 8 & 0 & 0 \\
+\addlinespace
+\tcode{fibcall} & none & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 224\,946 & 0 \\
+ & DoM & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & Invis-E & 0 & 0 & 0 & 0 & 0 & 0 & 224\,946 \\
+ & Invis-V & 0 & 0 & 0 & 0 & 0 & 0 & 224\,946 \\
+ & Taint & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\addlinespace
+\tcode{strsearch} & none & 41\,687 & 267 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 223\,840 & 0 \\
+ & DoM & 41\,831 & 0 & 0 & 0 & 0 & 1\,165 & 0 \\
+ & Invis-E & 41\,964 & 0 & 0 & 0 & 344 & 0 & 223\,840 \\
+ & Invis-V & 41\,964 & 0 & 0 & 0 & 344 & 0 & 223\,840 \\
+ & Taint & 41\,687 & 267 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 41\,993 & 267 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 41\,964 & 0 & 0 & 0 & 344 & 0 & 0 \\
+\end{longtable}
+%% END GENERATED tab_footprint_full_spectre
+}
+
+{\footnotesize\setlength{\tabcolsep}{3.6pt}%
+\setlength{\LTcapwidth}{\linewidth}
+\def\LTcaption{\caption[Transient footprint of every kernel, Futuristic model]{Transient
+activity of every kernel under each modeled defense, Futuristic model. The
+columns are those of \Cref{tab:footprintfull}.\label{tab:footprintfut}}}
+%% BEGIN GENERATED tab_footprint_full_futuristic
+\begin{longtable}{@{}llrrrrrrr@{}}
+\LTcaption\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Loads} & \textbf{Fills} & \textbf{Dep.\ loads} & \textbf{Dep.\ fills} & \textbf{Hidden} & \textbf{Delayed} & \textbf{Second} \\
+\midrule
+\endfirsthead
+\multicolumn{9}{@{}l}{\footnotesize\itshape \tablename~\thetable{} continued from previous page}\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Loads} & \textbf{Fills} & \textbf{Dep.\ loads} & \textbf{Dep.\ fills} & \textbf{Hidden} & \textbf{Delayed} & \textbf{Second} \\
+\midrule
+\endhead
+\midrule \multicolumn{9}{r@{}}{\footnotesize\itshape continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\tcode{matmul} & none & 8\,193 & 56 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 528\,369 & 0 \\
+ & DoM & 2\,559 & 0 & 0 & 0 & 0 & 433 & 0 \\
+ & Invis-E & 8\,193 & 0 & 0 & 0 & 5\,634 & 0 & 524\,315 \\
+ & Invis-V & 8\,193 & 0 & 0 & 0 & 5\,634 & 0 & 524\,315 \\
+ & Taint & 8\,193 & 56 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 8\,193 & 56 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 8\,193 & 0 & 0 & 0 & 5\,634 & 0 & 0 \\
+\addlinespace
+\tcode{heapsort} & none & 123\,324 & 13\,753 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 232\,638 & 0 \\
+ & DoM & 92\,008 & 0 & 0 & 0 & 0 & 6\,201 & 0 \\
+ & Invis-E & 121\,318 & 0 & 0 & 0 & 29\,497 & 0 & 179\,426 \\
+ & Invis-V & 121\,268 & 0 & 0 & 0 & 29\,458 & 0 & 175\,474 \\
+ & Taint & 125\,452 & 14\,032 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 126\,813 & 14\,455 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 121\,318 & 0 & 0 & 0 & 29\,497 & 0 & 0 \\
+\addlinespace
+\tcode{listwalk} & none & 71 & 4 & 32 & 2 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 262\,115 & 0 \\
+ & DoM & 64 & 0 & 28 & 0 & 0 & 102\,466 & 0 \\
+ & Invis-E & 71 & 0 & 32 & 0 & 7 & 0 & 253\,160 \\
+ & Invis-V & 71 & 0 & 32 & 0 & 7 & 0 & 251\,852 \\
+ & Taint & 39 & 2 & 0 & 0 & 0 & 196\,556 & 0 \\
+ & NoFwd & 39 & 2 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 71 & 0 & 32 & 0 & 7 & 0 & 0 \\
+\addlinespace
+\tcode{bsearch} & none & 869\,529 & 422\,092 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 133\,144 & 0 \\
+ & DoM & 415\,636 & 0 & 0 & 0 & 0 & 84\,290 & 0 \\
+ & Invis-E & 819\,587 & 0 & 0 & 0 & 488\,460 & 0 & 141\,850 \\
+ & Invis-V & 819\,554 & 0 & 0 & 0 & 488\,431 & 0 & 141\,811 \\
+ & Taint & 944\,457 & 424\,923 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 951\,944 & 426\,603 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 819\,587 & 0 & 0 & 0 & 488\,460 & 0 & 0 \\
+\addlinespace
+\tcode{bstree} & none & 1\,032\,016 & 131 & 7\,189 & 131 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 895\,693 & 0 \\
+ & DoM & 1\,046\,177 & 0 & 6\,430 & 0 & 0 & 157\,229 & 0 \\
+ & Invis-E & 1\,031\,886 & 0 & 7\,069 & 0 & 619 & 0 & 896\,441 \\
+ & Invis-V & 1\,031\,886 & 0 & 7\,069 & 0 & 619 & 0 & 896\,441 \\
+ & Taint & 1\,074\,755 & 0 & 0 & 0 & 0 & 393\,453 & 0 \\
+ & NoFwd & 1\,075\,061 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 1\,031\,886 & 0 & 7\,069 & 0 & 619 & 0 & 0 \\
+\addlinespace
+\tcode{crc32} & none & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 262\,144 & 0 \\
+ & DoM & 0 & 0 & 0 & 0 & 0 & 4\,096 & 0 \\
+ & Invis-E & 1 & 0 & 0 & 0 & 1 & 0 & 262\,144 \\
+ & Invis-V & 1 & 0 & 0 & 0 & 1 & 0 & 262\,144 \\
+ & Taint & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 1 & 1 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+\addlinespace
+\tcode{sieve} & none & 68\,678 & 1\,109 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 181\,389 & 0 \\
+ & DoM & 71\,610 & 0 & 0 & 0 & 0 & 2\,590 & 0 \\
+ & Invis-E & 70\,834 & 0 & 0 & 0 & 2\,386 & 0 & 181\,387 \\
+ & Invis-V & 70\,834 & 0 & 0 & 0 & 2\,386 & 0 & 181\,387 \\
+ & Taint & 68\,678 & 1\,109 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 73\,342 & 1\,109 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 70\,834 & 0 & 0 & 0 & 2\,386 & 0 & 0 \\
+\addlinespace
+\tcode{hashtab} & none & 383\,615 & 90\,287 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 198\,974 & 0 \\
+ & DoM & 132\,193 & 0 & 0 & 0 & 0 & 54\,348 & 0 \\
+ & Invis-E & 428\,597 & 0 & 0 & 0 & 305\,883 & 0 & 204\,298 \\
+ & Invis-V & 428\,230 & 0 & 0 & 0 & 305\,543 & 0 & 204\,096 \\
+ & Taint & 414\,659 & 97\,898 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 421\,375 & 101\,278 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 428\,631 & 0 & 0 & 0 & 305\,913 & 0 & 0 \\
+\addlinespace
+\tcode{stream} & none & 8 & 8 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 344\,062 & 0 \\
+ & DoM & 0 & 0 & 0 & 0 & 0 & 43\,006 & 0 \\
+ & Invis-E & 8 & 0 & 0 & 0 & 8 & 0 & 344\,052 \\
+ & Invis-V & 8 & 0 & 0 & 0 & 8 & 0 & 335\,444 \\
+ & Taint & 8 & 8 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 8 & 8 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 8 & 0 & 0 & 0 & 8 & 0 & 0 \\
+\addlinespace
+\tcode{fibcall} & none & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 364\,177 & 0 \\
+ & DoM & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & Invis-E & 0 & 0 & 0 & 0 & 0 & 0 & 364\,176 \\
+ & Invis-V & 0 & 0 & 0 & 0 & 0 & 0 & 364\,176 \\
+ & Taint & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+\addlinespace
+\tcode{strsearch} & none & 41\,687 & 267 & 0 & 0 & 0 & 0 & 0 \\
+ & NoSpecLoad & 0 & 0 & 0 & 0 & 0 & 271\,876 & 0 \\
+ & DoM & 41\,831 & 0 & 0 & 0 & 0 & 1\,166 & 0 \\
+ & Invis-E & 41\,964 & 0 & 0 & 0 & 344 & 0 & 271\,867 \\
+ & Invis-V & 41\,964 & 0 & 0 & 0 & 344 & 0 & 271\,867 \\
+ & Taint & 41\,687 & 267 & 0 & 0 & 0 & 0 & 0 \\
+ & NoFwd & 41\,993 & 267 & 0 & 0 & 0 & 0 & 0 \\
+ & Undo & 41\,964 & 0 & 0 & 0 & 344 & 0 & 0 \\
+\end{longtable}
+%% END GENERATED tab_footprint_full_futuristic
+}
+
+\section{Accesses at each level for every kernel}
+
+\Cref{tab:traffic} reports the change in hierarchy traffic as a percentage of
+the undefended sum. \Cref{tab:trafficfull,tab:trafficfut} give the counts
+behind it for the two attack models: the cycles of each run and the number of
+accesses at each level of the hierarchy. Invisible and rolled-back accesses
+are counted at the levels they reach.
+
+{\footnotesize
+\setlength{\LTcapwidth}{\linewidth}
+\def\LTcaption{\caption[Cycles and hierarchy accesses of every kernel, Spectre model]{Cycles
+and accesses at each level of the hierarchy for every kernel under each modeled
+defense, Spectre model.\label{tab:trafficfull}}}
+%% BEGIN GENERATED tab_traffic_full_spectre
+\begin{longtable}{@{}llrrrrr@{}}
+\LTcaption\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Cycles} & \textbf{First level} & \textbf{Second level} & \textbf{Last level} & \textbf{Memory} \\
+\midrule
+\endfirsthead
+\multicolumn{7}{@{}l}{\footnotesize\itshape \tablename~\thetable{} continued from previous page}\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Cycles} & \textbf{First level} & \textbf{Second level} & \textbf{Last level} & \textbf{Memory} \\
+\midrule
+\endhead
+\midrule \multicolumn{7}{r@{}}{\footnotesize\itshape continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\tcode{matmul} & none & 605\,057 & 548\,904 & 1\,236 & 779 & 779 \\
+ & NoSpecLoad & 605\,062 & 540\,708 & 1\,219 & 778 & 778 \\
+ & DoM & 605\,062 & 543\,267 & 1\,219 & 778 & 778 \\
+ & Invis-E & 605\,061 & 1\,069\,035 & 7\,236 & 783 & 783 \\
+ & Invis-V & 605\,061 & 1\,069\,035 & 7\,236 & 783 & 783 \\
+ & Taint & 605\,057 & 548\,904 & 1\,236 & 779 & 779 \\
+ & NoFwd & 605\,057 & 548\,904 & 1\,236 & 779 & 779 \\
+ & Undo & 605\,061 & 548\,901 & 6\,853 & 783 & 783 \\
+\addlinespace
+\tcode{heapsort} & none & 1\,346\,318 & 613\,671 & 24\,609 & 4\,565 & 4\,049 \\
+ & NoSpecLoad & 1\,577\,599 & 511\,735 & 9\,925 & 1\,036 & 1\,036 \\
+ & DoM & 1\,355\,967 & 572\,100 & 9\,925 & 1\,036 & 1\,036 \\
+ & Invis-E & 1\,342\,662 & 725\,470 & 44\,884 & 17\,796 & 17\,796 \\
+ & Invis-V & 1\,342\,585 & 722\,649 & 44\,831 & 17\,784 & 17\,784 \\
+ & Taint & 1\,349\,103 & 615\,327 & 24\,882 & 4\,649 & 4\,104 \\
+ & NoFwd & 1\,350\,985 & 617\,214 & 25\,347 & 4\,879 & 4\,252 \\
+ & Undo & 1\,343\,824 & 601\,721 & 39\,422 & 17\,796 & 17\,796 \\
+\addlinespace
+\tcode{listwalk} & none & 5\,683\,653 & 636\,128 & 120\,256 & 116\,580 & 17\,716 \\
+ & NoSpecLoad & 5\,783\,561 & 636\,051 & 120\,254 & 116\,578 & 17\,716 \\
+ & DoM & 5\,783\,297 & 636\,115 & 120\,254 & 116\,578 & 17\,716 \\
+ & Invis-E & 5\,683\,667 & 848\,252 & 219\,531 & 215\,669 & 17\,716 \\
+ & Invis-V & 5\,683\,667 & 848\,252 & 219\,531 & 215\,669 & 17\,716 \\
+ & Taint & 5\,683\,667 & 636\,096 & 120\,256 & 116\,580 & 17\,716 \\
+ & NoFwd & 5\,683\,667 & 636\,096 & 120\,256 & 116\,580 & 17\,716 \\
+ & Undo & 5\,683\,667 & 636\,122 & 120\,261 & 116\,585 & 17\,716 \\
+\addlinespace
+\tcode{bsearch} & none & 5\,378\,415 & 1\,578\,354 & 636\,300 & 226\,194 & 8\,218 \\
+ & NoSpecLoad & 7\,628\,012 & 453\,576 & 178\,667 & 80\,141 & 8\,217 \\
+ & DoM & 7\,382\,436 & 869\,212 & 178\,667 & 80\,141 & 8\,217 \\
+ & Invis-E & 5\,191\,045 & 1\,400\,450 & 752\,652 & 357\,487 & 8\,749 \\
+ & Invis-V & 5\,192\,534 & 1\,400\,379 & 752\,597 & 357\,469 & 8\,749 \\
+ & Taint & 5\,678\,487 & 1\,653\,228 & 639\,020 & 227\,054 & 8\,218 \\
+ & NoFwd & 5\,717\,583 & 1\,660\,682 & 640\,685 & 227\,071 & 8\,218 \\
+ & Undo & 5\,751\,451 & 1\,273\,163 & 663\,257 & 320\,766 & 8\,749 \\
+\addlinespace
+\tcode{bstree} & none & 9\,476\,276 & 2\,558\,592 & 186\,900 & 14\,488 & 4\,114 \\
+ & NoSpecLoad & 11\,806\,961 & 1\,526\,365 & 186\,776 & 14\,479 & 4\,114 \\
+ & DoM & 9\,652\,104 & 2\,572\,540 & 186\,776 & 14\,479 & 4\,114 \\
+ & Invis-E & 9\,475\,869 & 3\,416\,781 & 340\,147 & 24\,141 & 4\,114 \\
+ & Invis-V & 9\,475\,871 & 3\,416\,781 & 340\,147 & 24\,141 & 4\,114 \\
+ & Taint & 9\,766\,159 & 2\,601\,118 & 186\,776 & 14\,479 & 4\,114 \\
+ & NoFwd & 9\,855\,781 & 2\,601\,426 & 186\,776 & 14\,479 & 4\,114 \\
+ & Undo & 9\,476\,723 & 2\,558\,249 & 187\,354 & 14\,487 & 4\,114 \\
+\addlinespace
+\tcode{crc32} & none & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+ & NoSpecLoad & 2\,510\,733 & 557\,702 & 8\,250 & 6\,265 & 4\,129 \\
+ & DoM & 2\,510\,733 & 557\,702 & 8\,250 & 6\,265 & 4\,129 \\
+ & Invis-E & 2\,510\,733 & 557\,711 & 8\,251 & 6\,266 & 4\,130 \\
+ & Invis-V & 2\,510\,733 & 557\,711 & 8\,251 & 6\,266 & 4\,130 \\
+ & Taint & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+ & NoFwd & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+ & Undo & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+\addlinespace
+\tcode{sieve} & none & 1\,030\,691 & 675\,346 & 113\,310 & 18\,955 & 3\,139 \\
+ & NoSpecLoad & 1\,607\,797 & 606\,668 & 113\,306 & 18\,954 & 3\,138 \\
+ & DoM & 1\,039\,071 & 678\,278 & 113\,306 & 18\,954 & 3\,138 \\
+ & Invis-E & 1\,034\,366 & 858\,889 & 118\,280 & 19\,826 & 3\,141 \\
+ & Invis-V & 1\,034\,391 & 858\,889 & 118\,280 & 19\,826 & 3\,141 \\
+ & Taint & 1\,030\,701 & 675\,346 & 113\,310 & 18\,955 & 3\,139 \\
+ & NoFwd & 1\,037\,491 & 680\,010 & 113\,310 & 18\,955 & 3\,139 \\
+ & Undo & 1\,034\,366 & 677\,502 & 115\,692 & 19\,349 & 3\,141 \\
+\addlinespace
+\tcode{hashtab} & none & 4\,075\,219 & 847\,998 & 193\,812 & 34\,303 & 4\,114 \\
+ & NoSpecLoad & 6\,320\,634 & 462\,271 & 119\,436 & 18\,807 & 4\,114 \\
+ & DoM & 5\,653\,066 & 594\,446 & 119\,436 & 18\,807 & 4\,114 \\
+ & Invis-E & 4\,312\,546 & 1\,095\,031 & 477\,421 & 92\,239 & 9\,831 \\
+ & Invis-V & 4\,324\,590 & 1\,094\,466 & 476\,976 & 92\,128 & 9\,800 \\
+ & Taint & 4\,272\,568 & 878\,761 & 199\,428 & 35\,231 & 4\,114 \\
+ & NoFwd & 4\,317\,294 & 885\,413 & 201\,351 & 35\,383 & 4\,114 \\
+ & Undo & 4\,684\,250 & 890\,898 & 422\,246 & 83\,708 & 9\,837 \\
+\addlinespace
+\tcode{stream} & none & 1\,196\,215 & 740\,762 & 73\,892 & 73\,828 & 20\,782 \\
+ & NoSpecLoad & 1\,196\,256 & 740\,736 & 73\,886 & 73\,822 & 20\,780 \\
+ & DoM & 1\,196\,256 & 740\,736 & 73\,886 & 73\,822 & 20\,780 \\
+ & Invis-E & 1\,196\,243 & 798\,777 & 80\,036 & 79\,908 & 20\,786 \\
+ & Invis-V & 1\,196\,243 & 798\,777 & 80\,036 & 79\,908 & 20\,786 \\
+ & Taint & 1\,196\,215 & 740\,762 & 73\,892 & 73\,828 & 20\,782 \\
+ & NoFwd & 1\,196\,215 & 740\,762 & 73\,892 & 73\,828 & 20\,782 \\
+ & Undo & 1\,196\,243 & 740\,744 & 73\,894 & 73\,830 & 20\,786 \\
+\addlinespace
+\tcode{fibcall} & none & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & NoSpecLoad & 1\,101\,482 & 724\,178 & 19 & 19 & 19 \\
+ & DoM & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & Invis-E & 1\,052\,490 & 953\,303 & 19 & 19 & 19 \\
+ & Invis-V & 1\,052\,490 & 953\,303 & 19 & 19 & 19 \\
+ & Taint & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & NoFwd & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & Undo & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+\addlinespace
+\tcode{strsearch} & none & 1\,484\,894 & 481\,637 & 3\,763 & 1\,888 & 1\,888 \\
+ & NoSpecLoad & 1\,697\,319 & 439\,950 & 3\,763 & 1\,888 & 1\,888 \\
+ & DoM & 1\,488\,012 & 481\,781 & 3\,763 & 1\,888 & 1\,888 \\
+ & Invis-E & 1\,486\,226 & 705\,754 & 5\,272 & 1\,888 & 1\,888 \\
+ & Invis-V & 1\,486\,226 & 705\,754 & 5\,272 & 1\,888 & 1\,888 \\
+ & Taint & 1\,484\,894 & 481\,637 & 3\,763 & 1\,888 & 1\,888 \\
+ & NoFwd & 1\,486\,326 & 481\,943 & 3\,763 & 1\,888 & 1\,888 \\
+ & Undo & 1\,486\,226 & 481\,914 & 4\,107 & 1\,888 & 1\,888 \\
+\end{longtable}
+%% END GENERATED tab_traffic_full_spectre
+}
+
+{\footnotesize
+\setlength{\LTcapwidth}{\linewidth}
+\def\LTcaption{\caption[Cycles and hierarchy accesses of every kernel, Futuristic model]{Cycles
+and accesses at each level of the hierarchy for every kernel under each modeled
+defense, Futuristic model.\label{tab:trafficfut}}}
+%% BEGIN GENERATED tab_traffic_full_futuristic
+\begin{longtable}{@{}llrrrrr@{}}
+\LTcaption\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Cycles} & \textbf{First level} & \textbf{Second level} & \textbf{Last level} & \textbf{Memory} \\
+\midrule
+\endfirsthead
+\multicolumn{7}{@{}l}{\footnotesize\itshape \tablename~\thetable{} continued from previous page}\\
+\toprule
+\textbf{Kernel} & \textbf{Mechanism} & \textbf{Cycles} & \textbf{First level} & \textbf{Second level} & \textbf{Last level} & \textbf{Memory} \\
+\midrule
+\endhead
+\midrule \multicolumn{7}{r@{}}{\footnotesize\itshape continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\tcode{matmul} & none & 605\,057 & 548\,904 & 1\,236 & 779 & 779 \\
+ & NoSpecLoad & 3\,193\,094 & 540\,708 & 1\,219 & 778 & 778 \\
+ & DoM & 607\,663 & 543\,267 & 1\,219 & 778 & 778 \\
+ & Invis-E & 605\,061 & 1\,073\,216 & 7\,286 & 783 & 783 \\
+ & Invis-V & 605\,061 & 1\,073\,216 & 7\,286 & 783 & 783 \\
+ & Taint & 605\,057 & 548\,904 & 1\,236 & 779 & 779 \\
+ & NoFwd & 1\,087\,745 & 548\,904 & 1\,236 & 779 & 779 \\
+ & Undo & 605\,061 & 548\,901 & 6\,853 & 783 & 783 \\
+\addlinespace
+\tcode{heapsort} & none & 1\,346\,318 & 613\,671 & 24\,609 & 4\,565 & 4\,049 \\
+ & NoSpecLoad & 2\,043\,215 & 512\,443 & 9\,925 & 1\,036 & 1\,036 \\
+ & DoM & 1\,368\,054 & 571\,884 & 9\,925 & 1\,036 & 1\,036 \\
+ & Invis-E & 1\,342\,662 & 781\,147 & 45\,610 & 17\,796 & 17\,796 \\
+ & Invis-V & 1\,342\,506 & 773\,678 & 45\,528 & 17\,774 & 17\,774 \\
+ & Taint & 1\,349\,912 & 615\,979 & 24\,882 & 4\,649 & 4\,104 \\
+ & NoFwd & 1\,368\,305 & 617\,924 & 25\,348 & 4\,879 & 4\,252 \\
+ & Undo & 1\,343\,824 & 601\,721 & 39\,422 & 17\,796 & 17\,796 \\
+\addlinespace
+\tcode{listwalk} & none & 5\,683\,653 & 636\,128 & 120\,256 & 116\,580 & 17\,716 \\
+ & NoSpecLoad & 6\,561\,625 & 636\,115 & 120\,254 & 116\,578 & 17\,716 \\
+ & DoM & 5\,810\,915 & 636\,113 & 120\,254 & 116\,578 & 17\,716 \\
+ & Invis-E & 5\,683\,667 & 889\,282 & 222\,715 & 215\,669 & 17\,716 \\
+ & Invis-V & 5\,691\,772 & 887\,973 & 222\,505 & 215\,669 & 17\,716 \\
+ & Taint & 5\,784\,777 & 636\,096 & 120\,256 & 116\,580 & 17\,716 \\
+ & NoFwd & 5\,819\,273 & 636\,096 & 120\,256 & 116\,580 & 17\,716 \\
+ & Undo & 5\,683\,667 & 636\,122 & 120\,261 & 116\,585 & 17\,716 \\
+\addlinespace
+\tcode{bsearch} & none & 5\,378\,415 & 1\,578\,354 & 636\,300 & 226\,194 & 8\,218 \\
+ & NoSpecLoad & 7\,690\,080 & 453\,576 & 178\,667 & 80\,141 & 8\,217 \\
+ & DoM & 7\,382\,436 & 869\,212 & 178\,667 & 80\,141 & 8\,217 \\
+ & Invis-E & 5\,191\,045 & 1\,415\,013 & 752\,652 & 357\,487 & 8\,749 \\
+ & Invis-V & 5\,192\,534 & 1\,414\,941 & 752\,597 & 357\,469 & 8\,749 \\
+ & Taint & 5\,678\,487 & 1\,653\,228 & 639\,020 & 227\,054 & 8\,218 \\
+ & NoFwd & 5\,717\,583 & 1\,660\,682 & 640\,685 & 227\,071 & 8\,218 \\
+ & Undo & 5\,751\,451 & 1\,273\,163 & 663\,257 & 320\,766 & 8\,749 \\
+\addlinespace
+\tcode{bstree} & none & 9\,476\,276 & 2\,558\,592 & 186\,900 & 14\,488 & 4\,114 \\
+ & NoSpecLoad & 11\,935\,298 & 1\,526\,365 & 186\,776 & 14\,479 & 4\,114 \\
+ & DoM & 9\,652\,104 & 2\,572\,540 & 186\,776 & 14\,479 & 4\,114 \\
+ & Invis-E & 9\,475\,869 & 3\,454\,690 & 340\,147 & 24\,141 & 4\,114 \\
+ & Invis-V & 9\,475\,871 & 3\,454\,690 & 340\,147 & 24\,141 & 4\,114 \\
+ & Taint & 9\,766\,162 & 2\,601\,120 & 186\,776 & 14\,479 & 4\,114 \\
+ & NoFwd & 9\,855\,788 & 2\,601\,426 & 186\,776 & 14\,479 & 4\,114 \\
+ & Undo & 9\,476\,723 & 2\,558\,249 & 187\,354 & 14\,487 & 4\,114 \\
+\addlinespace
+\tcode{crc32} & none & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+ & NoSpecLoad & 3\,667\,319 & 557\,702 & 8\,250 & 6\,265 & 4\,129 \\
+ & DoM & 2\,635\,127 & 557\,702 & 8\,250 & 6\,265 & 4\,129 \\
+ & Invis-E & 2\,510\,733 & 819\,847 & 12\,347 & 8\,402 & 4\,130 \\
+ & Invis-V & 2\,510\,733 & 819\,847 & 12\,347 & 8\,402 & 4\,130 \\
+ & Taint & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+ & NoFwd & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+ & Undo & 2\,510\,733 & 557\,703 & 8\,251 & 6\,266 & 4\,130 \\
+\addlinespace
+\tcode{sieve} & none & 1\,030\,691 & 675\,346 & 113\,310 & 18\,955 & 3\,139 \\
+ & NoSpecLoad & 1\,607\,797 & 606\,668 & 113\,306 & 18\,954 & 3\,138 \\
+ & DoM & 1\,039\,071 & 678\,278 & 113\,306 & 18\,954 & 3\,138 \\
+ & Invis-E & 1\,034\,366 & 858\,889 & 118\,280 & 19\,826 & 3\,141 \\
+ & Invis-V & 1\,034\,391 & 858\,889 & 118\,280 & 19\,826 & 3\,141 \\
+ & Taint & 1\,030\,701 & 675\,346 & 113\,310 & 18\,955 & 3\,139 \\
+ & NoFwd & 1\,037\,491 & 680\,010 & 113\,310 & 18\,955 & 3\,139 \\
+ & Undo & 1\,034\,366 & 677\,502 & 115\,692 & 19\,349 & 3\,141 \\
+\addlinespace
+\tcode{hashtab} & none & 4\,075\,219 & 847\,998 & 193\,812 & 34\,303 & 4\,114 \\
+ & NoSpecLoad & 6\,357\,884 & 462\,271 & 119\,436 & 18\,807 & 4\,114 \\
+ & DoM & 5\,658\,767 & 594\,464 & 119\,436 & 18\,807 & 4\,114 \\
+ & Invis-E & 4\,312\,546 & 1\,095\,162 & 477\,518 & 92\,249 & 9\,831 \\
+ & Invis-V & 4\,324\,678 & 1\,094\,593 & 477\,071 & 92\,138 & 9\,800 \\
+ & Taint & 4\,274\,422 & 879\,258 & 199\,552 & 35\,241 & 4\,114 \\
+ & NoFwd & 4\,320\,566 & 885\,998 & 201\,427 & 35\,393 & 4\,114 \\
+ & Undo & 4\,684\,250 & 890\,898 & 422\,246 & 83\,708 & 9\,837 \\
+\addlinespace
+\tcode{stream} & none & 1\,196\,215 & 740\,762 & 73\,892 & 73\,828 & 20\,782 \\
+ & NoSpecLoad & 4\,375\,313 & 740\,736 & 73\,886 & 73\,822 & 20\,780 \\
+ & DoM & 2\,655\,194 & 740\,736 & 73\,886 & 73\,822 & 20\,780 \\
+ & Invis-E & 1\,196\,243 & 1\,084\,796 & 116\,898 & 116\,770 & 20\,786 \\
+ & Invis-V & 1\,552\,772 & 1\,076\,188 & 116\,898 & 116\,770 & 20\,786 \\
+ & Taint & 1\,196\,215 & 740\,762 & 73\,892 & 73\,828 & 20\,782 \\
+ & NoFwd & 1\,242\,802 & 740\,762 & 73\,892 & 73\,828 & 20\,782 \\
+ & Undo & 1\,196\,243 & 740\,744 & 73\,894 & 73\,830 & 20\,786 \\
+\addlinespace
+\tcode{fibcall} & none & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & NoSpecLoad & 1\,541\,327 & 627\,286 & 19 & 19 & 19 \\
+ & DoM & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & Invis-E & 1\,052\,490 & 1\,092\,533 & 19 & 19 & 19 \\
+ & Invis-V & 1\,052\,490 & 1\,092\,533 & 19 & 19 & 19 \\
+ & Taint & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & NoFwd & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+ & Undo & 1\,052\,490 & 728\,357 & 19 & 19 & 19 \\
+\addlinespace
+\tcode{strsearch} & none & 1\,484\,894 & 481\,637 & 3\,763 & 1\,888 & 1\,888 \\
+ & NoSpecLoad & 2\,336\,952 & 439\,950 & 3\,763 & 1\,888 & 1\,888 \\
+ & DoM & 1\,488\,021 & 481\,781 & 3\,763 & 1\,888 & 1\,888 \\
+ & Invis-E & 1\,486\,226 & 753\,781 & 5\,273 & 1\,888 & 1\,888 \\
+ & Invis-V & 1\,486\,233 & 753\,781 & 5\,273 & 1\,888 & 1\,888 \\
+ & Taint & 1\,484\,894 & 481\,637 & 3\,763 & 1\,888 & 1\,888 \\
+ & NoFwd & 1\,486\,326 & 481\,943 & 3\,763 & 1\,888 & 1\,888 \\
+ & Undo & 1\,486\,226 & 481\,914 & 4\,107 & 1\,888 & 1\,888 \\
+\end{longtable}
+%% END GENERATED tab_traffic_full_futuristic
+}
+
+\section{Results for every page-frame layout}
+
+\Cref{tab:seeds} summarizes how much the page-frame layout changes the results.
+\Cref{tab:seedsfull} lists the five layouts one by one: the cycles and the
+accesses to memory of the undefended run, and the slowdown that delay-on-miss
+and taint tracking cause on the same layout.
+
+{\footnotesize
+\setlength{\LTcapwidth}{\linewidth}
+\def\LTcaption{\caption[Results for every page-frame layout]{Undefended cycle
+count and memory accesses of each kernel on each of the five page-frame layouts,
+with the slowdown in percent of two defenses on that layout.\label{tab:seedsfull}}}
+%% BEGIN GENERATED tab_seeds_full
+\begin{longtable}{@{}lrrrrr@{}}
+\LTcaption\\
+\toprule
+\textbf{Kernel} & \textbf{Layout} & \textbf{Cycles} & \textbf{Memory accesses} & \textbf{DoM (\%)} & \textbf{Taint (\%)} \\
+\midrule
+\endfirsthead
+\multicolumn{6}{@{}l}{\footnotesize\itshape \tablename~\thetable{} continued from previous page}\\
+\toprule
+\textbf{Kernel} & \textbf{Layout} & \textbf{Cycles} & \textbf{Memory accesses} & \textbf{DoM (\%)} & \textbf{Taint (\%)} \\
+\midrule
+\endhead
+\midrule \multicolumn{6}{r@{}}{\footnotesize\itshape continued on next page}\\
+\endfoot
+\bottomrule
+\endlastfoot
+\tcode{matmul} & 1 & 605\,057 & 779 & 0.00 & 0.00 \\
+ & 2 & 605\,057 & 779 & 0.00 & 0.00 \\
+ & 3 & 605\,057 & 779 & 0.00 & 0.00 \\
+ & 4 & 605\,057 & 779 & 0.00 & 0.00 \\
+ & 5 & 605\,057 & 779 & 0.00 & 0.00 \\
+\addlinespace
+\tcode{heapsort} & 1 & 1\,346\,318 & 4\,049 & 0.72 & 0.21 \\
+ & 2 & 1\,346\,343 & 4\,058 & 0.71 & 0.23 \\
+ & 3 & 1\,346\,371 & 4\,057 & 0.71 & 0.25 \\
+ & 4 & 1\,346\,541 & 4\,100 & 0.70 & 0.26 \\
+ & 5 & 1\,346\,292 & 4\,038 & 0.72 & 0.24 \\
+\addlinespace
+\tcode{listwalk} & 1 & 5\,683\,653 & 17\,716 & 1.75 & 0.00 \\
+ & 2 & 5\,639\,468 & 17\,452 & 1.77 & 0.00 \\
+ & 3 & 5\,640\,093 & 17\,452 & 1.77 & 0.00 \\
+ & 4 & 6\,777\,575 & 24\,368 & 1.37 & 0.00 \\
+ & 5 & 5\,639\,822 & 17\,452 & 1.77 & 0.00 \\
+\addlinespace
+\tcode{bsearch} & 1 & 5\,378\,415 & 8\,218 & 37.26 & 5.58 \\
+ & 2 & 5\,414\,795 & 8\,218 & 37.07 & 5.71 \\
+ & 3 & 5\,381\,241 & 8\,218 & 37.06 & 5.49 \\
+ & 4 & 5\,371\,927 & 8\,218 & 37.32 & 5.50 \\
+ & 5 & 5\,371\,712 & 8\,218 & 37.33 & 5.68 \\
+\addlinespace
+\tcode{bstree} & 1 & 9\,476\,276 & 4\,114 & 1.85 & 3.06 \\
+ & 2 & 9\,414\,658 & 4\,114 & 1.87 & 3.08 \\
+ & 3 & 9\,526\,145 & 4\,114 & 1.85 & 3.05 \\
+ & 4 & 9\,535\,994 & 4\,114 & 1.84 & 3.04 \\
+ & 5 & 9\,307\,884 & 4\,114 & 1.89 & 3.11 \\
+\addlinespace
+\tcode{crc32} & 1 & 2\,510\,733 & 4\,130 & 0.00 & 0.00 \\
+ & 2 & 2\,511\,229 & 4\,130 & 0.00 & 0.00 \\
+ & 3 & 2\,511\,229 & 4\,130 & 0.00 & 0.00 \\
+ & 4 & 2\,511\,229 & 4\,130 & 0.00 & 0.00 \\
+ & 5 & 2\,511\,229 & 4\,130 & 0.00 & 0.00 \\
+\addlinespace
+\tcode{sieve} & 1 & 1\,030\,691 & 3\,139 & 0.81 & 0.00 \\
+ & 2 & 1\,031\,868 & 3\,139 & 0.85 & 0.00 \\
+ & 3 & 1\,030\,303 & 3\,139 & 0.84 & 0.00 \\
+ & 4 & 1\,047\,344 & 3\,139 & 1.16 & 0.00 \\
+ & 5 & 1\,019\,522 & 3\,139 & 0.60 & 0.00 \\
+\addlinespace
+\tcode{hashtab} & 1 & 4\,075\,219 & 4\,114 & 38.72 & 4.84 \\
+ & 2 & 4\,042\,990 & 4\,114 & 38.29 & 4.80 \\
+ & 3 & 4\,135\,552 & 4\,114 & 39.55 & 4.98 \\
+ & 4 & 4\,132\,328 & 4\,114 & 40.03 & 4.99 \\
+ & 5 & 3\,958\,055 & 4\,114 & 37.45 & 4.60 \\
+\addlinespace
+\tcode{stream} & 1 & 1\,196\,215 & 20\,782 & 0.00 & 0.00 \\
+ & 2 & 1\,051\,151 & 18\,477 & 0.00 & 0.00 \\
+ & 3 & 1\,051\,151 & 18\,477 & 0.00 & 0.00 \\
+ & 4 & 1\,271\,297 & 21\,677 & 0.00 & 0.00 \\
+ & 5 & 1\,193\,601 & 21\,037 & 0.00 & 0.00 \\
+\addlinespace
+\tcode{fibcall} & 1 & 1\,052\,490 & 19 & 0.00 & 0.00 \\
+ & 2 & 1\,052\,490 & 19 & 0.00 & 0.00 \\
+ & 3 & 1\,052\,490 & 19 & 0.00 & 0.00 \\
+ & 4 & 1\,052\,490 & 19 & 0.00 & 0.00 \\
+ & 5 & 1\,052\,490 & 19 & 0.00 & 0.00 \\
+\addlinespace
+\tcode{strsearch} & 1 & 1\,484\,894 & 1\,888 & 0.21 & 0.00 \\
+ & 2 & 1\,484\,894 & 1\,888 & 0.21 & 0.00 \\
+ & 3 & 1\,484\,894 & 1\,888 & 0.21 & 0.00 \\
+ & 4 & 1\,484\,894 & 1\,888 & 0.21 & 0.00 \\
+ & 5 & 1\,484\,894 & 1\,888 & 0.21 & 0.00 \\
+\end{longtable}
+%% END GENERATED tab_seeds_full
+}
+
 
 \chapter{The Kernels}
 \label{app:kernels}
 
-This appendix lists the start-up code and the eleven kernels of the model
-study, exactly as they were assembled and run. \Cref{tab:kernels} describes
-what each computes and why it is in the set. All are written for RV64IM and
-use only the integer registers, and each returns its checksum in \code{a0}.
-\Cref{lst:crt} is the start-up code, and
-\crefrange{lst:matmul}{lst:strsearch} are the kernels.
+The model study runs eleven kernels behind one start-up file.
+\Cref{tab:kernels} describes what each kernel computes and why it is in the
+set. All are written for RV64IM and use only the integer registers, and each
+returns its checksum in \code{a0}. \Cref{tab:kernelfiles} lists the twelve
+files.
+
+Five of the files are printed here exactly as they were assembled and run.
+\Cref{lst:crt} is the start-up code. \Cref{lst:bsearch,lst:bstree,lst:hashtab}
+are the three look-up kernels, which have the highest misprediction rates of
+the set (\Cref{tab:baseline}), and \Cref{lst:sieve} is a regular loop nest for
+contrast. The other seven kernels are written in the same style. They are kept
+beside these five in the directory \code{study/workloads} of the repository
+named on the title page, and \Cref{tab:manifest} gives the digest of every
+file.
+
+\begin{table}[ht]
+\centering
+\caption[The kernel files]{The start-up file and the eleven kernels of the
+model study, in the directory \code{study/workloads} of the repository.}
+\label{tab:kernelfiles}
+\footnotesize
+\begin{tabular}{@{}lrl@{\hspace{2.2em}}lrl@{}}
+\toprule
+\textbf{File} & \textbf{Lines} & \textbf{Printed as} & \textbf{File} & \textbf{Lines} & \textbf{Printed as} \\
+\midrule
+\tcode{crt.s} & 31 & \Cref{lst:crt} & \tcode{crc32.s} & 63 & repository only \\
+\tcode{matmul.s} & 77 & repository only & \tcode{sieve.s} & 38 & \Cref{lst:sieve} \\
+\tcode{heapsort.s} & 85 & repository only & \tcode{hashtab.s} & 82 & \Cref{lst:hashtab} \\
+\tcode{listwalk.s} & 78 & repository only & \tcode{stream.s} & 61 & repository only \\
+\tcode{bsearch.s} & 60 & \Cref{lst:bsearch} & \tcode{fibcall.s} & 32 & repository only \\
+\tcode{bstree.s} & 94 & \Cref{lst:bstree} & \tcode{strsearch.s} & 59 & repository only \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 %% BEGIN GENERATED code:study/workloads/crt.s
 \def\ltTotal{31}
@@ -9519,267 +10207,6 @@ crt_hang:
 \end{lstlisting}
 \def\ltTotal{0}
 %% END GENERATED code:study/workloads/crt.s
-
-%% BEGIN GENERATED code:study/workloads/matmul.s
-\def\ltTotal{77}
-\begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{matmul}: dense matrix product.}, label={lst:matmul}]
-# matmul - dense matrix product C = A * B of two 64 x 64 matrices of 32-bit
-# integers. Regular loops, unit-stride and row-stride accesses, a working set
-# of 48 KiB (larger than the first-level cache, smaller than the second).
-.equ N, 64
-.text
-main:
-    la    s0, mat_a
-    la    s1, mat_b
-    la    s2, mat_c
-    li    s3, N
-    li    t0, 0                 # i
-init_i:
-    li    t1, 0                 # j
-init_j:
-    slli  t2, t0, 6             # i * N
-    add   t2, t2, t1
-    slli  t2, t2, 2             # byte offset of element (i, j)
-    slli  t3, t1, 1
-    add   t3, t3, t0
-    addi  t3, t3, 1             # A[i][j] = i + 2j + 1
-    add   t4, s0, t2
-    sw    t3, 0(t4)
-    slli  t3, t0, 1
-    add   t3, t3, t0
-    sub   t3, t3, t1
-    addi  t3, t3, 2             # B[i][j] = 3i - j + 2
-    add   t4, s1, t2
-    sw    t3, 0(t4)
-    addi  t1, t1, 1
-    blt   t1, s3, init_j
-    addi  t0, t0, 1
-    blt   t0, s3, init_i
-    li    t0, 0                 # i
-mul_i:
-    li    t1, 0                 # j
-mul_j:
-    li    t6, 0                 # accumulator
-    slli  a1, t0, 8
-    add   a1, s0, a1            # walks row i of A
-    slli  a2, t1, 2
-    add   a2, s1, a2            # walks column j of B
-    li    t2, 0                 # k
-mul_k:
-    lw    a3, 0(a1)
-    lw    a4, 0(a2)
-    mulw  a3, a3, a4
-    addw  t6, t6, a3
-    addi  a1, a1, 4
-    addi  a2, a2, 256           # next row of B
-    addi  t2, t2, 1
-    blt   t2, s3, mul_k
-    slli  a5, t0, 8
-    slli  a6, t1, 2
-    add   a5, a5, a6
-    add   a5, s2, a5
-    sw    t6, 0(a5)             # C[i][j]
-    addi  t1, t1, 1
-    blt   t1, s3, mul_j
-    addi  t0, t0, 1
-    blt   t0, s3, mul_i
-    li    a0, 0                 # checksum: a0 = a0 * 31 + C[idx]
-    li    t0, 0
-    li    t1, 4096
-    li    t3, 31
-sum:
-    lw    t2, 0(s2)
-    mul   a0, a0, t3
-    add   a0, a0, t2
-    addi  s2, s2, 4
-    addi  t0, t0, 1
-    blt   t0, t1, sum
-    ret
-.data
-.align 6
-mat_a: .zero 16384
-mat_b: .zero 16384
-mat_c: .zero 16384
-\end{lstlisting}
-\def\ltTotal{0}
-%% END GENERATED code:study/workloads/matmul.s
-
-%% BEGIN GENERATED code:study/workloads/heapsort.s
-\def\ltTotal{85}
-\begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{heapsort}: in-place heap sort.}, label={lst:heapsort}]
-# heapsort - in-place heap sort of 8192 pseudo-random 64-bit keys (64 KiB).
-# Data-dependent branches and accesses that jump around the array.
-.equ N, 8192
-.text
-main:
-    mv    s11, ra               # sift is reached with call, so keep ra
-    la    s0, arr
-    li    s1, N
-    li    t0, 0x5851F42D4C957F2D
-    li    t1, 0x14057B7EF767814F
-    li    t2, 12345             # seed of the generator
-    mv    t3, s0
-    li    t4, 0
-gen:
-    mul   t2, t2, t0
-    add   t2, t2, t1
-    srli  t5, t2, 16
-    sd    t5, 0(t3)
-    addi  t3, t3, 8
-    addi  t4, t4, 1
-    blt   t4, s1, gen
-    addi  s2, s1, -1            # end = N - 1
-    addi  s3, s1, -2
-    srli  s3, s3, 1             # start = (N - 2) / 2
-heapify:
-    mv    a1, s3
-    mv    a2, s2
-    call  sift
-    addi  s3, s3, -1
-    bgez  s3, heapify
-sortloop:
-    blez  s2, sorted
-    slli  t0, s2, 3
-    add   t0, s0, t0
-    ld    t1, 0(t0)             # swap a[end] with a[0]
-    ld    t2, 0(s0)
-    sd    t2, 0(t0)
-    sd    t1, 0(s0)
-    addi  s2, s2, -1
-    li    a1, 0
-    mv    a2, s2
-    call  sift
-    j     sortloop
-sorted:
-    li    a0, 0                 # checksum: sum of a[i] * (i + 1)
-    li    t0, 0
-    mv    t3, s0
-chk:
-    ld    t1, 0(t3)
-    addi  t0, t0, 1
-    mul   t1, t1, t0
-    add   a0, a0, t1
-    addi  t3, t3, 8
-    blt   t0, s1, chk
-    mv    ra, s11
-    ret
-
-# sift(a1 = root, a2 = end): restore the max-heap property below root
-sift:
-    slli  t0, a1, 1
-    addi  t0, t0, 1             # child = 2 * root + 1
-    bgt   t0, a2, sift_done
-    slli  t1, t0, 3
-    add   t1, s0, t1
-    ld    t2, 0(t1)             # a[child]
-    bge   t0, a2, sift_cmp      # there is no right child
-    ld    t3, 8(t1)             # a[child + 1]
-    bgeu  t2, t3, sift_cmp
-    addi  t0, t0, 1
-    addi  t1, t1, 8
-    mv    t2, t3
-sift_cmp:
-    slli  t4, a1, 3
-    add   t4, s0, t4
-    ld    t5, 0(t4)             # a[root]
-    bgeu  t5, t2, sift_done
-    sd    t2, 0(t4)
-    sd    t5, 0(t1)
-    mv    a1, t0
-    j     sift
-sift_done:
-    ret
-.data
-.align 6
-arr: .zero 65536
-\end{lstlisting}
-\def\ltTotal{0}
-%% END GENERATED code:study/workloads/heapsort.s
-
-%% BEGIN GENERATED code:study/workloads/listwalk.s
-\def\ltTotal{78}
-\begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{listwalk}: traversal of a shuffled linked list.}, label={lst:listwalk}]
-# listwalk - builds a linked list of 16384 nodes, one cache line each (1 MiB),
-# threaded in a random order, and walks it six times. Every load address is
-# the result of the previous load: the worst case for a memory hierarchy.
-.equ N, 16384
-.text
-main:
-    la    s0, perm
-    la    s1, nodes
-    li    s2, N
-    li    t0, 0
-init:                           # perm[i] = i
-    slli  t1, t0, 2
-    add   t1, s0, t1
-    sw    t0, 0(t1)
-    addi  t0, t0, 1
-    blt   t0, s2, init
-    li    s3, 0x5851F42D4C957F2D
-    li    s4, 0x14057B7EF767814F
-    li    s5, 2024              # seed of the generator
-    addi  t0, s2, -1            # i = N - 1
-shuffle:                        # Fisher-Yates shuffle of perm
-    mul   s5, s5, s3
-    add   s5, s5, s4
-    srli  t1, s5, 33
-    addi  t2, t0, 1
-    remu  t1, t1, t2            # j = random % (i + 1)
-    slli  t3, t0, 2
-    add   t3, s0, t3
-    slli  t4, t1, 2
-    add   t4, s0, t4
-    lw    t5, 0(t3)
-    lw    t6, 0(t4)
-    sw    t6, 0(t3)
-    sw    t5, 0(t4)
-    addi  t0, t0, -1
-    bgtz  t0, shuffle
-    li    t0, 0
-link:                           # node[perm[k]].next = &node[perm[k + 1]]
-    slli  t1, t0, 2
-    add   t1, s0, t1
-    lwu   t2, 0(t1)
-    slli  t3, t2, 6
-    add   t3, s1, t3            # address of this node
-    slli  t4, t2, 3
-    sub   t4, t4, t2
-    addi  t4, t4, 1             # payload = 7 * index + 1
-    sd    t4, 8(t3)
-    addi  t0, t0, 1
-    bge   t0, s2, link_last
-    lwu   t5, 4(t1)
-    slli  t5, t5, 6
-    add   t5, s1, t5
-    sd    t5, 0(t3)
-    j     link
-link_last:
-    sd    zero, 0(t3)
-    li    a0, 0                 # checksum: a0 = a0 * 31 + payload
-    li    t6, 31
-    li    s6, 6                 # number of passes
-    lwu   t0, 0(s0)
-    slli  t0, t0, 6
-    add   s7, s1, t0            # head of the list
-pass:
-    mv    t0, s7
-walk:
-    ld    t1, 8(t0)
-    mul   a0, a0, t6
-    add   a0, a0, t1
-    ld    t0, 0(t0)
-    bnez  t0, walk
-    addi  s6, s6, -1
-    bnez  s6, pass
-    ret
-.data
-.align 6
-perm:  .zero 65536
-.align 6
-nodes: .zero 1048576
-\end{lstlisting}
-\def\ltTotal{0}
-%% END GENERATED code:study/workloads/listwalk.s
 
 %% BEGIN GENERATED code:study/workloads/bsearch.s
 \def\ltTotal{60}
@@ -9949,76 +10376,6 @@ pool: .zero 262144
 \def\ltTotal{0}
 %% END GENERATED code:study/workloads/bstree.s
 
-%% BEGIN GENERATED code:study/workloads/crc32.s
-\def\ltTotal{63}
-\begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{crc32}: table-driven cyclic redundancy check.}, label={lst:crc32}]
-# crc32 - table-driven CRC-32 of a 256 KiB buffer. A sequential stream plus a
-# table lookup whose index is derived from the data, the access pattern of
-# every table-based cipher.
-.equ LEN, 262144
-.text
-main:
-    la    s0, table
-    li    s2, 0xEDB88320
-    li    s3, 256
-    li    t0, 0                 # n
-tab_n:
-    mv    t1, t0
-    li    t2, 8
-tab_k:
-    andi  t3, t1, 1
-    srli  t1, t1, 1
-    beqz  t3, tab_skip
-    xor   t1, t1, s2
-tab_skip:
-    addi  t2, t2, -1
-    bnez  t2, tab_k
-    slli  t4, t0, 2
-    add   t4, s0, t4
-    sw    t1, 0(t4)
-    addi  t0, t0, 1
-    blt   t0, s3, tab_n
-    la    s1, buf
-    li    s4, 0x5851F42D4C957F2D
-    li    s5, 0x14057B7EF767814F
-    li    t0, 99                # seed of the generator
-    li    t1, 32768             # LEN / 8 doublewords
-    mv    t2, s1
-fillb:
-    mul   t0, t0, s4
-    add   t0, t0, s5
-    sd    t0, 0(t2)
-    addi  t2, t2, 8
-    addi  t1, t1, -1
-    bnez  t1, fillb
-    li    a0, 0xFFFFFFFF
-    mv    t2, s1
-    li    t1, LEN
-crc:
-    lbu   t3, 0(t2)
-    xor   t3, t3, a0
-    andi  t3, t3, 255
-    slli  t3, t3, 2
-    add   t3, s0, t3
-    lwu   t4, 0(t3)             # table[(crc ^ byte) & 255]
-    srli  a0, a0, 8
-    xor   a0, a0, t4
-    addi  t2, t2, 1
-    addi  t1, t1, -1
-    bnez  t1, crc
-    not   a0, a0
-    slli  a0, a0, 32
-    srli  a0, a0, 32            # the CRC is a 32-bit value
-    ret
-.data
-.align 6
-table: .zero 1024
-.align 6
-buf:   .zero 262144
-\end{lstlisting}
-\def\ltTotal{0}
-%% END GENERATED code:study/workloads/crc32.s
-
 %% BEGIN GENERATED code:study/workloads/sieve.s
 \def\ltTotal{38}
 \begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{sieve}: sieve of Eratosthenes.}, label={lst:sieve}]
@@ -10153,179 +10510,6 @@ tab: .zero 262144
 \def\ltTotal{0}
 %% END GENERATED code:study/workloads/hashtab.s
 
-%% BEGIN GENERATED code:study/workloads/stream.s
-\def\ltTotal{61}
-\begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{stream}: streaming triad over three arrays.}, label={lst:stream}]
-# stream - three passes of a[i] = b[i] + 3 c[i] + pass over arrays of 49152
-# doublewords (384 KiB each, 1.1 MiB in total). Pure sequential streaming.
-.equ N, 49152
-.text
-main:
-    la    s0, arr_a
-    la    s1, arr_b
-    la    s2, arr_c
-    li    s3, N
-    li    t0, 0
-init:                           # b[i] = i, c[i] = 2i + 1
-    slli  t1, t0, 3
-    add   t2, s1, t1
-    sd    t0, 0(t2)
-    slli  t3, t0, 1
-    addi  t3, t3, 1
-    add   t2, s2, t1
-    sd    t3, 0(t2)
-    addi  t0, t0, 1
-    blt   t0, s3, init
-    li    s4, 3                 # passes left
-pass:
-    mv    t1, s0
-    mv    t2, s1
-    mv    t3, s2
-    li    t0, 0
-triad:
-    ld    t4, 0(t2)
-    ld    t5, 0(t3)
-    slli  t6, t5, 1
-    add   t5, t5, t6            # 3 * c[i]
-    add   t4, t4, t5
-    add   t4, t4, s4
-    sd    t4, 0(t1)
-    sd    t4, 0(t2)             # b[i] = a[i] feeds the next pass
-    addi  t1, t1, 8
-    addi  t2, t2, 8
-    addi  t3, t3, 8
-    addi  t0, t0, 1
-    blt   t0, s3, triad
-    addi  s4, s4, -1
-    bnez  s4, pass
-    li    a0, 0                 # checksum: a0 = a0 * 31 + a[i]
-    li    t0, 0
-    li    t6, 31
-    mv    t1, s0
-sum:
-    ld    t4, 0(t1)
-    mul   a0, a0, t6
-    add   a0, a0, t4
-    addi  t1, t1, 8
-    addi  t0, t0, 1
-    blt   t0, s3, sum
-    ret
-.data
-.align 6
-arr_a: .zero 393216
-.align 6
-arr_b: .zero 393216
-.align 6
-arr_c: .zero 393216
-\end{lstlisting}
-\def\ltTotal{0}
-%% END GENERATED code:study/workloads/stream.s
-
-%% BEGIN GENERATED code:study/workloads/fibcall.s
-\def\ltTotal{32}
-\begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{fibcall}: recursive Fibonacci numbers.}, label={lst:fibcall}]
-# fibcall - the doubly recursive Fibonacci function, fib(25). Nearly a quarter
-# of a million calls and returns: exercises the return-address stack and
-# store-to-load forwarding through the stack frame; no data working set.
-.text
-main:
-    addi  sp, sp, -16
-    sd    ra, 8(sp)
-    li    a0, 25
-    call  fib
-    ld    ra, 8(sp)
-    addi  sp, sp, 16
-    ret
-fib:
-    li    t0, 2
-    blt   a0, t0, fib_base
-    addi  sp, sp, -32
-    sd    ra, 24(sp)
-    sd    s0, 16(sp)
-    sd    s1, 8(sp)
-    mv    s0, a0
-    addi  a0, s0, -1
-    call  fib
-    mv    s1, a0
-    addi  a0, s0, -2
-    call  fib
-    add   a0, a0, s1
-    ld    ra, 24(sp)
-    ld    s0, 16(sp)
-    ld    s1, 8(sp)
-    addi  sp, sp, 32
-fib_base:
-    ret
-\end{lstlisting}
-\def\ltTotal{0}
-%% END GENERATED code:study/workloads/fibcall.s
-
-%% BEGIN GENERATED code:study/workloads/strsearch.s
-\def\ltTotal{59}
-\begin{lstlisting}[style=longcode, language=riscv, caption={Kernel \code{strsearch}: naive substring search.}, label={lst:strsearch}]
-# strsearch - naive search for a 6-symbol pattern in 120000 symbols of random
-# text over a four-letter alphabet. Short inner loops that end on a
-# data-dependent mismatch.
-.equ LEN, 120000
-.equ PLEN, 6
-.text
-main:
-    la    s0, text
-    li    s1, LEN
-    li    s3, 0x5851F42D4C957F2D
-    li    s4, 0x14057B7EF767814F
-    li    t0, 31337             # seed of the generator
-    li    t1, 0
-gen:
-    mul   t0, t0, s3
-    add   t0, t0, s4
-    srli  t2, t0, 62            # two random bits
-    addi  t2, t2, 97            # one of the letters a, b, c, d
-    add   t3, s0, t1
-    sb    t2, 0(t3)
-    addi  t1, t1, 1
-    blt   t1, s1, gen
-    la    s2, pat               # the pattern is a copy of text[1000..1005]
-    li    s6, PLEN
-    li    t1, 0
-copy:
-    add   t3, s0, t1
-    lbu   t2, 1000(t3)
-    add   t4, s2, t1
-    sb    t2, 0(t4)
-    addi  t1, t1, 1
-    blt   t1, s6, copy
-    li    a0, 0
-    li    t0, 0                 # i
-    addi  s5, s1, -PLEN         # last possible starting position
-    li    s7, 31
-scan:
-    li    t1, 0                 # j
-    add   t3, s0, t0
-cmp:
-    add   t4, t3, t1
-    lbu   t5, 0(t4)
-    add   t6, s2, t1
-    lbu   a1, 0(t6)
-    bne   t5, a1, nomatch
-    addi  t1, t1, 1
-    blt   t1, s6, cmp
-    mul   a0, a0, s7            # checksum: a0 = a0 * 31 + (i + 1) per match
-    add   a0, a0, t0
-    addi  a0, a0, 1
-nomatch:
-    addi  t0, t0, 1
-    ble   t0, s5, scan
-    ret
-.data
-.align 6
-pat:  .zero 64
-.align 6
-text: .zero 120064
-\end{lstlisting}
-\def\ltTotal{0}
-%% END GENERATED code:study/workloads/strsearch.s
-
 
 \chapter{The Programs of the Model Study}
 \label{app:source}
@@ -10333,10 +10517,10 @@ text: .zero 120064
 The results of the model study come from four programs, and a fifth turns their
 output into the tables, plots and quoted numbers of this report.
 \Cref{tab:programs} describes each of them. They are kept in the repository
-named on the title page, together with the kernels, which \Cref{app:kernels}
-reproduces in full because they are the RISC-V code whose behavior the study
+named on the title page, together with the kernels, of which \Cref{app:kernels}
+prints four as examples of the RISC-V code whose behavior the study
 measures. The behavior of the simulator is specified in \Cref{app:model} and
-its validation is reported in \Cref{app:validation}, so that the results can be
+its verification is reported in \Cref{app:validation}, so that the results can be
 judged without reading its source. \Cref{tab:manifest} gives the SHA-256 digest
 of every file with which the reported results were produced, so that a copy of
 the repository can be checked against this report, and
@@ -10358,13 +10542,13 @@ and has no digest there.}
 rules of \Cref{app:model}, caches, TLB, predictors, and the switches for the
 defenses and isolation mechanisms. \\
 \tcode{run\_study.py} & Python & 681 & The driver: builds the tools and the kernels,
-runs the validation of \Cref{app:validation} and the experiments of
+runs the verification of \Cref{app:validation} and the experiments of
 \Cref{tab:experiments}, and writes the result files. \\
 \tcode{rvasm.py} & Python & 355 & A two-pass assembler for the RV64IM subset
 that the kernels of \Cref{app:kernels} use. \\
 \tcode{reference.py} & Python & 218 & An independent implementation of every
 kernel, against which the binaries are checked. \\
-\tcode{make\_fragments.py} & Python & 667 & Turns the result files into the
+\tcode{make\_fragments.py} & Python & 694 & Turns the result files into the
 tables, plots and number macros embedded in this report. \\
 \bottomrule
 \end{tabularx}
@@ -10477,7 +10661,7 @@ and report the results. Each mechanism description, derivation or worked
 example that needs more room is an appendix, and the chapter points to it.
 \Cref{app:leakage} to \Cref{app:specdef} are ten such explanations, each on one
 subject, and \Cref{app:model,app:validation} do the same for the instrument of
-the model study and its validation.
+the model study and its verification.
 
 The rule is also checked by measurement. The script that computes the reading
 indices of \Cref{app:readability} counts the words of running prose under every
@@ -10502,7 +10686,7 @@ meets each of them.
 \begin{tabular}{@{}p{0.5cm}>{\raggedright\arraybackslash}p{5.0cm}%
   >{\raggedright\arraybackslash}p{\dimexpr\linewidth-5.5cm-4\tabcolsep\relax}@{}}
 \toprule
- & \textbf{Guideline} & \textbf{How it is met} \\
+\textbf{\#} & \textbf{Guideline} & \textbf{How it is met} \\
 \midrule
  & Authorship: every author of a term paper named in the Gradescope group
 submission; a project report has one author & Single author; see the

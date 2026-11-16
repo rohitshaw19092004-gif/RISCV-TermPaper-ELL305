@@ -191,7 +191,7 @@ def cache_sweep():
     shown = ["listwalk", "stream", "bsearch", "hashtab", "bstree"]
     plot = ["\\begin{tikzpicture}", "\\begin{axis}[width=0.74\\linewidth, height=6.0cm, xmode=log, log basis x=2,",
             "  xtick={256,512,1024,2048,4096}, xticklabels={0.25,0.5,1,2,4},",
-            "  xlabel={last-level cache size (MiB), 16 ways}, ylabel={execution time relative to 2\\,MiB},",
+            "  xlabel={last-level cache size (MiB), 16 ways}, ylabel={execution time\\\\relative to 2\\,MiB}, ylabel style={align=center},",
             "  tick label style={font=\\scriptsize}, label style={font=\\small}, ymin=0.8,",
             "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\scriptsize, draw=black!25},",
             "  legend pos=north east]"]
@@ -239,13 +239,13 @@ def predictor_window():
     shown = ["bsearch", "hashtab", "bstree", "heapsort", "strsearch", "sieve"]
     marks = ["*", "square*", "triangle*", "diamond*", "o", "x"]
     plot = ["\\begin{tikzpicture}", "\\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.6cm},",
-            "  width=0.50\\linewidth, height=6.0cm, xmode=log, log basis x=2,",
+            "  width=0.48\\linewidth, height=6.0cm, xmode=log, log basis x=2,",
             "  xtick={16,32,64,128,256}, xticklabels={16,32,64,128,256},",
             "  xlabel={reorder-buffer entries}, tick label style={font=\\scriptsize},",
             "  label style={font=\\small}, ymajorgrids, grid style={draw=black!12},",
-            "  legend style={font=\\scriptsize, draw=black!25}, ymin=0]"]
-    for field, ylabel, legend in (("executed_per_squash", "transient instructions executed per squash", False),
-                                  ("loads_per_squash", "transient loads executed per squash", True)):
+            "  legend style={font=\\scriptsize, draw=black!25}, ymin=0, ylabel style={align=center}]"]
+    for field, ylabel, legend in (("executed_per_squash", "transient instructions\\\\executed per squash", False),
+                                  ("loads_per_squash", "transient loads\\\\executed per squash", True)):
         plot.append("\\nextgroupplot[ylabel={%s}%s]" % (ylabel, ", legend pos=north west" if legend else ""))
         for k, m in zip(shown, marks):
             pts = " ".join("(%d,%.3f)" % (rob, float(get[(k, rob)][field])) for rob in (16, 32, 64, 128, 256))
@@ -347,7 +347,7 @@ def defenses():
     total = {d: {f: sum(int(get[(k, "spectre", d)][f]) for k in KERNELS) for f, _ in fields}
              for d in ["none"] + DEFS}
     body = [[label] + [num(total[d][f]) for d in ["none"] + DEFS] for f, label in fields]
-    emit("tab_footprint", "\\begin{tabularx}{\\linewidth}{@{}X" + "r" * 8 + "@{}}\n\\toprule\n"
+    emit("tab_footprint", "\\begin{tabularx}{\\linewidth}{@{}>{\\raggedright\\arraybackslash}X" + "r" * 8 + "@{}}\n\\toprule\n"
          + " & ".join(["\\textbf{Summed over all kernels}"] + ["\\textbf{%s}" % DEFNAME[d] for d in ["none"] + DEFS])
          + " \\\\\n\\midrule\n" + "\n".join(" & ".join(b) + " \\\\" for b in body) + "\n\\bottomrule\n\\end{tabularx}")
     for d in ["none"] + DEFS:
@@ -356,8 +356,8 @@ def defenses():
     # cost against what is left behind
     plot = ["\\begin{tikzpicture}", "\\begin{axis}[width=0.80\\linewidth, height=6.6cm,",
             "  xlabel={geometric-mean slowdown, Spectre model (\\%)},",
-            "  ylabel={transient fills left in the cache (\\% of undefended)},",
-            "  xmin=-4, xmax=21, ymin=-14, ymax=120, tick label style={font=\\scriptsize},",
+            "  ylabel={transient fills left in the cache\\\\(\\% of undefended)}, ylabel style={align=center},",
+            "  xmin=-4, xmax=21, ymin=-26, ymax=120, ytick={0,20,...,120}, tick label style={font=\\scriptsize},",
             "  label style={font=\\small}, xmajorgrids, ymajorgrids, grid style={draw=black!12}]"]
     base = total["none"]["wp_fills"]
     # label positions chosen so that the two clusters of points stay legible
@@ -396,6 +396,20 @@ def defenses():
     emit("tab_traffic", tabular("@{}lrrrrr@{}",
          ["\\textbf{Defense}", "\\textbf{L1 accesses}", "\\textbf{L2 accesses}", "\\textbf{LLC accesses}",
           "\\textbf{Memory accesses}", "\\textbf{Total cycles}"], body))
+    # the per-kernel counts behind the sums of the footprint and traffic tables
+    full = [(k, d) for k in KERNELS for d in ["none"] + DEFS]
+    for model in ("spectre", "futuristic"):
+        body = [[tt(k) if d == "none" else "", DEFNAME[d]] + [num(get[(k, model, d)][f]) for f, _ in fields]
+                for k, d in full]
+        emit("tab_footprint_full_" + model, longtable("@{}ll" + "r" * len(fields) + "@{}",
+             ["\\textbf{Kernel}", "\\textbf{Mechanism}", "\\textbf{Loads}", "\\textbf{Fills}",
+              "\\textbf{Dep.\\ loads}", "\\textbf{Dep.\\ fills}", "\\textbf{Hidden}", "\\textbf{Delayed}",
+              "\\textbf{Second}"], body, group=len(DEFS) + 1))
+        body = [[tt(k) if d == "none" else "", DEFNAME[d]] + [num(get[(k, model, d)][f]) for f in
+                ("cycles", "l1_accesses", "l2_accesses", "llc_accesses", "memory_accesses")] for k, d in full]
+        emit("tab_traffic_full_" + model, longtable("@{}llrrrrr@{}",
+             ["\\textbf{Kernel}", "\\textbf{Mechanism}", "\\textbf{Cycles}", "\\textbf{First level}",
+              "\\textbf{Second level}", "\\textbf{Last level}", "\\textbf{Memory}"], body, group=len(DEFS) + 1))
 
 
 def sensitivity():
@@ -469,8 +483,8 @@ def isolation():
     plot = ["\\begin{tikzpicture}", "\\begin{groupplot}[group style={group size=2 by 1, horizontal sep=1.7cm},",
             "  width=0.48\\linewidth, height=6.0cm, xmode=log, tick label style={font=\\scriptsize},",
             "  xlabel={time slice (instructions)}, label style={font=\\small},",
-            "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\scriptsize, draw=black!25}]"]
-    plot.append("\\nextgroupplot[ymode=log, ylabel={slowdown of flushing on-core state (\\%)}]")
+            "  ymajorgrids, grid style={draw=black!12}, legend style={font=\\scriptsize, draw=black!25}, ylabel style={align=center}]"]
+    plot.append("\\nextgroupplot[ymode=log, ylabel={slowdown from flushing\\\\on-core state (\\%)}]")
     for p, m in zip(pairs, marks):
         pts = " ".join("(%d,%.4f)" % (q, statistics.mean(stat(sel(p, q, ISO[0]), "slowdown_pct"))) for q in quanta)
         plot.append("\\addplot+[mark=%s, mark size=1.5pt, thick] coordinates {%s};" % (m, pts))
@@ -536,6 +550,14 @@ def isolation():
     emit("tab_seeds", tabular("@{}lrrrrr@{}",
          ["\\textbf{Kernel}", "\\textbf{Fewest cycles}", "\\textbf{Most cycles}", "\\textbf{Spread (\\%)}",
           "\\textbf{DoM (\\%)}", "\\textbf{Taint (\\%)}"], body))
+    layouts = sorted({int(x["seed"]) for x in s})
+    pick = {(x["kernel"], int(x["seed"]), x["defense"]): x for x in s}
+    body = [[tt(k) if n == layouts[0] else "", str(n), num(pick[(k, n, "none")]["cycles"]),
+             num(pick[(k, n, "none")]["memory_accesses"]), minus("%.2f" % float(pick[(k, n, "dom")]["slowdown_pct"])),
+             minus("%.2f" % float(pick[(k, n, "stt")]["slowdown_pct"]))] for k in KERNELS for n in layouts]
+    emit("tab_seeds_full", longtable("@{}lrrrrr@{}",
+         ["\\textbf{Kernel}", "\\textbf{Layout}", "\\textbf{Cycles}", "\\textbf{Memory accesses}",
+          "\\textbf{DoM (\\%)}", "\\textbf{Taint (\\%)}"], body, group=len(layouts)))
 
 
 def randomized():
@@ -588,6 +610,11 @@ def composition():
                              if float(x["excess_min_pct"]) * float(x["excess_max_pct"]) > 0))
     macro("comp.max", "%+.1f" % max(inter))
     macro("comp.min", "%+.1f" % min(inter))
+    big = [x for x in r if min(float(x["s_a_pct"]), float(x["s_b_pct"])) >= 1.0]   # neither part is negligible
+    macro("comp.small", len(r) - len(big))
+    macro("comp.big", len(big))
+    macro("comp.big.prod1", sum(1 for x in big if abs(float(x["excess_pct"])) <= 1.0))
+    macro("comp.big.sum1", sum(1 for x in big if abs(float(x["excess_over_sum_pct"])) <= 1.0))
 
 
 def channel():
@@ -623,7 +650,7 @@ def channel():
     pts = " ".join("(%.2f,%.4f)" % (d / 10.0, 1 - h2(q(d / 20.0))) for d in range(0, 81, 2))
     emit("fig_capacity", "\n".join([
         "\\begin{tikzpicture}", "\\begin{axis}[width=0.66\\linewidth, height=5.2cm, xmin=0, xmax=8, ymin=0, ymax=1.05,",
-        "  xlabel={separation $d = \\Delta/\\sigma$}, ylabel={capacity (bits per observation)},",
+        "  xlabel={separation $d = \\Delta/\\sigma$}, ylabel={capacity\\\\(bits per observation)}, ylabel style={align=center},",
         "  tick label style={font=\\scriptsize}, label style={font=\\small},",
         "  xmajorgrids, ymajorgrids, grid style={draw=black!12}]",
         "\\addplot[thick, accent] coordinates {%s};" % pts, "\\end{axis}", "\\end{tikzpicture}"]))
